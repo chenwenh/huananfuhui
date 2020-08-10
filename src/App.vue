@@ -1,28 +1,60 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="header" v-if="showHeader">
+      <div class="center">
+        <img src="static/images/logo.png" alt=""><span>华南富汇智慧供应链平台</span>
+        <span class='right login'><router-link :to="{path:'/login'}" v-show="$route.path!='/login'">登录</router-link></span>
+      </div>
+    </div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    
+  },
+  computed:{
+    showHeader(){
+      return this.$route.path == '/homePage' || this.$route.path == '/login'
+    }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style scoped>
+#app{
+  height: 100%;
+}
+.center{
+  position: relative;
+  width:1200px;
+  margin:0 auto;
+  height:80px;
+  line-height: 80px;
+  display: flex;
+  align-items: center;
+}
+.center img{
+  margin-right:15px;
+}
+.center span{
+  font-family: PingFangSC-Semibold;
+  font-size: 24px;
+  color: #2A211E;
+  letter-spacing: 0;
+  line-height: 24px;
+}
+.right{
+  float:right;
+}
+span.login a{
+  position: absolute;
+  right:0;
+  font-size:16px;
+  color: #302F4D;
+  top:30px;
 }
 </style>
