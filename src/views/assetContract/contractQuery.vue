@@ -2,6 +2,11 @@
     <div>
        <breadcrumb :breadcrumbList="breadcrumbs"/>
         <!-- 表格 -->
+        <el-input
+            placeholder="输入关键字进行搜索"
+            v-model="searchValue" style="width:300px;" class="search">
+            <i slot="prefix" class="el-input__icon el-icon-search" style="margin-top:-2px;"></i>
+        </el-input><el-button type="primary" @click="search" size="medium" style="margin-left:20px;">搜索</el-button>
         <Table
               ref="tableRef"
               :mainTable="mainTable"
@@ -53,6 +58,7 @@ export default {
   name: '',
   data() {
     return {
+      searchValue:"",
       breadcrumbs:["协议管理","协议维护"],
       workDate: '',
       // 表格数据
@@ -170,7 +176,7 @@ export default {
       const params = {
         page: this.page,
         pageSize: this.pageSize,
-        orgId:'6badcc0a-0288-409e-b458-58276e801711',//sessionStorage.getItem('orgId'),
+        orgId:sessionStorage.getItem('orgId'),
         assetType:'TRADECONTRACT',
         sortDirection: 'DESC'
       };

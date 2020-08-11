@@ -1,6 +1,11 @@
 <template>
     <div>
          <breadcrumb :breadcrumbList="breadcrumbs"/>
+        <el-input
+            placeholder="输入关键字进行搜索"
+            v-model="searchValue" style="width:300px;" class="search">
+            <i slot="prefix" class="el-input__icon el-icon-search" style="margin-top:-2px;"></i>
+        </el-input><el-button type="primary" @click="search" size="medium" style="margin-left:20px;">搜索</el-button>
         <!-- 表格 -->
         <Table
               ref="tableRef"
@@ -33,21 +38,9 @@
                         @click="details(scope.row)">
                         拒绝
                     </el-button>
-                     <el-button
-                        class="collectBtn"
-                        size="medium"
-                        type="text"
-                        style="margin-left:0px; "
-                        @click="add(scope.row)">
-                        新建
-                    </el-button>
                   </template>
               </el-table-column>
         </Table>
-        <!-- 添加 -->
-        <dialogCommonComponent ref="dialogCommonComponent" title="新建协议" width="50%">
-            <add ref="add"></add>
-        </dialogCommonComponent>
     </div>
 </template>
 
@@ -55,13 +48,13 @@
 import Table from '@/components/Table.vue';
 import dialogCommonComponent from '@/components/dialogCommonComponent';
 import breadcrumb from '@/components/breadcrumb.vue';
-import add from './add.vue';
 import { mapGetters } from 'vuex'
 
 export default {
   name: '',
   data() {
     return {
+      searchValue:"",
       breadcrumbs:["协议管理","协议签署"],
       workDate: '',
       // 表格数据
@@ -171,8 +164,7 @@ export default {
   components: {
     Table,
     breadcrumb,
-    dialogCommonComponent,
-    add
+    dialogCommonComponent
   },
   computed: {
       
@@ -185,12 +177,6 @@ export default {
     // this.search();
   },
   methods: {
-    add(scope) {
-       this.$refs.dialogCommonComponent.show();
-       this.$nextTick(()=>{
-          this.$refs.add.resetForm();
-       });
-    },
     // 搜索
     search(searchData) {
       this.mainTable.tableData = [];
