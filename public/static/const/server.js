@@ -1,5 +1,6 @@
 /* eslint-disable */
 
+const apiGateway =  'https://192.168.20.70/api'
 const apiGateway2 = 'https://test.easy-sight.com/api';
 const langchaoUrl = apiGateway2 + '/tlyy/trade';
 const FILE_IP = "https://test.easy-sight.com";
