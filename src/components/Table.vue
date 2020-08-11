@@ -11,6 +11,7 @@
               style="width: 100%"
               ref="multipleTable"
               v-loading="loading"
+              @row-click="rowClick"
               :height="height" size="mini">
       <el-table-column type="index"  width="50" align="center"> </el-table-column>       
       <el-table-column
@@ -136,10 +137,13 @@ export default {
   computed: {
     height() {
       var height2 = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-      return height2 - 230 + 'px';
+      return height2 - 250 + 'px';
     },
   },
   methods: {
+    rowClick(row){
+      this.$emit('rowClick',row);
+    },
     labelHead (h, {column, index}) {
       let l = column.label.length
       let f = 16

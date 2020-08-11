@@ -16,6 +16,7 @@
               :totalCount="totalCount"
               @handleSizeChange = "handleSizeChange"
               @handleCurrentChange="handleCurrentChange"
+              @rowClick="rowClick"
               :showPagination="true">
               <!-- 操作 -->
               <el-table-column fixed="right"
@@ -41,6 +42,10 @@
                   </template>
               </el-table-column>
         </Table>
+        <!-- 详情 -->
+        <dialogCommonComponent ref="dialogCommonComponent2" title="详情" width="50%">
+            <detail ref="detail" :detailInfo="detailInfo"></detail>
+        </dialogCommonComponent>
     </div>
 </template>
 
@@ -49,11 +54,26 @@ import Table from '@/components/Table.vue';
 import dialogCommonComponent from '@/components/dialogCommonComponent';
 import breadcrumb from '@/components/breadcrumb.vue';
 import { mapGetters } from 'vuex'
+import detail from '@/components/detail.vue';
 
 export default {
   name: '',
   data() {
     return {
+      detailInfo:{
+            name: "合同流水号",
+            entityNo: "合同号",
+            orderAmount1: "合同名称",
+            buyer: "合同类型",
+            seller: "甲方",
+            createTime: "乙方",
+            startDate: "合同金额",
+            param1:"起始日期",
+            param2:"到期日期",
+            param3:"合同",
+            param4:"已拒绝",
+            param5:"拒绝原因"
+      },
       searchValue:"",
       breadcrumbs:["协议管理","协议签署"],
       workDate: '',
@@ -164,7 +184,8 @@ export default {
   components: {
     Table,
     breadcrumb,
-    dialogCommonComponent
+    dialogCommonComponent,
+    detail
   },
   computed: {
       
@@ -177,6 +198,12 @@ export default {
     // this.search();
   },
   methods: {
+    rowClick(row){
+      this.$refs.dialogCommonComponent2.show();
+      this.$nextTick(()=>{
+        this.$refs.detail.init(row);
+      });
+    },
     // 搜索
     search(searchData) {
       this.mainTable.tableData = [];

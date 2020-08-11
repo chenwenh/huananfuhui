@@ -16,6 +16,7 @@
               :totalCount="totalCount"
               @handleSizeChange = "handleSizeChange"
               @handleCurrentChange="handleCurrentChange"
+              @rowClick="rowClick"
               :showPagination="true">
               <!-- 操作 -->
               <el-table-column fixed="right" width="100px"
@@ -35,15 +36,19 @@
                         size="medium"
                         type="text"
                         style="margin-left:0px; "
-                        @click="add(scope.row)">
+                        @click.stop="add(scope.row)">
                         新建
                     </el-button>
                   </template>
               </el-table-column>
         </Table>
-         <!-- 添加 -->
+        <!-- 添加 -->
         <dialogCommonComponent ref="dialogCommonComponent" title="新建协议" width="50%">
             <add ref="add"></add>
+        </dialogCommonComponent>
+        <!-- 详情 -->
+        <dialogCommonComponent ref="dialogCommonComponent2" title="详情" width="50%">
+            <detail ref="detail" :detailInfo="detailInfo"></detail>
         </dialogCommonComponent>
     </div>
 </template>
@@ -53,11 +58,30 @@ import Table from '@/components/Table.vue';
 import breadcrumb from '@/components/breadcrumb.vue';
 import dialogCommonComponent from '@/components/dialogCommonComponent';
 import add from './add.vue';
+import detail from '@/components/detail.vue';
 
 export default {
   name: '',
   data() {
     return {
+      detailInfo:{
+          name: "合同流水号",
+          entityNo: "合同号",
+          contractContent: "合同名称",
+          buzType1: "合同层级",
+          cType1: "合同类型",
+          buyer: "甲方",
+          seller: "乙方",
+          contractMoney1: "丙方",
+          signingDate: "签署日期",
+          startDate: "合同金额",
+          endDate: "起始日期",
+          param1:"到期日期",
+          param2:"签订方式",
+          param3:"部门",
+          param4:"合同",
+          param5:"状态"
+      },
       searchValue:"",
       breadcrumbs:["协议管理","协议维护"],
       workDate: '',
@@ -152,7 +176,8 @@ export default {
     Table,
     breadcrumb,
     dialogCommonComponent,
-    add
+    add,
+    detail
   },
   computed: {
   },
@@ -164,6 +189,12 @@ export default {
     // this.search();
   },
   methods: {
+    rowClick(row){
+      this.$refs.dialogCommonComponent2.show();
+       this.$nextTick(()=>{
+          this.$refs.detail.init(row);
+       });
+    },
     add(scope) {
        this.$refs.dialogCommonComponent.show();
        this.$nextTick(()=>{
