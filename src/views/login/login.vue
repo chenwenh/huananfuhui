@@ -16,10 +16,11 @@
                         </el-form-item>
                         <el-form-item label="" prop="smsCode">
                             <el-input v-model="ruleForm.smsCode" placeholder="验证码" style="width:180px;"><i slot="prefix" class="el-input__icon icon"><img src="static/images/code.png" alt=""></i></el-input>
-                            <img src="static/images/smsCode.png" alt="" style="position:absolute;right:0;">
+                            <!-- <img src="static/images/smsCode.png" alt="" style="position:absolute;right:0;"> -->
+                            <span @click="getSMScode" class="smsCodeTip">{{smsCodeTip}}</span>
                         </el-form-item>
                         <el-form-item>
-                            <el-button :loading="loading" type="primary" @click="submitForm('ruleForm')" class="loginButton" style="width:100%;">立即创建</el-button>
+                            <el-button :loading="loading" type="primary" @click="submitForm('ruleForm')" class="loginButton" style="width:100%;">登录</el-button>
                         </el-form-item>
                     </el-form>
                     <p>
@@ -46,6 +47,7 @@ export default {
         return{
             loading:false,
             checked:true,
+            smsCodeTip:"获取验证码",
             ruleForm:{
 
             },
@@ -63,6 +65,44 @@ export default {
         }
     },
     methods:{
+        // 获取短信验证码
+        getSMScode(){
+            if (this.smsCodeTip !== '获取验证码') {
+                return;
+            }
+            if(!this.ruleForm.userName){
+                this.$message.error('用户名不能为空！');
+                return;
+            }
+            if(!this.ruleForm.pwd){
+                this.$message.error('密码不能为空！');
+                return;
+            }
+            var url = this.$apiUrl.getSmsCode;
+            var params = {
+                username: this.ruleForm.userName.trim(),
+                password: this.ruleForm.pwd.trim()
+            };
+            this.$http.post(url, params)
+            .then(res => {
+                if (res.data.status === 200) {
+                    this.ruleForm.smsToken = res.data.data.uid;
+                    let djs = 60;
+                    window.$('.smsCodeTip').css('cursor', 'not-allowed');
+                    this.timer = setInterval(() => {
+                        this.smsCodeTip = `${djs}秒后重新发送`;
+                        if (djs <= 0) {
+                            this.smsCodeTip = '获取验证码';
+                            window.$('.smsCodeTip').css('cursor', 'pointer');
+                            clearInterval(this.timer);
+                        }
+                        djs -= 1;
+                    }, 1000);
+                }
+            }).catch(err=>{
+                this.$message.error(err.data.message);
+            })
+        },
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -98,6 +138,18 @@ export default {
 }
 </script>
 <style  scoped>
+.smsCodeTip{
+    width: 145px;
+    text-align: right;
+    height: 43px;
+    line-height: 40px;
+    display: inline-block;
+    border: 1px solid #DCDFE6;
+    float:right;
+    padding-right: 7px;
+    background: rgb(255,245,213);
+    cursor: pointer;
+}
 .login-container{
     background-image: linear-gradient(180deg, #FFF8E0 0%, #FFF7DD 22%, #FFF4D3 100%);
     position: relative;

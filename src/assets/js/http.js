@@ -11,8 +11,10 @@ axios.defaults.timeout = 500000
 axios.interceptors.request.use(
     config => {
         config.headers = {
-        'Authorization': sessionStorage.getItem('token'),
         'org_id': sessionStorage.getItem('orgId')
+        }
+        if (window.sessionStorage.getItem('token')) {
+            config.headers.Authorization = window.sessionStorage.getItem('token');
         }
         
         // loader = new Vue().$loading({
