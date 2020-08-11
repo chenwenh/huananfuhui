@@ -20,7 +20,7 @@
         <div style="clear:both;"></div>
     </div>
     <div class="dialog-footer" style="text-align:center;">
-        <el-button plain  @click="close()" size="medium">取消</el-button>
+        <el-button plain  @click="close()" size="medium">关闭</el-button>
     </div>
 </div>
 </template>
