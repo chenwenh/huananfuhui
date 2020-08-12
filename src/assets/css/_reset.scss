@@ -433,9 +433,20 @@ a, a:hover, a:focus {
 .el-table__row:hover{
   cursor: pointer !important;
 }
+
 .radiusNone{
   border-radius: 0 !important;
 }
 .applicationOpen .el-input.is-disabled .el-input__inner{
   color:black !important;
 }
+
+.el-breadcrumb .el-breadcrumb__item:nth-child(1) span.el-breadcrumb__inner{
+  font-size: 12px;
+  color: #333333 !important;
+}
+.el-breadcrumb .el-breadcrumb__item:nth-child(2) span.el-breadcrumb__inner{
+  font-size: 12px;
+  color: #888888 !important;
+}
+

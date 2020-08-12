@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="right">
-            <div class="shadow" style="overflow:hidden;">
+            <div class="shadow" style="overflow:hidden; padding-top: 24px;">
                 <img src="static/images/touxiang2.png" alt="" style="float:left;margin-right:20px;margin-top:13px;">
                 <h4 style="margin-top:5px;">欢迎“{{enterpriseData.orgName}}”登录系统</h4>
                 <p style="margin-left:20px;" class="word">
@@ -45,8 +45,8 @@
                     <span class="blue pointer" style="float:right;">企业管理</span>
                 </p>
             </div>
-            <div class="shadow publicMessages">
-                <h3 class="title">公告</h3>
+            <div class="shadow publicMessages" style="padding-top:11px; padding-bottom: 18px;">
+                <p class="title">公告</p>
                 <ul>
                     <li v-for="(item,index) in publicMessages" :key="index">
                         {{item.info}}
@@ -54,8 +54,8 @@
                 </ul>
                 <p class="blue pointer">更多</p>
             </div>
-            <div class="shadow publicMessages">
-                <h3 class="title">公示</h3>
+            <div class="shadow publicMessages" style="padding-top:11px">
+                <p class="title">公示</p>
                 <el-tabs v-model="activeName" @tab-click="handleClick">
                     <el-tab-pane label="项目信息" name="first">
                         <ul>
@@ -234,7 +234,8 @@ export default {
      padding-top:10px;
  }
 .title{
-     font-size: 14px;
+    font-weight: 700;
+    font-size: 14px;
     color: #000000;
     letter-spacing: 0;
  }
@@ -260,6 +261,7 @@ export default {
      margin-right:140px;
      line-height:30px;
      cursor: pointer;
+     margin-bottom: 5px;
  }
  .publicMessages ul li {
      height:35px;
