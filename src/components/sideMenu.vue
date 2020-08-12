@@ -77,7 +77,7 @@
     computed: {
         activeIndex () {
             if (this.$route.path ==='/home2'){
-                return '/contractQuery'
+                return '/agreementMaintenance'
             }else{
                 return this.$route.path;
             }  
