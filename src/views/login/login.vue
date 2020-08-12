@@ -10,13 +10,19 @@
                     <h2>登 录</h2>
                     <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="0" class="demo-loginForm">
                         <el-form-item label="" prop="userName">
-                            <el-input v-model="loginForm.userName" placeholder="用户名"><i slot="prefix" class="el-input__icon icon"><img src="static/images/userName.png" alt=""></i></el-input>
+                            <el-input v-model="loginForm.userName" placeholder="邮箱/手机号">
+                                <!-- <i slot="prefix" class="el-input__icon icon"><img src="static/images/userName.png" alt=""></i> -->
+                            </el-input>
                         </el-form-item>
                         <el-form-item label="" prop="pwd">
-                            <el-input v-model="loginForm.pwd" placeholder="密码"><i slot="prefix" class="el-input__icon icon"><img src="static/images/password.png" alt=""></i></el-input>
+                            <el-input v-model="loginForm.pwd" placeholder="密码">
+                                <!-- <i slot="prefix" class="el-input__icon icon"><img src="static/images/password.png" alt=""></i> -->
+                            </el-input>
                         </el-form-item>
                         <el-form-item label="" prop="smsCode">
-                            <el-input v-model="loginForm.smsCode" placeholder="验证码" style="width:142px;"><i slot="prefix" class="el-input__icon icon"><img src="static/images/code.png" alt=""></i></el-input>
+                            <el-input v-model="loginForm.smsCode" placeholder="请填写短信验证码" class="smsInput">
+                                <!-- <i slot="prefix" class="el-input__icon icon"><img src="static/images/code.png" alt=""></i> -->
+                            </el-input>
                             <!-- <img src="static/images/smsCode.png" alt="" style="position:absolute;right:0;"> -->
                             <span @click="getSMScode" class="smsCodeTip">{{smsCodeTip}}</span>
                         </el-form-item>
@@ -27,41 +33,68 @@
                     <p>
                         <span style="margin-right:20px;"><el-checkbox v-model="checked"><span class="blue">自动登录</span></el-checkbox></span>
                         <label style="float:right;">
-                            <span class="blue leftspan">忘记密码</span>
+                            <span @click="changeTab('resetPwdForm')" class="blue leftspan">忘记密码</span>
                             <span style="color:#D8D8D8">|</span>
                             <span @click="changeTab('registerForm')" class="blue leftspan">注册账户</span>
                         </label>
                     </p>
                 </div>
                 <!-- 注册 -->
-                <div v-show="title === 'registerForm'" class="login right" style="height: 540px;width:388px;">
+                <div v-show="title === 'registerForm'" class="login right" style="height:575px;width:388px;">
                     <h2>注 册</h2>
                     <el-form :model="registerForm" :rules="rules" ref="registerForm">
                         <el-form-item prop="username">
-                            <el-input v-model.trim="registerForm.username" placeholder="请输入用户名"></el-input>
+                            <el-input v-model.trim="registerForm.username" placeholder="用户名"></el-input>
                             <span class="el-form-item__error" v-show="usernameRegistered">该用户名已注册</span>
                         </el-form-item>
                         <el-form-item prop="mobile">
-                            <el-input v-model.trim="registerForm.mobile" placeholder="请输入手机号"></el-input>
+                            <el-input v-model.trim="registerForm.mobile" placeholder="手机号"></el-input>
                         </el-form-item>
                         <el-form-item prop="smsCode">
                             <el-input :disabled="notfillsmscode" style="width: 150px;" v-model.trim="registerForm.smsCode" placeholder="填写短信验证码"></el-input>
-                            <span @click="handleResetPwdSMS('registerForm')" class="SMSverification" style="color: #FDA328;border: 1px solid #E1E5EF;">{{smsCodeTip}}</span>
+                            <span @click="handleResetPwdSMS('registerForm')" class="SMSverification">{{smsCodeTip}}</span>
                         </el-form-item>
                         <el-form-item prop="newPassword">
-                            <el-input type="password" v-model.trim="registerForm.newPassword" placeholder="请设置您的密码"></el-input>
+                            <el-input type="password" v-model.trim="registerForm.newPassword" placeholder="输入密码"></el-input>
                         </el-form-item>
                         <el-form-item prop="checkpwd">
-                            <el-input type="password" v-model.trim="registerForm.checkpwd" placeholder="请再次输入密码"></el-input>
+                            <el-input type="password" v-model.trim="registerForm.checkpwd" placeholder="再次输入密码"></el-input>
                             <span class="el-form-item__error" v-show="pwdInconformity">两次输入密码不一致</span>
                         </el-form-item>
                     </el-form>
                     <div class="btn">
-                        <el-button :disabled="!agree" @click="handleRegisterNewuser" :class="agree?'loginButton':'noagreeForRegister'">同意协议并注册</el-button>
+                        <el-button :disabled="!agree" @click="handleRegisterNewuser" :class="agree?'loginButton':'noagreeForRegister'">注册</el-button>
                         <div class="agreement"><el-checkbox v-model="agree"></el-checkbox> 我同意并遵守<span @click="handleShowAgreement('userRegister')">《会员服务协议》</span>、<span @click="handleShowAgreement('CFCA')">《CFCA数字证书服务协议》</span></div>
                         <div class="hasaccount" @click="changeTab('loginForm')">已有账号，立即登录</div>
                     </div>
                 </div>
+                <!-- 重置密码 -->
+                <!-- <div v-loading="formloading" v-show="title === 'resetPwdForm'" style="height:540px;width:388px;" class="login right">
+                    <h2>密码重置</h2>
+                    <el-form :model="resetPwdForm" :rules="rules" ref="resetPwdForm">
+                        <el-form-item prop="userName">
+                            <el-input v-model.trim="resetPwdForm.userName" placeholder="请输入您的用户名"></el-input>
+                        </el-form-item>
+                        <el-form-item prop="mobile">
+                            <el-input v-model.trim="resetPwdForm.mobile" placeholder="请输入您的手机号"></el-input>
+                        </el-form-item>
+                        <el-form-item prop="smsCode">
+                            <el-input :disabled="notfillsmscode" style="width: 150px" v-model.trim="resetPwdForm.smsCode" placeholder="填写短信验证码"></el-input>
+                            <span @click="handleResetPwdSMS('resetPwdForm')" class="SMSverification" style="color: #FDA328;border: 1px solid #E1E5EF;">{{sendSMStips}}</span>
+                        </el-form-item>
+                        <el-form-item prop="newPassword">
+                            <el-input type="password" v-model.trim="resetPwdForm.newPassword" placeholder="请设置您的密码"></el-input>
+                        </el-form-item>
+                        <el-form-item prop="checkpwd">
+                            <el-input type="password" v-model.trim="resetPwdForm.checkpwd" placeholder="请再次输入密码"></el-input>
+                            <span class="el-form-item__error" v-show="pwdInconformity">两次输入密码不一致</span>
+                        </el-form-item>
+                    </el-form>
+                    <div class="btn">
+                        <el-button @click="handleConfirmResetPwd">确定</el-button>
+                        <div style="margin-top:20px;" class="hasaccount" @click="handleTabToLogin">已有账号，立即登录</div>
+                    </div>
+                </div> -->
             </div>
         </div>
         <div class="footer">
@@ -104,7 +137,14 @@ export default {
                 smsCode:null,
                 smsToken:null
             },
-            resetPwdForm: {}, // 重置密码
+            resetPwdForm: { // 重置密码
+                userName:null,
+                mobile:null,
+                newPassword: null,
+                checkpwd:null,
+                smsCode: null,
+                smsToken: null
+            }, // 重置密码
             rules:{
                 userName: [
                     { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -289,7 +329,7 @@ export default {
             this.$refs[val].resetFields();
             this.title = val;
         },
-        // 查询用户重复，手机号重复
+        // 查询用户重复，手机号重复，是否已经被注册
         handleUserNameRepeate(value){
             this.usernameRegistered = false;
             this.$refs['registerForm'].validateField('username',valid => {
@@ -372,15 +412,16 @@ export default {
 </script>
 <style lang="less" scoped>
 .smsCodeTip{
-    width: 184px;
-    text-align: right;
-    height: 43px;
-    line-height: 40px;
+    width: 192px;
+    text-align: center;
+    height: 48px;
+    color: #000;
+    line-height: 50px;
     display: inline-block;
     border: 1px solid #DCDFE6;
-    float:right;
+    float: right;
     padding-right: 7px;
-    background: rgb(255,245,213);
+    background:rgba(240,240,240,1);
     cursor: pointer;
 }
 .login-container{
@@ -417,16 +458,17 @@ export default {
     float:right;
 }
 .login{
-    width:340px;
-    height:410px;
+    width:346px;
+    height:415px;
     background: #FFFFFF;
     box-shadow: 0 10px 30px 0 rgba(121,121,121,0.10);
-    padding-left:30px;
-    padding-right:30px;
+    padding-left:42px;
+    padding-right:42px;
     padding-top:20px;
     h2 {
-        text-align:center;
-        color: #333;
+        font-size:24px;
+        font-weight:500;
+        color:rgba(93,93,93,1);
     }
 }
 .icon img{
@@ -439,14 +481,16 @@ export default {
     border-radius: 22px;
     border-radius: 22px;
     height:44px;
-    color: #7F4318;
+    font-size:16px;
+    font-weight:500;
+    color:rgba(127,67,24,1);
 }
 .el-button--primary {
     background-color: #FFD24D;
     border-color: #FFD24D;
 }
 .leftspan{
-    margin:0 10px;
+    margin:0 20px;
     cursor: pointer;
 }
 .agreement{
@@ -462,21 +506,24 @@ export default {
     font-size: 14px;
     cursor: pointer;
     width: 128px;
-    color: #999;
     margin: 0px auto;
-    border-bottom: 1px solid #999;
+    font-weight:400;
+    color:rgba(51,51,51,1);
 }
 .SMSverification{
     display: inline-block;
-    height: 40px;
+    height: 48px;
     width: 230px;
-    border: 1px solid #E1E5EF;
-    line-height: 40px;
+    line-height: 48px;
     text-align: center;
     color: #B8B8B8;
     cursor: pointer;
-    background: #F0F0F0;
     margin-left: 4px;
+    background:rgba(240,240,240,1);
+    border:1px solid rgba(225,229,239,1);
+    font-size:14px;
+    font-weight:400;
+    color:rgba(0,0,0,1);
 }
 .noagreeForRegister {
     cursor: not-allowed;
@@ -488,17 +535,29 @@ export default {
     height:44px;
     color: #ffffff;
 }
+.smsInput {
+    width: 142px;
+    /deep/.el-input__inner {
+        padding-right: 0;
+    }
+}
 .el-input /deep/.el-input__prefix {
     left: 14px;
+}
+.el-input /deep/ .el-input__inner {
+    height: 50px;
 }
 .el-checkbox /deep/.el-checkbox__input {
     line-height: 19px;
 }
 .el-input--prefix /deep/.el-input__inner {
     padding-left: 46px;
-    height: 46px;
+    height: 50px;
 }
 .el-button.is-disabled:hover {
     color: #fff;
+}
+.el-input.is-disabled /deep/.el-input__inner {
+    border: 1px solid #DCDFE6;
 }
 </style>
