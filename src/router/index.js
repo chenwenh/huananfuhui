@@ -41,7 +41,7 @@ const routes = [
               path: '/contractQuery',
               name: 'contractQuery',
               meta: {
-                  title: '合同查询',
+                  title: '协议维护',
                   icon: 'iconfolder1'
               },
               component: resolve => require(['../views/assetContract/contractQuery.vue'], resolve)
@@ -50,11 +50,20 @@ const routes = [
               path: '/orderQuery',
               name: 'orderQuery',
               meta: {
-                  title: '订单查询',
+                  title: '协议签署',
                   icon: 'iconproject1'
               },
               component: resolve => require(['../views/assetOrder/orderQuery.vue'], resolve)
           },
+          {
+            path: '/businessOpenAudit',
+            name: 'businessOpenAudit',
+            meta: {
+                title: '业务开通审核',
+                icon: 'iconproject1'
+            },
+            component: resolve => require(['../views/businessOpenAudit/index.vue'], resolve)
+        },
         ]
       },
     ]

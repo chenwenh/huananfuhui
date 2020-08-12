@@ -11,6 +11,7 @@ import '@/assets/css/_main.scss'
 import bus from '@/views/eventBus/eventBus'
 import './assets/js/dialogDrag';
 import './assets/js/validate';
+import store from './store';
 Vue.use(ElementUI)
 
 Vue.prototype.$http = http;
@@ -23,5 +24,6 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')

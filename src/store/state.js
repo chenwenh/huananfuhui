@@ -1,6 +1,8 @@
 
 let state = {
-  loading: false
+  loading: false,
+  step:3,
+  auditState:'failed'
 }
 
 export default state

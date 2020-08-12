@@ -428,3 +428,9 @@ a, a:hover, a:focus {
 .el-table__row:hover{
   cursor: pointer !important;
 }
+.radiusNone{
+  border-radius: 0 !important;
+}
+.applicationOpen .el-input.is-disabled .el-input__inner{
+  color:black !important;
+}

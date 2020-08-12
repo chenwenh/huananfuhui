@@ -28,7 +28,7 @@
                         size="medium"
                         type="text"
                         style="margin-left:0px; "
-                        @click="details(scope.row)">
+                        @click.stop="details(scope.row)">
                         签章
                     </el-button>
                      <el-button
@@ -36,7 +36,7 @@
                         size="medium"
                         type="text"
                         style="margin-left:0px; "
-                        @click="details(scope.row)">
+                        @click.stop="details(scope.row)">
                         拒绝
                     </el-button>
                   </template>

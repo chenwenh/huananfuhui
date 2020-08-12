@@ -7,7 +7,7 @@
             v-for="(item, key) in detailInfo" 
             :key="item+key">
             <el-col :span="24" class="elCol" style="margin-bottom:10px;">
-                <el-col class="elLable" :span="7" style="text-align:right; padding-right:5px; color:#48576a; ">
+                <el-col class="elLable" :span="8" style="text-align:right; padding-right:5px; color:#48576a; ">
                     {{item}}：
                 </el-col>
                 <el-col :span="15">

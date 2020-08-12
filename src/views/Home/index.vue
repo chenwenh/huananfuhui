@@ -3,11 +3,11 @@
     <div class="header">
         <img src="static/images/homeLogo.png" alt="" class="left">
         <div class="right">
-             <el-input
+             <!-- <el-input
                 placeholder="输入关键字进行搜索"
                 v-model="searchValue" style="width:200px;" class="search">
                 <i slot="prefix" class="el-input__icon el-icon-search" style="margin-top:-2px;"></i>
-            </el-input>
+            </el-input> -->
             <img src="static/images/infoLogo.png" alt="" class="infoLogo">
             <el-dropdown trigger="click" @command="handleCommand" style="margin-top:7px;cursor:pointer;">
                 <span class="el-dropdown-link">
@@ -54,11 +54,11 @@ export default {
 }
 .header .right{
     display: inline-block;
-    width:326px;
     float:right;
     display:flex;
     align-items:center;
     height:60px;
+    text-align: right;
 }
 .infoLogo{
     margin-left:20px;

@@ -9,8 +9,15 @@
             <div class="product shadow">
                  <h3 class="title">产品中心</h3>
                  <img src="static/images/fubaotong.png" alt="" style="margin-right:20px;" class="pointer" @click="fubaotongClick">
-                 <img src="static/images/kuyibao.png" alt="" class="pointer">
+                 <div style="position:relative;display:inline-block;" @click="applicationOpen">
+                    <img src="static/images/kuyibao.png" alt="" class="pointer">
+                    <span class="status" >申请开通</span>
+                 </div>
             </div>
+            <!-- 开通组件 -->
+            <dialogCommonComponent ref="dialogCommonComponent" title="业务开通申请" width="860px">
+                <applicationOpen ref="applicationOpen"></applicationOpen>
+            </dialogCommonComponent>
             <div class="questions shadow">
                 <h3 class="title">常见问题</h3>
                 <ul>
@@ -83,6 +90,8 @@
     </div>
 </template>
 <script>
+import dialogCommonComponent from '@/components/dialogCommonComponent';
+import applicationOpen from './applicationOpen.vue';
 export default {
     data(){
         return{
@@ -144,6 +153,9 @@ export default {
         }
     },
     methods:{
+        applicationOpen(){
+            this.$refs.dialogCommonComponent.show();
+        },
         handleClick(tab, event) {
             console.log(tab, event);
         },
@@ -152,10 +164,23 @@ export default {
                 path:'/home2'
             });
         }
+    },
+    components:{
+        dialogCommonComponent,
+        applicationOpen
     }
 }
 </script>
 <style scoped>
+.status{
+    position: absolute;
+    right:4px;
+    top:0;
+    padding:3px;
+    background:red;
+    color:white;
+    border-top-right-radius:3px;
+}
 .marginRight{
     margin-right:26px;
 }
