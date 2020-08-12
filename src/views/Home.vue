@@ -1,12 +1,12 @@
 <template>
     <el-container>
         <el-container>
-            <el-aside style='width: 220px !important;float:left;background:#F5F5F5'>
+            <el-aside style='width: 189px !important;float:left;background:#F5F5F5'>
                 <div class="logo" @click="contentShow = !contentShow">
                     <img src="static/images/menu.png" class="productWord">产品中心
                     <i class="el-icon-arrow-right iconRight" style="float:right;"></i>
                     <div class="content" v-show="contentShow"> 
-                        <div style="width:100px;float:left">
+                        <!-- <div style="width:100px;float:left">
                             <p class="title">供应链</p>
                             <ul>
                                 <li>订单管理</li>
@@ -21,7 +21,10 @@
                                 <li>发货管理</li>
                                 <li>企业协议</li>
                             </ul>
-                        </div>
+                        </div> -->
+                        <div class="squareBox">供应链</div>
+                        <div class="squareBox">融资</div>
+                        <div class="squareBox">物流公司</div>
                     </div>
                 </div>
                 <sidebar></sidebar>
@@ -79,7 +82,7 @@
         }
     }
     .el-menu-item {
-        width: 220px;
+        width: 189px;
         text-align: left;
     }
 
@@ -88,7 +91,7 @@
     }
 
     .el-submenu__title {
-        width: 220px;
+        width: 189px;
         text-align: left;
     }
 
@@ -122,9 +125,10 @@
             }
             .content{
                 position: fixed;
-                left:220px;
+                left:189px;
                 top:60px;
-                width:250px;
+                width:387px;
+                height: 118px;
                 z-index: 100;
                 background: #F7F7F7;
                 border:1px solid white;
@@ -220,5 +224,18 @@
         height:22px;
         margin-left:20px;
         margin-right:6px;
+    }
+    .squareBox {
+        width: 100px;
+        height: 53px;
+        background: #FFFFFF;
+        float: left;
+        margin-left: 20px;
+        margin-top: 28px;
+        line-height: 53px;
+        text-align: center;
+    }
+    .squareBox:hover {
+        border:1px solid rgba(237,157,3,1) !important;
     }
 </style>
