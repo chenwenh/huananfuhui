@@ -42,13 +42,17 @@
                   </template>
               </el-table-column>
         </Table>
-        <!-- 添加 -->
-        <dialogCommonComponent ref="dialogCommonComponent" title="新建协议" width="50%">
+        <!-- 审核 -->
+        <dialogCommonComponent ref="dialogCommonComponent" title="审核" width="50%">
             <auditDetail ref="auditDetail" :detailInfo="detailInfo"></auditDetail>
         </dialogCommonComponent>
         <!-- 详情 -->
         <dialogCommonComponent ref="dialogCommonComponent2" title="详情" width="50%">
             <detail ref="detail" :detailInfo="detailInfo"></detail>
+        </dialogCommonComponent>
+          <!-- 添加 -->
+        <dialogCommonComponent ref="dialogCommonComponent3" title="签署协议" width="50%">
+            <add ref="add"  :fromAudit="true"></add>
         </dialogCommonComponent>
     </div>
 </template>
@@ -57,7 +61,7 @@
 import Table from '@/components/Table.vue';
 import breadcrumb from '@/components/breadcrumb.vue';
 import dialogCommonComponent from '@/components/dialogCommonComponent';
-// import add from './add.vue';
+import add from '@/views/assetContract/add.vue';
 import auditDetail from './auditDetail.vue';
 import detail from '@/components/detail.vue';
 
@@ -74,7 +78,7 @@ export default {
           buyer: "拒绝原因",
       },
       searchValue:"",
-      breadcrumbs:["协议管理","协议维护"],
+      breadcrumbs:["协议管理","业务开通审核"],
       workDate: '',
       // 表格数据
       mainTable: {
@@ -127,7 +131,7 @@ export default {
     Table,
     breadcrumb,
     dialogCommonComponent,
-    // add,
+    add,
     detail,
     auditDetail
   },
@@ -153,8 +157,11 @@ export default {
           this.$refs.auditDetail.init(row);
        });
     },
-    signAggreement(){
-        
+    signAggreement(scope) {
+       this.$refs.dialogCommonComponent3.show();
+       this.$nextTick(()=>{
+          this.$refs.add.resetForm();
+       });
     },
     // 搜索
     search(searchData) {

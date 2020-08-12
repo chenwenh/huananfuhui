@@ -140,9 +140,17 @@ export default {
       return height2 - 250 + 'px';
     },
   },
+  mounted() {
+    this.$refs.multipleTable.doLayout()
+  },
   methods: {
     rowClick(row){
       this.$emit('rowClick',row);
+    },
+    doLayout() {
+      this.$nextTick(() => {
+        this.$refs.multipleTable.doLayout();
+      });
     },
     labelHead (h, {column, index}) {
       let l = column.label.length

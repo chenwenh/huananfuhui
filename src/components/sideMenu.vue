@@ -3,7 +3,7 @@
         <el-menu
             :default-active="activeIndex"
             class="el-menu-vertical-demo"
-            text-color="#4A3718"
+            text-color="#444444"
             unique-opened
             router
             background-color="#F5F5F5"
@@ -14,8 +14,8 @@
                 <template v-if="item.subs.length">
                     <el-submenu :index="item.index" :key="item.index" v-if="item.subs.length">
                         <template slot="title">
-                            <i class="sideBar"></i>
                             <!-- <i :class="['sideIcon', 'iconfont', item.icon]"></i> -->
+                            <i style="margin-left: 27px;"></i>
                             {{ item.title }}
                         </template>
                         <div>
@@ -23,7 +23,6 @@
                               v-for="subItem in item.subs"
                               :key="subItem.index"
                               :index="subItem.index">
-                                <i class="sideBar"></i>
                                 {{
                                   subItem.title
                                 }}
@@ -33,12 +32,16 @@
                 </template>
                 <template v-else>
                     <el-menu-item :index="item.index" v-if="item.index !== 'assetSetting'" :key="item.index">
-                        <i class="sideBar"></i>
                         <i :class="['sideIcon', 'iconfont', item.icon]"></i>{{ item.title }}
                     </el-menu-item>
                 </template>
             </template>
         </el-menu>
+        <div class="fixedBottom" @click="goHome">
+            <!-- <i class="el-icon-menu"></i> -->
+            <img src="./../assets/img/iconhome.png" style="width:16px; vertical-align:middle; margin-right:5px;">
+            返回平台
+        </div>
     </div>
 </template>
 
@@ -83,7 +86,11 @@
     watch: {
     },
     methods: {
-        
+        goHome() {
+            this.$router.push({
+                path: '/home'
+            });
+        }
     },
     mounted () {
         
@@ -102,16 +109,6 @@
         }
     }
 
-    .sideBar {
-        display: none;
-        position: absolute;
-        left: 0;
-        top: 20px;
-        width: 4px;
-        height: 19px;
-        background: #E59D28;
-    }
-
     .el-aside {
         position: relative;
         background: #F5F5F5;
@@ -126,15 +123,13 @@
 
         .el-menu-item.is-active /deep/,
         .el-menu-item.is-active:hover {
-            color: #4A3718 !important;
-            background: #FFF1DB !important;
+            color: #FEA700 !important;
+            // background: #FFF1DB !important;
+            background: #FFFFFF !important;
+            text-align: center;
 
             .sideIcon {
                 color: #E79C2A !important;
-            }
-
-            .sideBar {
-                display: block;
             }
         }
 
@@ -157,7 +152,7 @@
                 position: absolute;
                 bottom: 0;
                 left: 0;
-                width: 220px;
+                width: 189px;
                 height: 45px;
                 border-top: 1px solid #E7EFF7;
                 text-align: center;
@@ -177,6 +172,32 @@
                 //     color: #228BF7;
                 // }
             }
+
+            .fixedBottom{
+                border-top: 1px solid #EDEDED;
+                position:fixed;
+                background:#F5F5F5;
+                height:50px;
+                line-height: 50px;
+                text-align: center;
+                width: 189px;
+                bottom:0;
+                cursor: pointer;
+                font-size: 12px;
+
+                i {
+                    color:#FEA700;
+                }
+            }
+            .fixedBottom:hover {
+               background: #FFFFFF!important;
+               color:#FEA700;
+            }
+
         }
+    }
+
+    .el-submenu .el-menu-item {
+        text-align: center;
     }
 </style>

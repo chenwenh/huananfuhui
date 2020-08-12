@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="position: relative;">
        <breadcrumb :breadcrumbList="breadcrumbs"/>
         <!-- 表格 -->
         <el-input
@@ -18,8 +18,18 @@
               @handleCurrentChange="handleCurrentChange"
               @rowClick="rowClick"
               :showPagination="true">
+              <!-- 状态筛选一栏 -->
+              <el-table-column
+                width="100"
+                label="状态筛选"
+                :filters="filterStatusList"
+                :filter-method="filterHandler">
+                  <template slot-scope="scope">
+                    {{scope.row.param5 ? scope.row.param5 : '/'}}
+                  </template>
+              </el-table-column>
               <!-- 操作 -->
-              <el-table-column fixed="right" width="100px"
+              <el-table-column fixed="right" width="100"
                         label="操作"
                         >
                   <template slot-scope="scope">
@@ -82,6 +92,12 @@ export default {
           param4:"合同",
           param5:"状态"
       },
+      filterStatus: [],
+      filterStatusList: [
+        {text: '正常', value: 'zhengchang'},
+        {text: '失效', value: 'shixiao'},
+        {text: '更新中', value: 'updateing'}
+      ],
       searchValue:"",
       breadcrumbs:["协议管理","协议维护"],
       workDate: '',
@@ -103,7 +119,7 @@ export default {
           param2:"签订方式",
           param3:"部门",
           param4:"合同",
-          param5:"状态"
+          // param5:"状态"
         },
         tableData: [
            {
@@ -182,7 +198,13 @@ export default {
   computed: {
   },
   watch: {
-    
+    'filterStatus': function statusChange() {
+      let filterParam = {
+        status: this.filterStatus
+      };
+      filterParam = JSON.parse(JSON.stringify(filterParam));
+      this.search(filterParam);
+    }
   },
   created() {
     if (this.$route.query.type && this.$route.query.type !== '') this.isDevorg = this.$route.query.type;
@@ -194,6 +216,16 @@ export default {
        this.$nextTick(()=>{
           this.$refs.detail.init(row);
        });
+    },
+    filterHandler(value, row, column) {
+      // console.log(value, row, column, '123456', column.filteredValue)
+      this.filterStatus = column.filteredValue;
+    },
+    handleCommand(command) {
+      let filterParam = {
+        status: command
+      }
+      this.search(filterParam);
     },
     add(scope) {
        this.$refs.dialogCommonComponent.show();
@@ -213,7 +245,8 @@ export default {
       };
       // 获取意向申请列表
       const url = `${this.$apiUrl.queryContract}`;
-      this.$http.post(url,params)
+      let copyParams = Object.assign({}, searchData, params)
+      this.$http.post(url, copyParams)
         .then(res => {
           if (res.data.status !== 200) return;
           this.totalCount = res.data.data.totalElements;
@@ -222,6 +255,7 @@ export default {
             item.contractMoney = item.amount;
             item.cType = item.type;
           });
+          this.$refs.tableRef.doLayout();
           console.log(this.mainTable.tableData);
         }).catch(err => {
           this.$message.warning(err.message || '服务器错误，请稍后再试!');
@@ -243,17 +277,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.approval__box{
-  .search{
-    height: 120px;
-    margin-top: 50px;
-  }
-  .btn__search{
-    bottom: -46px;
-    right: 0;
-  }
-  .table_btn{
-    margin: 5px;
-  }
-}
+
 </style>

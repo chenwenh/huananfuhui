@@ -3,7 +3,7 @@
         <div class="left">
             <div class="alert shadow" v-show="alertShow">
                 <h3 class="title">实用提示</h3>
-                <p><img src="static/images/lamp.png">为保证您的帐户及资源的所属权安全，建议您优先完成实名认证。<span class="blue pointer">前往认证</span></p>
+                <p><img src="static/images/lamp.png">为保证您的帐户及资源的所属权安全，建议您优先完成实名认证。<span @click="goToSSO" class="blue pointer">前往认证</span></p>
                 <i class="el-icon-close close" @click="alertShow=!alertShow"></i>
             </div>
             <div class="product shadow">
@@ -11,7 +11,8 @@
                  <img src="static/images/fubaotong.png" alt="" style="margin-right:20px;" class="pointer" @click="fubaotongClick">
                  <div style="position:relative;display:inline-block;" @click="applicationOpen">
                     <img src="static/images/kuyibao.png" alt="" class="pointer">
-                    <span class="status" >申请开通</span>
+                    <span class="status" v-show="$store.state.openState=='notOpen'">申请开通</span>
+                    <span class="status" v-show="$store.state.openState=='opening'">开通中</span>
                  </div>
             </div>
             <!-- 开通组件 -->
@@ -38,9 +39,9 @@
         <div class="right">
             <div class="shadow" style="overflow:hidden;">
                 <img src="static/images/touxiang2.png" alt="" style="float:left;margin-right:20px;margin-top:13px;">
-                <h4 style="margin-top:5px;">欢迎“北京华南企业有限公司”登录系统</h4>
+                <h4 style="margin-top:5px;">欢迎“{{enterpriseData.orgName}}”登录系统</h4>
                 <p style="margin-left:20px;" class="word">
-                    <span>贸易商</span><span class="noReal">未实名</span>
+                    <span>{{enterpriseData.orgRole}}</span><span class="noReal">{{enterpriseData.isVerified}}</span>
                     <span class="blue pointer" style="float:right;">企业管理</span>
                 </p>
             </div>
@@ -93,10 +94,18 @@
 import dialogCommonComponent from '@/components/dialogCommonComponent';
 import applicationOpen from './applicationOpen.vue';
 export default {
+    created() {
+        this.getUserData();
+    },
     data(){
         return{
             activeName:'first',
             alertShow:true,
+            enterpriseData: { // 企业信息
+                orgName: '',
+                isVerified: '',
+                orgRole: ''
+            },
             publicMessages:[
                 {
                     info:"【每日一习话】推动脱贫攻坚各项政策措施落地生根"
@@ -163,6 +172,18 @@ export default {
             this.$router.push({
                 path:'/home2'
             });
+        },
+        // 获取用户信息
+        getUserData() {
+            let user = JSON.parse(sessionStorage.getItem('user'));
+            this.enterpriseData.orgName = user.orgName;
+            this.enterpriseData.isVerified = user.hasOwnProperty('verified') && user.verified === true ? '已实名' : '未实名';
+            this.enterpriseData.orgRole = this.$appConst.enterOrgRole[user.orgRole];
+        },
+        // 跳转统一登陆系统
+        goToSSO() {
+            let token = sessionStorage.getItem('token');
+            window.open(`${SSO_URL}/login?token=${token}`);
         }
     },
     components:{

@@ -1,12 +1,13 @@
 <template>
 <div style="background:rgba(255,255,255,1);" class="applicationOpen">
     <div class="steps">
-        <span class="child"><span class="step" :class="{'active':step=='1'}">1</span><label>基础信息</label><span class="line"></span></span>
-        <span class="step" :class="{'active':step=='2'}">2</span><label>平台审核</label><span class="line"></span>
-        <span class="step" :class="{'active':step=='3'}">3</span><label>签署框架合同</label><span class="line"></span>
-        <span class="step" :class="{'active':step=='4'}">4</span><label>银行授信审核</label>
+        <span class="child" @click="firstClick"><span class="step" :class="{'active':step=='1'}">1</span><label>基础信息</label><span class="line"></span></span>
+        <span class="step" :class="{'active':step=='2'}" @click="otherClick">2</span><label>平台审核</label><span class="line"></span>
+        <span class="step" :class="{'active':step=='3'}" @click="otherClick">3</span><label>签署框架合同</label><span class="line"></span>
+        <span class="step" :class="{'active':step=='4'}" @click="otherClick">4</span><label>银行授信审核</label>
     </div>
-    <div v-show="step==1">
+    <div v-show="step==1 || status">
+        <div v-if="!status">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="70px" class="specialsForm" style="width:100%;">
           <div style="overflow:hidden;">
                 <el-form-item label="名称" prop="model1">
@@ -55,8 +56,54 @@
                 <el-button type="info" @click="close()" class="radiusNone">取消</el-button>
                 <el-button type="primary" @click="submitForm('ruleForm')" class="primaryButton radiusNone">提交</el-button>      
         </div>
+        </div>
     </div>
-    <div v-show="step==2 && auditState == 'shenhezhong'" style="text-align:center;padding-top:40px;padding-bottom:60px;">
+    <div v-show="status">
+        <el-form :model="ruleForm2" ref="ruleForm2" label-width="70px" class="specialsForm" style="width:100%;">
+          <div style="overflow:hidden;">
+                <el-form-item label="名称" prop="model1">
+                   <el-select v-model="ruleForm2.model1" placeholder="请选择协议模板" clearable=""  style="width:100%;" disabled="">
+                        <el-option label="协议模板1" value="value1"></el-option>
+                        <el-option label="协议模板2" value="value2"></el-option>
+                    </el-select>
+                </el-form-item>
+               <el-form-item label="名称" prop="model2">
+                   <el-select v-model="ruleForm2.model2" placeholder="请选择协议模板" clearable=""  style="width:100%;" disabled="">
+                        <el-option label="协议模板1" value="value1"></el-option>
+                        <el-option label="协议模板2" value="value2"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="名称" prop="name1">
+                    <el-input v-model="ruleForm2.name1" disabled=""></el-input>
+                </el-form-item>
+                 <el-form-item label="名称" prop="name2">
+                    <el-input v-model="ruleForm2.name2" disabled=""></el-input>
+                </el-form-item>
+          </div>
+        </el-form>
+         <el-row type="flex" class="attachmentContent" justify="space-between">
+            <el-col :span="7">
+                <div class="child">
+                    <h4>营业执照扫描件</h4>
+                    <img src="static/images/pdf.png" alt="" class="pdf"><span @click="handlePreview(attachment1)">{{attachment1.name}}</span>
+                </div>
+            </el-col>
+            <el-col :span="7">
+                <div class="child">
+                    <h4>企业法人或负责人证件扫描件</h4>
+                    <img src="static/images/pdf.png" alt="" class="pdf"><span @click="handlePreview(attachment2)">{{attachment2.name}}</span>
+                </div>
+            </el-col>
+            <el-col :span="7">
+                <div class="child">
+                    <h4>营业执照扫描件</h4>
+                    <img src="static/images/pdf.png" alt="" class="pdf"><span @click="handlePreview(attachment3)">{{attachment3.name}}</span>
+                </div>
+            </el-col>
+        </el-row>
+        </div>
+
+    <div v-show="step==2 && auditState == 'shenhezhong' && !status" style="text-align:center;padding-top:40px;padding-bottom:60px;">
         <img src="static/images/shenhezhong.png" alt="">
         <p style="color:rgba(153,153,153,1);">平台审核中，请耐心等待</p>
     </div>
@@ -66,8 +113,8 @@
         <p style="color:rgba(102,102,102,1);text-align:left;margin-top:20px;">“一般来说资格审核是用不了多久的,一般一两天就可以通过了。 但是也不排除因为其他的原因而造成的等待时间特别长。 但是这个也不一定,因为有的地方一天左右的样子就会审核完成,而有的地方需要10天或者一个星期左右,还有的地方甚至要半个 月的时间。我们这里一般审核的话,大概一个星期左右就可以拿到...”</p>
         <p style="text-align:right;"><el-button type="primary" @click="repeatApplication()" class="primaryButton radiusNone">重新申请</el-button>      </p>
     </div>
-    <div v-show="step==3" class="thirdStep">
-        <el-form :model="ruleForm2" ref="ruleForm" label-width="70px" class="specialsForm" style="width:100%;">
+    <div v-show="step==3  && !status" class="thirdStep">
+        <el-form :model="ruleForm2" ref="ruleForm2" label-width="70px" class="specialsForm" style="width:100%;">
           <div style="overflow:hidden;">
                 <el-form-item label="名称" prop="model1">
                    <el-select v-model="ruleForm2.model1" placeholder="请选择协议模板" clearable=""  style="width:100%;" disabled="">
@@ -117,11 +164,11 @@
                 <el-button type="primary" @click="signSubmit()" class="primaryButton radiusNone">提交</el-button>      
         </div>
     </div>
-    <div v-show="step==4 && auditState == 'shenhezhong'" style="text-align:center;padding-top:40px;padding-bottom:60px;">
+    <div v-show="step==4 && auditState == 'shenhezhong'  && !status" style="text-align:center;padding-top:40px;padding-bottom:60px;">
         <img src="static/images/shenhezhong.png" alt="">
         <p style="color:rgba(153,153,153,1);">银行授信审核中，请耐心等待</p>
     </div>
-    <div v-show="step==4 &&　auditState =='failed'" style="text-align:center;padding-top:40px;padding-bottom:10px;">
+    <div v-show="step==4 &&　auditState =='failed'  && !status" style="text-align:center;padding-top:40px;padding-bottom:10px;">
         <img src="static/images/shenheerror.png" alt="">
         <p style="color:rgba(255,88,1,1);">银行授信审核未通过</p>
         <p style="color:rgba(102,102,102,1);text-align:left;margin-top:20px;">“一般来说资格审核是用不了多久的,一般一两天就可以通过了。 但是也不排除因为其他的原因而造成的等待时间特别长。 但是这个也不一定,因为有的地方一天左右的样子就会审核完成,而有的地方需要10天或者一个星期左右,还有的地方甚至要半个 月的时间。我们这里一般审核的话,大概一个星期左右就可以拿到...”</p>
@@ -136,6 +183,8 @@ import showFileDetail from '@/components/showFileDetail.vue'
 export default {
     data(){
         return{
+            status:false,
+            currentStep:1,
             checked:true,
             ruleForm:{},
             attachment1:{
@@ -202,6 +251,9 @@ export default {
         onlineSign(){
             
         },
+        stepChange(){
+            this.step = 1;
+        },
         handlePreview(file) {
             let IEPDF = this.$global.isAcrobatPDFPluginInstalled();
             var vm = this;
@@ -220,6 +272,7 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     this.$store.state.step = 2;
+                    this.$store.state.openState = 'opening';
                 } else {
                     console.log('error submit!!');
                     return false;
@@ -234,6 +287,16 @@ export default {
         repeatApplication(){
             this.$store.state.step = 1;
             this.$store.state.auditState = 'shenhezhong';
+        },
+        firstClick(){
+            if(this.step>1){
+                this.status = true;
+            }
+        },
+        otherClick(){
+            if(this.step>1){
+                this.status = false;
+            }
         },
     }
 }
