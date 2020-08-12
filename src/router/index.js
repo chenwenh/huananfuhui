@@ -35,25 +35,25 @@ const routes = [
         children:[
           {
                   path: '/',
-                  component: resolve =>require(['../views/assetContract/contractQuery.vue'], resolve)
+                  component: resolve =>require(['../views/agreementMaintenance/index.vue'], resolve)
           },
           {
-              path: '/contractQuery',
-              name: 'contractQuery',
+              path: '/agreementMaintenance',
+              name: 'agreementMaintenance',
               meta: {
                   title: '协议维护',
                   icon: 'iconfolder1'
               },
-              component: resolve => require(['../views/assetContract/contractQuery.vue'], resolve)
+              component: resolve => require(['../views/agreementMaintenance/index.vue'], resolve)
           },
           {
-              path: '/orderQuery',
-              name: 'orderQuery',
+              path: '/signAgreement',
+              name: 'signAgreement',
               meta: {
                   title: '协议签署',
                   icon: 'iconproject1'
               },
-              component: resolve => require(['../views/assetOrder/orderQuery.vue'], resolve)
+              component: resolve => require(['../views/signAgreement/index.vue'], resolve)
           },
           {
             path: '/businessOpenAudit',
@@ -68,50 +68,6 @@ const routes = [
       },
     ]
   },
-  // {
-  //   path: '/home',
-  //   name: 'home',
-  //   component: resolve => require(['../views/Home.vue'], resolve),
-  //   children: [
-  //     {
-  //       path: '/',
-  //       component: resolve =>
-  //         require(['../views/readme.vue'], resolve)
-  //     },
-  //     {
-  //       path: '/readme',
-  //       component: resolve =>
-  //         require(['../views/readme.vue'], resolve)
-  //     },
-  //     {
-  //       path: '/contractQuery',
-  //       name: 'contractQuery',
-  //       meta: {
-  //           title: '合同查询',
-  //           icon: 'iconfolder1'
-  //       },
-  //       component: resolve => require(['../views/assetContract/contractQuery.vue'], resolve)
-  //   },
-  //   {
-  //       path: '/orderQuery',
-  //       name: 'orderQuery',
-  //       meta: {
-  //           title: '订单查询',
-  //           icon: 'iconproject1'
-  //       },
-  //       component: resolve => require(['../views/assetOrder/orderQuery.vue'], resolve)
-  //   },
-  //   {
-  //       path: '/invoiceQuery',
-  //       name: 'invoiceQuery',
-  //       meta: {
-  //           title: '发票查询',
-  //           icon: 'el-icon-s-order'
-  //       },
-  //       component: resolve => require(['../views/assetInvoice/invoiceQuery.vue'], resolve)
-  //   },
-  //   ]
-  // },
   
 ];
 

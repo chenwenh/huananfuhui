@@ -61,7 +61,7 @@
 import Table from '@/components/Table.vue';
 import breadcrumb from '@/components/breadcrumb.vue';
 import dialogCommonComponent from '@/components/dialogCommonComponent';
-import add from '@/views/assetContract/add.vue';
+import add from '@/views/agreementMaintenance/add.vue';
 import auditDetail from './auditDetail.vue';
 import detail from '@/components/detail.vue';
 

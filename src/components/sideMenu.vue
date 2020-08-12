@@ -57,11 +57,11 @@
                     "title": "协议管理",
                     "subs": [
                         {
-                            "index": "/contractQuery",
+                            "index": "/agreementMaintenance",
                             "title": "协议维护",
                         },
                         {
-                            "index": "/orderQuery",
+                            "index": "/signAgreement",
                             "title": "协议签署",
                         },
                         {
