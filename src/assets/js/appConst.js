@@ -114,6 +114,13 @@ export default {
       PURCHASE_SINGLE_PARTY:'单方提交采购合同',
       SELLING:'采购订单',
       PURCHASE:'销售订单'
+    },
+    // 企业角色 暂时
+    enterOrgRole: {
+      PLATFORM: '平台',
+      MERCHANT: '贸易商',
+      FIN_INSTITUTION: '金融机构',
+      OTHER_FIN_INSTITUTION: '其它资金提供方'
     }
   }
   
