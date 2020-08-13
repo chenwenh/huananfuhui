@@ -28,7 +28,7 @@
                         size="medium"
                         type="text"
                         style="margin-left:0px; "
-                        @click.stop="details(scope.row)">
+                        @click.stop="sign(scope.row)">
                         签章
                     </el-button>
                      <el-button
@@ -36,7 +36,7 @@
                         size="medium"
                         type="text"
                         style="margin-left:0px; "
-                        @click.stop="details(scope.row)">
+                        @click.stop="refuseShow(scope.row)">
                         拒绝
                     </el-button>
                   </template>
@@ -44,7 +44,17 @@
         </Table>
         <!-- 详情 -->
         <dialogCommonComponent ref="dialogCommonComponent2" title="详情" width="50%">
-            <detail ref="detail" :detailInfo="detailInfo"></detail>
+            <detail ref="detail" :detailInfo="detailInfo" closeButton = true></detail>
+        </dialogCommonComponent>
+        <!-- 拒绝 -->
+         <dialogCommonComponent ref="dialogCommonComponent3" title="详情" width="50%">
+            <detail ref="detail2" :detailInfo="detailInfo" :closeButton="closeButton"></detail>
+            <p style="margin-left:10%;">拒绝理由：</p>
+            <el-input type="textarea" v-model="remark" placeholder="请输入拒绝理由" style="width:80%;margin-left:10%;"></el-input>
+             <div style="text-align:center;width:100%;margin-top:20px;">
+                    <el-button type="info" @click="close()"  class="radiusNone">取消</el-button>
+                    <el-button type="primary" @click="submitForm()" class="primaryButton radiusNone">提交</el-button>
+            </div>
         </dialogCommonComponent>
     </div>
 </template>
@@ -60,6 +70,8 @@ export default {
   name: '',
   data() {
     return {
+      closeButton:false,
+      remark:"",
       detailInfo:{
             name: "合同流水号",
             entityNo: "合同号",
@@ -202,6 +214,19 @@ export default {
       this.$refs.dialogCommonComponent2.show();
       this.$nextTick(()=>{
         this.$refs.detail.init(row);
+      });
+    },
+    sign(row){
+
+    },
+    close(){
+      this.$bus.$emit('closeDialog');
+    },
+    refuseShow(row){
+      console.log('1');
+      this.$refs.dialogCommonComponent3.show();
+      this.$nextTick(()=>{
+        this.$refs.detail2.init(row);
       });
     },
     // 搜索

@@ -48,7 +48,7 @@
         </dialogCommonComponent>
         <!-- 详情 -->
         <dialogCommonComponent ref="dialogCommonComponent2" title="详情" width="50%">
-            <detail ref="detail" :detailInfo="detailInfo"></detail>
+            <detail ref="detail" :detailInfo="detailInfo" closeButton=true></detail>
         </dialogCommonComponent>
           <!-- 添加 -->
         <dialogCommonComponent ref="dialogCommonComponent3" title="签署协议" width="50%">

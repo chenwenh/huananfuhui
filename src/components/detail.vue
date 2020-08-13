@@ -19,14 +19,14 @@
         </el-col>
         <div style="clear:both;"></div>
     </div>
-    <div class="dialog-footer" style="text-align:center;">
+    <div class="dialog-footer" style="text-align:center;" v-show="closeButton">
         <el-button plain  @click="close()" size="medium">关闭</el-button>
     </div>
 </div>
 </template>
 <script>
 export default {
-    props:['detailInfo'],
+    props:['detailInfo','closeButton'],
     data(){
         return{
             diaComData: {},
