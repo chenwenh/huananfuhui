@@ -2,7 +2,7 @@
 <div style="height:calc(100% - 60px);">
     <div class="header">
         <img src="static/images/homeLogo.png" alt="" class="left pointer" @click="goHomePage">
-        <el-dropdown @command="handleCommand2" style="position:relative;top:-13px;left:20px;font-weight:bold;">
+        <el-dropdown @command="handleCommand2" style="position:relative;top:-13px;left:20px;font-weight:bold;" v-if="$route.path!='/home'">
             <span class="el-dropdown-link">
                 富宝通<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
