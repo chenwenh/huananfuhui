@@ -30,7 +30,7 @@ const routes = [
           require(['../views/Home/info.vue'], resolve)
       },
       {
-        path: '/home2',
+        path: '/homes',
         component: resolve =>require(['../views/Home.vue'], resolve),
         children:[
           {

@@ -76,7 +76,7 @@
     },
     computed: {
         activeIndex () {
-            if (this.$route.path ==='/home2'){
+            if (this.$route.path ==='/homes'){
                 return '/agreementMaintenance'
             }else{
                 return this.$route.path;
