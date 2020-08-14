@@ -2,6 +2,14 @@
 <div style="height:calc(100% - 60px);">
     <div class="header">
         <img src="static/images/homeLogo.png" alt="" class="left pointer" @click="goHomePage">
+        <el-dropdown @command="handleCommand2" style="position:relative;top:-13px;left:20px;font-weight:bold;">
+            <span class="el-dropdown-link">
+                富宝通<i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="a">库易宝</el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
         <div class="right">
              <!-- <el-input
                 placeholder="输入关键字进行搜索"
@@ -37,6 +45,9 @@ export default {
                 localStorage.clear()
                 this.$router.push({path:'/login'});
             }
+        },
+        handleCommand2(command) {
+            this.$message('click on item ' + command);
         },
         goHomePage(){
             this.$router.push({path:'/homePage'});
