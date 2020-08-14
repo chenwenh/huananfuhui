@@ -30,7 +30,7 @@
                 </el-form-item>
           </div>
         </el-form>
-        <p style="margin-left:31px;">附件<span class="download">下载模板</span></p>
+        <p style="margin-left:31px;">附件<span class="download" @click="download">下载模板</span></p>
         <el-row type="flex" class="attachmentContent" justify="space-between">
             <el-col :span="7">
                 <div class="child">
@@ -250,6 +250,9 @@ export default {
     methods:{
         onlineSign(){
             
+        },
+        download(){
+            window.location.href="static/模板.rar";
         },
         stepChange(){
             this.step = 1;
