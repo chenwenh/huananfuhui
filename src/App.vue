@@ -25,7 +25,7 @@
 export default {
   data(){
     return{
-      token:sessionStorage.getItem('token')
+      token:false
     }
   },
   name: 'App',
@@ -38,8 +38,8 @@ export default {
     },
   },
   watch:{
-    token(val){
-      return val ? true : false;
+    token(){
+      return sessionStorage.getItem('token') ? true : false;
     },
     $route(to,from){
       if(from.path=='/login'){
