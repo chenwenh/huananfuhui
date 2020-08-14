@@ -1,7 +1,7 @@
 <template>
 <div style="height:calc(100% - 60px);">
     <div class="header">
-        <img src="static/images/homeLogo.png" alt="" class="left">
+        <img src="static/images/homeLogo.png" alt="" class="left pointer" @click="goHomePage">
         <div class="right">
              <!-- <el-input
                 placeholder="输入关键字进行搜索"
@@ -35,9 +35,12 @@ export default {
             if (command === 'logout') {
                 sessionStorage.clear()
                 localStorage.clear()
-                this.$router.push({path:'/homePage'});
+                this.$router.push({path:'/login'});
             }
         },
+        goHomePage(){
+            this.$router.push({path:'/homePage'});
+        }
     }
 }
 </script>

@@ -2,7 +2,7 @@
     <div style="height:calc(100% - 80px)">
         <div class="login-container" style="padding:0;bottom:0;">
             <div class="content">
-                <div class="login-content-left left">
+                <div class="login-content-left left" >
                     <img src="static/images/login.png" alt="" style="width:592px;height:294px;">
                 </div>
                 <!-- 登录 -->
@@ -428,6 +428,7 @@ export default {
     background-image: linear-gradient(180deg, #FFF8E0 0%, #FFF7DD 22%, #FFF4D3 100%);
     position: relative;
     height: calc(100% - 60px);
+    overflow: auto;
 }
 .content{
     width:1200px;
