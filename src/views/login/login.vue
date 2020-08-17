@@ -15,7 +15,7 @@
                             </el-input>
                         </el-form-item>
                         <el-form-item label="" prop="pwd">
-                            <el-input v-model="loginForm.pwd" placeholder="密码">
+                            <el-input type="password" v-model="loginForm.pwd" placeholder="密码">
                                 <!-- <i slot="prefix" class="el-input__icon icon"><img src="static/images/password.png" alt=""></i> -->
                             </el-input>
                         </el-form-item>
@@ -69,7 +69,7 @@
                     </div>
                 </div>
                 <!-- 重置密码 -->
-                <!-- <div v-loading="formloading" v-show="title === 'resetPwdForm'" style="height:540px;width:388px;" class="login right">
+                <div v-show="title === 'resetPwdForm'" style="height:540px;width:388px;" class="login right">
                     <h2>密码重置</h2>
                     <el-form :model="resetPwdForm" :rules="rules" ref="resetPwdForm">
                         <el-form-item prop="userName">
@@ -80,7 +80,7 @@
                         </el-form-item>
                         <el-form-item prop="smsCode">
                             <el-input :disabled="notfillsmscode" style="width: 150px" v-model.trim="resetPwdForm.smsCode" placeholder="填写短信验证码"></el-input>
-                            <span @click="handleResetPwdSMS('resetPwdForm')" class="SMSverification" style="color: #FDA328;border: 1px solid #E1E5EF;">{{sendSMStips}}</span>
+                            <span @click="handleResetPwdSMS('resetPwdForm')" class="SMSverification" style="color: #FDA328;border: 1px solid #E1E5EF;">{{smsCodeTip}}</span>
                         </el-form-item>
                         <el-form-item prop="newPassword">
                             <el-input type="password" v-model.trim="resetPwdForm.newPassword" placeholder="请设置您的密码"></el-input>
@@ -91,10 +91,10 @@
                         </el-form-item>
                     </el-form>
                     <div class="btn">
-                        <el-button @click="handleConfirmResetPwd">确定</el-button>
-                        <div style="margin-top:20px;" class="hasaccount" @click="handleTabToLogin">已有账号，立即登录</div>
+                        <el-button class="loginButton" @click="handleConfirmResetPwd">确定</el-button>
+                        <div class="hasaccount" style="marginTop:10px;" @click="changeTab('loginForm')">已有账号，立即登录</div>
                     </div>
-                </div> -->
+                </div>
             </div>
         </div>
         <div class="footer">
@@ -205,7 +205,27 @@ export default {
                     this.handleUserNameRepeate()
                 }, 350);
             }
-        }
+        },
+        "resetPwdForm.newPassword"(){
+            this.pwdInconformity = false
+            if(this.resetPwdForm.newPassword && this.resetPwdForm.checkpwd){
+                if(this.resetPwdForm.newPassword === this.resetPwdForm.checkpwd){
+                    this.pwdInconformity = false
+                }else{
+                    this.pwdInconformity = true
+                }
+            }
+        },
+        "resetPwdForm.checkpwd"(){
+            this.pwdInconformity = false
+            if(this.resetPwdForm.newPassword && this.resetPwdForm.checkpwd){
+                if(this.resetPwdForm.newPassword === this.resetPwdForm.checkpwd){
+                    this.pwdInconformity = false
+                }else{
+                    this.pwdInconformity = true
+                }
+            }
+        },
     },
     methods:{
         // 用户名获取短信验证码
@@ -300,8 +320,8 @@ export default {
                         userName: this.loginForm.userName,
                         pwd: this.loginForm.pwd,
                         smsCode: this.loginForm.smsCode,
-                        smsToken: '456415345454'
-                        // smsToken: this.loginForm.smsToken
+                        // smsToken: '456415345454'
+                        smsToken: this.loginForm.smsToken
                     };
                     // params.sys = 'trade';
                     this.loading = true;
@@ -381,15 +401,15 @@ export default {
                                 if(res.data.status === 200){
                                     this.$message.success('注册成功，请您使用新用户进行登录')
                                     window.clearInterval(this.timer)
-                                    this.sendSMStips = '发送验证码'
+                                    this.smsCodeTip = '发送验证码'
                                     this.changeTab('loginForm')
                                 }else{
                                     window.clearInterval(this.timer)
-                                    this.sendSMStips = '发送验证码'
+                                    this.smsCodeTip = '发送验证码'
                                 }
                             }).catch(err => {
                                 window.clearInterval(this.timer)
-                                this.sendSMStips = '发送验证码'
+                                this.smsCodeTip = '发送验证码'
                                 this.$message.error(err.response.data.message)
                             })
                         }else{
@@ -404,6 +424,35 @@ export default {
                 }
             })
         },
+        // 重置密码
+        handleConfirmResetPwd() {
+            this.$refs['resetPwdForm'].validate(valid => {
+                if(valid && !this.pwdInconformity){
+                    let url = this.$apiUrl.login.resetPassword;
+                    let params ={
+                        username:this.resetPwdForm.userName,
+                        phone:this.resetPwdForm.mobile,
+                        newPassword:this.resetPwdForm.newPassword,
+                        smsCode:this.resetPwdForm.smsCode,
+                        smsToken:this.resetPwdForm.smsToken
+                    }
+                    this.$http.post(url,params, {headers:{Authorization: ''}})
+                    .then(res => {
+                        if(res.data.data === '密码重置成功'){
+                            this.$message.success("密码重置成功，请您使用新密码进行登录")
+                        }else{
+                            window.clearInterval(this.timer)
+                            this.smsCodeTip = '发送验证码'
+                        }
+                        this.changeTab('loginForm')
+                    }).catch(err => {
+                        window.clearInterval(this.timer)
+                        this.smsCodeTip = '发送验证码'
+                        this.$message.error(err.response.data.message)
+                    })
+                }
+            })
+        }
     },
     components: {
         userRegisterAgreementComponent

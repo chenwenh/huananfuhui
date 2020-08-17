@@ -14,7 +14,8 @@ export let apiUrl = {
     login: {
         loginUrl: apiGateway + '/auth/api/v1.0/token/new',
         isExist: apiGateway + '/auth/api/v1.0/user/isExist', // 校验用户名是否存在
-        register: apiGateway + '/auth/api/v1.0/user/register' // 注册
+        register: apiGateway + '/auth/api/v1.0/user/register', // 注册
+        resetPassword: apiGateway + '/auth/api/v1.0/user/reset-password' // 重置密码
     },
     // 验证码
     sms: {
