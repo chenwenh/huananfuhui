@@ -1,10 +1,10 @@
 <template>
     <div>
-        <el-carousel trigger="click" height="480px">
+        <el-carousel trigger="click"  id="el-carousel">
             <el-carousel-item v-for="(item,index) in imgList"
                                 :interval="3000"
                                 :key="index">
-                <img src="static/images/banner.png" class="carousel-content">
+                <img :src="item.url" class="carousel-content">
             </el-carousel-item>
         </el-carousel>
         <div class="messageContent">
@@ -127,12 +127,22 @@ export default {
 
             ]
         }
+    },
+    mounted(){
+        var vm = this;
+        //监听浏览器窗口大小改变
+        window.addEventListener('resize', function() {
+            var screenWidth = document.documentElement.scrollWidth || document.body.scrollWidth;
+            var bannerHeight = 480 / 1920 * screenWidth;
+            document.getElementById('el-carousel').style.height = bannerHeight + 'px';
+        }, false);
     }
 }
 </script>
 <style scoped lang="scss">
-.el-carousel__container{
-    height:480px;
+#el-carousel{
+    min-width: 1200px;
+    height: 480px;
 }
 .el-carousel__container img{
     width:100%;
