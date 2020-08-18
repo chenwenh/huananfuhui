@@ -105,7 +105,7 @@
             cursor: pointer;
             text-align: center;
             align-items: center;
-            font-size:18px;
+            font-size: 16px;
             color:white;
             padding-right: 0px;
             background: #ED9D03;

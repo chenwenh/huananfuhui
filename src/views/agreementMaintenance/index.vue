@@ -38,7 +38,7 @@
                         size="medium"
                         type="text"
                         style="margin-left:0px; "
-                        @click="update(scope.row)">
+                        @click.stop="update(scope.row)">
                         更新
                     </el-button>
                      <el-button
@@ -211,6 +211,9 @@ export default {
     // this.search();
   },
   methods: {
+    update() {
+
+    },
     rowClick(row){
       this.$refs.dialogCommonComponent2.show();
        this.$nextTick(()=>{

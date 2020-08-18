@@ -9,65 +9,62 @@
                         <el-option label="纸质" value="paper"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="合同类型" prop="designated">
-                    <el-select v-model="ruleForm.designated" placeholder="" clearable=""  style="width:100%;">
+                <el-form-item label="合同类型" prop="contractType">
+                    <el-select v-model="ruleForm.contractType" placeholder="" clearable=""  style="width:100%;">
                         <el-option label="是" value="true"></el-option>
                         <el-option label="否" value="false"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="合同模板" prop="designated">
-                    <el-select v-model="ruleForm.designated" placeholder="" clearable=""  style="width:100%;">
-                        <el-option label="是" value="true"></el-option>
-                        <el-option label="否" value="false"></el-option>
-                    </el-select>
+                <el-form-item label="合同号" prop="contractNum">
+                    <el-input v-model="ruleForm.contractNum"></el-input>
                 </el-form-item>
-                <el-form-item label="合同名称" prop="contextOverview">
-                    <el-input v-model="ruleForm.contextOverview"></el-input>
+                <el-form-item label="合同名称" prop="contractName">
+                    <el-input v-model="ruleForm.contractName"></el-input>
                 </el-form-item>
-                <el-form-item label="合同金额" prop="contextOverview">
-                    <el-input v-model="ruleForm.contextOverview"></el-input>
+                <el-form-item label="合同金额" prop="contractAmount">
+                    <el-input v-model="ruleForm.contractAmount"></el-input>
                 </el-form-item>
-                <el-form-item label="起始日期" prop="contextOverview" >
+                <el-form-item label="起始日期" prop="startDate" >
                     <el-date-picker
-                        v-model="ruleForm.value1"
+                        v-model="ruleForm.startDate"
                         type="date"
-                        placeholder="选择日期" style="width:305px;">
+                        placeholder="选择日期" style="width: 100%;">
                     </el-date-picker>
                 </el-form-item>
-                <el-form-item label="合同附件" prop="contextOverview" v-if="ruleForm.signMode === 'paper'">
-                    <upload-file ref="uploadFile" drag="true" @fileChange="fileChange"></upload-file>
+                <el-form-item label="签署日期" prop="signDAate" v-if="ruleForm.signMode === 'paper'">
+                   <el-date-picker
+                        v-model="ruleForm.signDAate"
+                        type="date"
+                        placeholder="选择日期" style="width:100%;">
+                    </el-date-picker>
                 </el-form-item>
               </div>
 
               <div style="width:44%;float:right;">
-                <el-form-item label="甲方" prop="finAmount" class="inputwidth">
-                  <el-input v-model="ruleForm.finAmount"></el-input>
+                <el-form-item label="甲方" prop="jiafang" class="inputwidth">
+                  <el-input v-model="ruleForm.jiafang"></el-input>
                 </el-form-item>
-                <el-form-item label="乙方" prop="finRate" class="inputwidth">
-                  <el-input v-model="ruleForm.finRate"></el-input>
+                <el-form-item label="乙方" prop="yifang" class="inputwidth">
+                  <el-input v-model="ruleForm.yifang"></el-input>
                 </el-form-item>
-                <el-form-item label="丙方" prop="paymentDays"  class="inputwidth">
-                  <el-input v-model="ruleForm.paymentDays"></el-input>
+                <el-form-item label="丙方" prop="bingfang"  class="inputwidth">
+                  <el-input v-model="ruleForm.bingfang"></el-input>
                 </el-form-item>
-                <el-form-item label="合同层级" prop="finFee"  class="inputwidth">
-                  <el-input v-model="ruleForm.finFee"></el-input>
+                <el-form-item label="合同层级" prop="level"  class="inputwidth">
+                  <el-input v-model="ruleForm.level"></el-input>
                 </el-form-item>
-                <el-form-item label="部门" prop="desc"   class="inputwidth">
-                    <el-input v-model="ruleForm.desc"></el-input>
+                <el-form-item label="部门" prop="department"   class="inputwidth">
+                    <el-input v-model="ruleForm.department"></el-input>
                 </el-form-item>
-                <el-form-item label="到期日期" prop="finIntention" >
+                <el-form-item label="到期日期" prop="endDate" >
                    <el-date-picker
-                        v-model="ruleForm.value1"
+                        v-model="ruleForm.endDate"
                         type="date"
-                        placeholder="选择日期" style="width:302px;">
+                        placeholder="选择日期" style="width:100%;">
                     </el-date-picker>
                 </el-form-item>
-                <el-form-item label="签署日期" prop="finIntention" v-if="ruleForm.signMode === 'paper'">
-                   <el-date-picker
-                        v-model="ruleForm.value1"
-                        type="date"
-                        placeholder="选择日期" style="width:302px;">
-                    </el-date-picker>
+                <el-form-item label="合同附件" prop="" v-if="ruleForm.signMode === 'paper'">
+                    <upload-file ref="uploadFile" drag="true" @fileChange="fileChange"></upload-file>
                 </el-form-item>
               </div>
           </div>
@@ -101,57 +98,48 @@ export default {
             },
             ruleForm: {
                 signMode: '',
-                value1:'',
-                prepaymentAllowed: true,//允许提前还款
-                repaymentMethod: "ONE_TIME_DEBT_SERVICE",//还款方式
-                entityNo: '',
-                finIntention:"",
-                finType: "ACCOUNTING_FINANCING",
-                contextOverview: '',
-                tradeAmount: "",
-                desc: '',
-                factoringType: '',
-                finAmount: "",
-                finRate: "",
-                paymentDays: '',
-                finFee: 0,
-                effBindingTime: '',
-                attachments: [],
-                designated:"",
-                contextUid:"",//贸易合同uid
-                contexts:[],//结算单列表
-                participants:[],
-                finOrgId:""
+                contractType: '',
+                contractNum: '',
+                contractName: '',
+                contractAmount: '',
+                startDate: '',
+                endDate: '',
+                signDAate:'',
+                department: '',
+                jiafang: "",
+                yifang: "",
+                bingfang: '',
+                level: 0,
             },
             rules: {
                 signMode: [
                 { required: true, message: '不能为空！', trigger: 'change' }
                 ],
-                tradeAmount: [
+                contractType: [
                 { required: true, message: '不能为空！', trigger: 'blur' }
                 ],
-                factoringType: [
+                contractNum: [
                 { required: true, message: '不能为空！', trigger: 'change' }
                 ],
-                designated:[
+                contractName:[
                 { required: true, message: '不能为空！', trigger: 'change' }
                 ],
-                finOrgId: [
+                contractAmount: [
                 { required: true, message: '不能为空！', trigger: 'change' }
                 ],
-                finAmount: [
+                jiafang: [
                 { required: true, message: '不能为空！', trigger: 'blur' },
                 ],
-                finRate: [
+                yifang: [
                 { required: true, message: '不能为空！', trigger: 'blur' },
                 ],
-                paymentDays: [
+                bingfang: [
                 { required: true, message: '不能为空！', trigger: 'blur' },
                 ],
-                finFee: [
+                level: [
                 { required: true, message: '不能为空！', trigger: 'blur' }
                 ],
-                effBindingTime: [
+                startDate: [
                 { required: true, message: '不能为空！', trigger: 'blur' }
                 ],
             },
