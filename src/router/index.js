@@ -64,6 +64,15 @@ const routes = [
             },
             component: resolve => require(['../views/businessOpenAudit/index.vue'], resolve)
         },
+        {
+          path: '/mapComponent',
+          name: 'mapComponent',
+          meta: {
+              title: '地图',
+              icon: 'iconproject1'
+          },
+          component: resolve => require(['@/components/mapComponent.vue'], resolve)
+      },
         ]
       },
     ]

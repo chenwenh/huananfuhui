@@ -68,6 +68,10 @@
                             "index": "/businessOpenAudit",
                             "title": "业务开通审核",
                         },
+                        {
+                            "index": "/mapComponent",
+                            "title": "地图",
+                        },
                     ]
                 },
             ],
