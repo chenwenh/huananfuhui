@@ -35,19 +35,19 @@
             <el-col :span="7">
                 <div class="child">
                     <h4>营业执照扫描件</h4>
-                    <textStyleUpload ref="textStyleUpload"></textStyleUpload>
+                    <textStyleUpload ref="textStyleUpload1" fileAccept= 'jpg,jpeg,png,gif,PDF,pdf' :limitNumber="limitNumber"></textStyleUpload>
                 </div>
             </el-col>
             <el-col :span="7">
                 <div class="child">
                     <h4>企业法人或负责人证件扫描件</h4>
-                    <textStyleUpload ref="textStyleUpload"></textStyleUpload>
+                    <textStyleUpload ref="textStyleUpload2" fileAccept= 'jpg,jpeg,png,gif,PDF,pdf' :limitNumber="limitNumber"></textStyleUpload>
                 </div>
             </el-col>
             <el-col :span="7">
                 <div class="child">
                     <h4>营业执照扫描件</h4>
-                    <textStyleUpload ref="textStyleUpload"></textStyleUpload>
+                    <textStyleUpload ref="textStyleUpload3" fileAccept='jpg,jpeg,png,gif,PDF,pdf' :limitNumber="limitNumber"></textStyleUpload>
                 </div>
             </el-col>
         </el-row>
@@ -183,6 +183,7 @@ import showFileDetail from '@/components/showFileDetail.vue'
 export default {
     data(){
         return{
+            limitNumber:1,
             status:false,
             currentStep:1,
             checked:true,
@@ -272,8 +273,21 @@ export default {
             this.$refs['ruleForm'].resetFields();
         },
         submitForm(formName) {
+            var vm = this;
             this.$refs[formName].validate((valid) => {
                 if (valid) {
+                    // if(this.$refs.textStyleUpload1.getFile.length==0){
+                    //     vm.$message.error('请先上传营业执照扫描件');
+                    //     return;
+                    // }
+                    // if(this.$refs.textStyleUpload2.getFile.length==0){
+                    //     vm.$message.error('请先上传企业法人或负责人证件扫描件');
+                    //     return;
+                    // }
+                    // if(this.$refs.textStyleUpload3.getFile.length==0){
+                    //     vm.$message.error('营业执照扫描件');
+                    //     return;
+                    // }
                     this.$store.state.step = 2;
                     this.$store.state.openState = 'opening';
                 } else {

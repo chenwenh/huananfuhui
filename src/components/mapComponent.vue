@@ -110,7 +110,7 @@ export default {
     },
     methods:{
         setCenter(){
-            this.win.postMessage('{"action":"setCenter","data":{"lng":116.404,"lat":39.905}}','*');
+            this.win.postMessage('{"action":"setCenter","data":{"lng":113.704375,"lat":24.8203867}}','*');
         },
         setControl(controlShow){
             this.win.postMessage('{"action":"setControl","data":true}','*');
@@ -133,21 +133,21 @@ export default {
                     },
                     "offset": {
                         "x": 0,
-                        "y": 0
+                        "y": -10
                     },
                     "position": {
-                        "lat": 39.905,
-                        "lng": 116.404
+                        "lat": 40.1302155765804,
+                        "lng": 117.80105123046874
                     },
                     "icon": {
-                        "src": "http://api.transmap.com.cn/images/marker_.png",
+                        "src":"http://192.168.28.87:8086/static/images/car.png",
                         "size": {
-                            "width": 23,
-                            "height": 34
+                            "width": 20,
+                            "height": 40
                         },
                         "offset": {
-                            "x": -15,
-                            "y": -46
+                            "x": 0,
+                            "y": 0
                         }
                     },
                     "label": {
@@ -155,7 +155,7 @@ export default {
                         "html": "",
                         "offset": {
                             "x": 0,
-                            "y": 0
+                            "y": -10
                         },
                         "angle": 0
                     }
@@ -179,8 +179,8 @@ export default {
                         "y": 0
                     },
                     "position": {
-                        "lat": 39.905,
-                        "lng": 116.404
+                        "lat": 22.8203833,
+                        "lng": 113.704375
                     },
                     "icon": {
                         "src": "http://api.transmap.com.cn/images/marker_.png",
@@ -217,35 +217,24 @@ export default {
                     "vno": "京A12345",
                     "trackData": [{
                         "lng": 113.704375,
-                        "lat": 22.8203867,
+                        "lat": 24.8203867,
                         "time": 1498468172000,
                         "speed": 60,
                         "mileage": 0
                     }, {
                         "lng": 113.704375,
-                        "lat": 22.82038,
+                        "lat": 23.82038,
                         "time": 1498468202000,
                         "speed": 60,
                         "mileage": 0.7458405882190926
                     }, {
-                        "lng": 113.704375,
-                        "lat": 22.820385,
+                        "lng": 120.704375,
+                        "lat": 23.820385,
                         "time": 1498468232000,
                         "speed": 60,
                         "mileage": 1.3024380426159599
-                    }, {
-                        "lng": 113.704375,
-                        "lat": 22.8203833,
-                        "time": 1498468262000,
-                        "speed": 60,
-                        "mileage": 1.4916811775003584
-                    }, {
-                        "lng": 113.704375,
-                        "lat": 22.8203833,
-                        "time": 1498468292000,
-                        "speed": 60,
-                        "mileage": 1.4916811775003584
-                    }, {
+                    },
+                    {
                         "lng": 117.80105123046874,
                         "lat": 40.1302155765804,
                         "time": 1498468322000,
@@ -254,6 +243,7 @@ export default {
                     }]
                 }
             }`,'*');
+            $("[src='images/start_end_icon.png']").hide();
         },
         drawStopPoints(){
             this.win.postMessage(`{

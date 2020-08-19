@@ -64,7 +64,7 @@
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="合同附件" prop="" v-if="ruleForm.signMode === 'paper'">
-                    <upload-file ref="uploadFile" drag="true" @fileChange="fileChange"></upload-file>
+                    <textStyleUpload ref="textStyleUpload" fileAccept= 'PDF,pdf'></textStyleUpload>
                 </el-form-item>
               </div>
           </div>
@@ -81,8 +81,8 @@
     </div>
 </template>
 <script>
-import uploadFile from '@/components/uploadFile.vue';
 import showFileDetail from '@/components/showFileDetail.vue';
+import   textStyleUpload from '@/components/textStyleUpload.vue';
 
 export default {
     props:['fromAudit'],
@@ -148,14 +148,11 @@ export default {
     },
     components: {
         showFileDetail,
-        uploadFile
+        textStyleUpload
     },
     methods:{
         preView() {
             this.$refs.showFileDetail.showFile(this.filePrev);
-        },
-        fileChange (){ // 上传成功验证；
-            
         },
         signAgreement(){
 

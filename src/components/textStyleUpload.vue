@@ -2,15 +2,18 @@
 <div>
 <el-upload
   class="upload-demo textStyleUpload"
+  :class="{limitStyleUpload:limitNumber==1}"
   :headers="headers"
   :action="upload"
-  :beforeUpload="handleBeforeUpload"
+  :accept="fileAccept"
+  :before-upload="handleBeforeUpload"
   :on-preview="handlePreview"
   :on-remove="handleRemove"
-  :limit="1"    
+  :limit="limitNumber"    
   :on-success="handleSuccess"
   :file-list="fileList">
-  <span class="blue" v-if="fileList.length==0">添加</span>
+  <span class="blue" v-if="limitNumber== 1 && fileList.length==0">添加</span>
+  <span class="blue" v-if="limitNumber!=1">文件上传</span>
 </el-upload>
 <show-file-detail ref="showFileDetail"></show-file-detail>
 </div>
@@ -18,6 +21,7 @@
 <script>
   import showFileDetail from './showFileDetail.vue'
   export default {
+    props:['fileAccept','limitNumber'],
     data() {
       return {
         fileList:[],
@@ -28,8 +32,8 @@
         headers(){
             return{
                 "Authorization": sessionStorage.getItem('token'),
-                "client_id":"pGCXRYBmkbDS88Yls6CNBaD8YkHK7QPzFHFlG1m8IPIgD6T3L98ZnO82q67kj8R1",
-                "org_id": sessionStorage.getItem("orgId"),
+                "client_id":this.$apiUrl.ClIENT_ID,
+                "org_id": JSON.parse(sessionStorage.getItem('user')).orgId,
             }
 		},
         upload(){
@@ -43,10 +47,15 @@
         handleBeforeUpload(file) {				
             const isLt30M = file.size / 1024 / 1024 < 30    
             if(!isLt30M) {  
-                global.errMsg("上传文件大小不能超过 30MB!")
-                return
+                this.$message.error("上传文件大小不能超过 30MB!")
             }
-            return isLt30M
+            const typeList = file.name.split('.');
+            const type = typeList[typeList.length - 1];
+            const isDoc = this.fileAccept.indexOf(type)!=-1;
+            if (!isDoc) {
+                this.$message.error('文件格式错误!');
+            }
+            return isDoc &&　isLt30M;
         },
         handleRemove(file, fileList) {
             fileList.map((val, index) => {
@@ -60,7 +69,6 @@
             let IEPDF = this.$global.isAcrobatPDFPluginInstalled();
             var vm = this;
             if(IEPDF) {
-                console.log(file,'file');
                 vm.$refs.showFileDetail.showFile(file);
             }else{
                 this.$message.error("对不起,您还没有安装PDF阅读器软件呢,为了方便预览PDF文档,请选择安装！");
@@ -100,7 +108,7 @@
   }
 </script>
 <style >
-.textStyleUpload .el-upload-list__item:first-child{
+.textStyleUpload.limitStyleUpload .el-upload-list__item:first-child{
     margin-top:-28px !important;
 }
 </style>
