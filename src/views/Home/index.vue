@@ -11,11 +11,6 @@
             </el-dropdown-menu>
         </el-dropdown>
         <div class="right">
-             <!-- <el-input
-                placeholder="输入关键字进行搜索"
-                v-model="searchValue" style="width:200px;" class="search">
-                <i slot="prefix" class="el-input__icon el-icon-search" style="margin-top:-2px;"></i>
-            </el-input> -->
             <img src="static/images/infoLogo.png" alt="" class="infoLogo">
             <el-dropdown trigger="click" @command="handleCommand" style="margin-top:7px;cursor:pointer;">
                 <span class="el-dropdown-link">
@@ -23,6 +18,13 @@
                     <i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item style="font-size: 12px;color: #666666;">{{userName}}</el-dropdown-item>
+                    <el-dropdown-item :command="'enterpriseAgreement'">企业协议</el-dropdown-item>
+                    <p class="line"></p>
+                    <el-dropdown-item :command="'enterpriseManagement'">企业管理</el-dropdown-item>
+                    <p class="line"></p>
+                    <el-dropdown-item :command="'personalCenter'">个人中心</el-dropdown-item>
+                    <p class="line"></p>
                     <el-dropdown-item :command="'logout'">退出</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
@@ -35,15 +37,22 @@
 export default {
     data(){
         return{
-            searchValue:''
+            userName: JSON.parse(sessionStorage.getItem('user')).username
         }
     },
     methods:{
         handleCommand (command) {
+            // 退出
             if (command === 'logout') {
                 sessionStorage.clear()
                 localStorage.clear()
                 this.$router.push({path:'/login'});
+            }
+            if (command === 'enterpriseManagement'){
+                // 跳转业务审核页面
+                this.$router.push({
+                    path:'/manage/businessOpenAudit'
+                });
             }
         },
         handleCommand2(command) {
@@ -78,5 +87,14 @@ export default {
     margin-left:20px;
     margin-right:20px;
     cursor: pointer;
+}
+.el-dropdown-menu {
+    text-align: center;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.line {
+    background-color: #EDEDED;
+    height: 1px;
 }
 </style>

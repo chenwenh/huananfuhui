@@ -170,7 +170,7 @@ export default {
         },
         fubaotongClick(){
             this.$router.push({
-                path:'/homes'
+                path:'/homes/agreementMaintenance'
             });
         },
         // 获取用户信息

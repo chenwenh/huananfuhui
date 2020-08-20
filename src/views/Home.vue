@@ -2,7 +2,7 @@
     <el-container>
         <el-container>
             <el-aside style='width: 189px !important;float:left;background:#F5F5F5'>
-                <div class="logo" @click="contentShow = !contentShow">
+                <div class="logo" @click="contentShow = !contentShow" v-show="enterType === 'homes'">
                     <img src="static/images/menu.png" class="productWord">产品中心
                     <i class="el-icon-arrow-right iconRight" style="float:right;"></i>
                     <div class="content" v-show="contentShow"> 
@@ -27,6 +27,7 @@
                         <div class="squareBox">物流公司</div>
                     </div>
                 </div>
+                <div class="siderBox" v-show="enterType === 'manage'">管理中心</div>
                 <sidebar></sidebar>
             </el-aside>
             <el-main style="width:calc(100% - 60px);float:right;">
@@ -43,6 +44,7 @@
         name: 'home',
         data () {
             return {
+                enterType: '', // 从哪个入口进去管理系统
                 contentShow:false,
                 userName: JSON.parse(sessionStorage.getItem('user')).username,
                 orgName: sessionStorage.getItem('orgName'),
@@ -54,7 +56,14 @@
             },
         },
         watch: {
-
+            $route() {
+                if (this.enterType !== this.$route.path.split('/')[1]) {
+                    this.enterType = this.$route.path.split('/')[1];
+                }
+            }
+        },
+        created() {
+            this.enterType = this.$route.path.split('/')[1]; // 从哪个入口进入
         },
         methods: {
             handleCommand (command) {
@@ -237,5 +246,15 @@
     }
     .squareBox:hover {
         border:1px solid rgba(237,157,3,1) !important;
+    }
+    .siderBox {
+        height: 66px;
+        width: 100%;
+        line-height: 66px;
+        text-align: center;
+        font-size: 16px;
+        color: #373D42;
+        font-weight: 600;
+        border-bottom: 1px solid #DCDCDC;
     }
 </style>

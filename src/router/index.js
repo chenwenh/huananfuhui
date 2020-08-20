@@ -26,19 +26,15 @@ const routes = [
     children: [
       {
         path: '/',
-        component: resolve =>
-          require(['../views/Home/info.vue'], resolve)
+        component: resolve => require(['../views/Home/info.vue'], resolve)
       },
+      // 富宝通展示 homes
       {
         path: '/homes',
         component: resolve =>require(['../views/Home.vue'], resolve),
         children:[
           {
-                  path: '/',
-                  component: resolve =>require(['../views/agreementMaintenance/index.vue'], resolve)
-          },
-          {
-              path: '/agreementMaintenance',
+              path: '/homes/agreementMaintenance',
               name: 'agreementMaintenance',
               meta: {
                   title: '协议维护',
@@ -47,7 +43,7 @@ const routes = [
               component: resolve => require(['../views/agreementMaintenance/index.vue'], resolve)
           },
           {
-              path: '/signAgreement',
+              path: '/homes/signAgreement',
               name: 'signAgreement',
               meta: {
                   title: '协议签署',
@@ -56,25 +52,32 @@ const routes = [
               component: resolve => require(['../views/signAgreement/index.vue'], resolve)
           },
           {
-            path: '/businessOpenAudit',
+            path: '/homes/mapComponent',
+            name: 'mapComponent',
+            meta: {
+                title: '地图',
+                icon: 'iconproject1'
+            },
+            component: resolve => require(['@/components/mapComponent.vue'], resolve)
+          },
+        ]
+      },
+      // 管理中心展示 业务开通 manage
+      {
+        path: '/manage',
+        component: resolve =>require(['../views/Home.vue'], resolve),
+        children:[
+          {
+            path: '/manage/businessOpenAudit',
             name: 'businessOpenAudit',
             meta: {
                 title: '业务开通审核',
                 icon: 'iconproject1'
             },
             component: resolve => require(['../views/businessOpenAudit/index.vue'], resolve)
-        },
-        {
-          path: '/mapComponent',
-          name: 'mapComponent',
-          meta: {
-              title: '地图',
-              icon: 'iconproject1'
           },
-          component: resolve => require(['@/components/mapComponent.vue'], resolve)
-      },
         ]
-      },
+      }
     ]
   },
   

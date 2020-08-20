@@ -317,8 +317,8 @@ export default {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     const params = {
-                        userName: this.loginForm.userName,
-                        pwd: this.loginForm.pwd,
+                        userName: this.loginForm.userName.trim(),
+                        pwd: this.loginForm.pwd.trim(),
                         smsCode: this.loginForm.smsCode,
                         // smsToken: '456415345454'
                         smsToken: this.loginForm.smsToken

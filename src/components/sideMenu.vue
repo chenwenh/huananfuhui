@@ -11,7 +11,7 @@
             :default-openeds='openeds'
         >
             <template v-for="item in menuList">
-                <template v-if="item.subs.length">
+                <template v-if="item.subs && item.subs.length">
                     <el-submenu :index="item.index" :key="item.index" v-if="item.subs.length">
                         <template slot="title">
                             <!-- <i :class="['sideIcon', 'iconfont', item.icon]"></i> -->
@@ -46,35 +46,13 @@
 </template>
 
 <script>
+  import menu from '../assets/js/menu.js'
   export default {
     name: 'sideBar',
     data () {
         return {
-            menuList: [
-                {
-                    "icon": "el-icon-search",
-                    "index": "12",
-                    "title": "协议管理",
-                    "subs": [
-                        {
-                            "index": "/agreementMaintenance",
-                            "title": "协议维护",
-                        },
-                        {
-                            "index": "/signAgreement",
-                            "title": "协议签署",
-                        },
-                        {
-                            "index": "/businessOpenAudit",
-                            "title": "业务开通审核",
-                        },
-                        {
-                            "index": "/mapComponent",
-                            "title": "地图",
-                        },
-                    ]
-                },
-            ],
+            menuList: [],
+            enterType: '',
             openeds: [],
         }
     },
@@ -88,13 +66,49 @@
         }
     },
     watch: {
+        $route() {
+            if (this.enterType !== this.$route.path.split('/')[1]) {
+                this.enterType = this.$route.path.split('/')[1];
+                this.detailWithMenu();
+            }
+        }
+    },
+    created() {
+        this.enterType = this.$route.path.split('/')[1]; // 从哪个入口进入
+        this.detailWithMenu();
     },
     methods: {
         goHome() {
             this.$router.push({
                 path: '/home'
             });
-        }
+        },
+        // 过滤侧边栏
+        detailWithMenu() {
+            let menuList = JSON.parse(JSON.stringify(menu));
+            for (let i = 0; i < menuList.length; i++) {
+                // 有子节点
+                if (menuList[i].hasOwnProperty('subs')) {
+                    for (let j = 0; j < menuList[i].subs.length; j++) {
+                        if (!menuList[i].subs[j].enterType.includes(this.enterType)) {
+                            menuList[i].subs.splice(j, 1);
+                            j--;
+                        }
+                    }
+                    if (menuList[i].subs.length === 0) {
+                        menuList.splice(i, 1);
+                        i--;
+                    }
+                } else {
+                    // 无子节点
+                    if (!menuList[i].enterType.includes(this.enterType)) {
+                        menuList.splice(i, 1);
+                        i--;
+                    }
+                }
+            }
+            this.menuList = menuList;
+        },
     },
     mounted () {
         
