@@ -474,7 +474,7 @@ a, a:hover, a:focus {
     align-items: center;
   }
   .el-pagination.is-background .el-pager li:not(.disabled).active {
-      background-color: #F7B500;
+      background-color: #F7B500 !important;
       color: #FFF;
   }
   .el-pagination.is-background .el-pager li:not(.disabled):hover {
