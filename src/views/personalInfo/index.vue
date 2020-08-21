@@ -1,7 +1,8 @@
 <template>
 <div>
+    
+    <div class="box2">
     <breadcrumb :breadcrumbList="breadcrumbs"/>
-    <div class="box">
     <div class="personalInfo">
         <p class="center" style="margin-bottom:40px;"><img src="static/images/personalLogo.png" alt=""></p>
         <p><span class="left">用户名</span><el-input v-model="ruleForm.username" disabled=""></el-input></p>
@@ -67,7 +68,7 @@ export default {
 }
 </script>
 <style scoped>
-.box{
+.box2{
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.05);
     border: 1px solid #F7F7F7;
     padding-bottom:40px;
