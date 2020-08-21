@@ -8,7 +8,7 @@
             <!-- 返回 breadcrumb -->
             <div class='title'>
               <span @click="back">返回</span>
-              <i></i>
+              <img src="../../../public/static/images/location.png" alt="">
               <breadcrumb :breadcrumbList="breadcrumbs"/>
             </div>
             <router-view></router-view>
@@ -99,7 +99,8 @@ export default {
       //  头部
       .title {
         display: flex;
-        span, i {
+        align-items: center;
+        span, img {
           line-height: 44px;
         }
         span {
@@ -110,12 +111,11 @@ export default {
           text-decoration: underline;
           font-weight: 700;
         }
-        i {
+        img {
           display: block;
-          width: 18px;
-          height: 44px;
-          background: url('../../../public/static/images/lamp.png') no-repeat 100% 100%;
-          margin: -2px 5px 0 20px;
+          width: 20px;
+          height: 20px;
+          margin: 10px 5px 0 20px;
         }
       }
     } 

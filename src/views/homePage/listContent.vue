@@ -2,7 +2,9 @@
   <div>
     <!-- 项目标题 -->
     <div class="project__title">
-      <img src="../../../public/static/images/projectLogo.png" alt="">
+      <img  v-show="$route.query.type === 'project'" src="../../../public/static/images/projectLogo.png" alt="">
+      <img  v-show="$route.query.type === 'buy'" src="../../../public/static/images/buyLogo.png" alt="">
+      <img  v-show="$route.query.type === 'sell'" src="../../../public/static/images/sellLogo.png" alt="">
       <span v-show="$route.query.type === 'project'">项目信息</span>
       <span v-show="$route.query.type === 'buy'">采购计划</span>
       <span v-show="$route.query.type === 'sell'">销售信息</span>
