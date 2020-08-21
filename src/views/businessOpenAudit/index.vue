@@ -6,7 +6,7 @@
             placeholder="输入关键字进行搜索"
             v-model="searchValue" style="width:300px;" class="search">
             <i slot="prefix" class="el-input__icon el-icon-search" style="margin-top:-2px;"></i>
-        </el-input><el-button type="primary" @click="search" size="medium" style="margin-left:20px;">搜索</el-button>
+        </el-input><el-button type="primary" @click="search" size="medium" style="margin-left:20px;"  class="radiusNone">搜索</el-button>
         <Table
               ref="tableRef"
               :mainTable="mainTable"

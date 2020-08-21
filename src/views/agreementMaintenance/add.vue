@@ -28,14 +28,14 @@
                     <el-date-picker
                         v-model="ruleForm.startDate"
                         type="date"
-                        placeholder="选择日期" style="width: 100%;">
+                        placeholder="选择日期" style="width: 100%;" value-format="yyyy-MM-dd">
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="签署日期" prop="signDAate" v-if="ruleForm.signMode === 'paper'">
                    <el-date-picker
                         v-model="ruleForm.signDAate"
                         type="date"
-                        placeholder="选择日期" style="width:100%;">
+                        placeholder="选择日期" style="width:100%;" value-format="yyyy-MM-dd">
                     </el-date-picker>
                 </el-form-item>
               </div>
@@ -60,7 +60,7 @@
                    <el-date-picker
                         v-model="ruleForm.endDate"
                         type="date"
-                        placeholder="选择日期" style="width:100%;">
+                        placeholder="选择日期" style="width:100%;" value-format="yyyy-MM-dd">
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="合同附件" prop="" v-if="ruleForm.signMode === 'paper'">

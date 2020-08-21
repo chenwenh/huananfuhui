@@ -31,7 +31,7 @@
                     <el-date-picker
                         v-model="ruleForm.value1"
                         type="date"
-                        placeholder="选择日期" style="width:305px;">
+                        placeholder="选择日期" style="width:305px;" value-format="yyyy-MM-dd">
                     </el-date-picker>
                 </el-form-item>
                 <el-form-item label="附件" prop="contextOverview">
@@ -59,14 +59,14 @@
                    <el-date-picker
                         v-model="ruleForm.value1"
                         type="date"
-                        placeholder="选择日期" style="width:302px;">
+                        placeholder="选择日期" style="width:302px; " value-format="yyyy-MM-dd">
                     </el-date-picker>
                 </el-form-item>
-                  <el-form-item label="签署日期" prop="finIntention">
+                  <el-form-item label="签署日期" prop="finIntention" value-format="yyyy-MM-dd">
                    <el-date-picker
                         v-model="ruleForm.value1"
                         type="date"
-                        placeholder="选择日期" style="width:302px;">
+                        placeholder="选择日期" style="width:302px;" value-format="yyyy-MM-dd">
                     </el-date-picker>
                 </el-form-item>
               </div>

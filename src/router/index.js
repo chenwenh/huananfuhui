@@ -60,6 +60,33 @@ const routes = [
             },
             component: resolve => require(['@/components/mapComponent.vue'], resolve)
           },
+          {
+            path: '/homes/projectInfo',
+            name: 'projectInfo',
+            meta: {
+                title: '项目信息',
+                icon: 'iconproject1'
+            },
+            component: resolve => require(['../views/projectInfo/index.vue'], resolve)
+        },
+        {
+              path: '/homes/procurementPlan',
+              name: 'procurementPlan',
+              meta: {
+                  title: '采购计划',
+                  icon: 'iconproject1'
+              },
+              component: resolve => require(['../views/procurementPlan/index.vue'], resolve)
+        },
+        {
+              path: '/homes/procurementPlan2',
+              name: 'procurementPlan2',
+              meta: {
+                  title: '采购计划',
+                  icon: 'iconproject1'
+              },
+              component: resolve => require(['../views/procurementPlan2/index.vue'], resolve)
+        },
         ]
       },
       // 管理中心展示 业务开通 manage

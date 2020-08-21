@@ -122,7 +122,7 @@ export default {
   components: {
     
   },
-  props: ['mainTable', 'showPagination', 'selected', 'totalCount', 'pageSize', 'loading', 'bannedElection', 'isSearch'],
+  props: ['mainTable', 'showPagination', 'selected', 'totalCount', 'pageSize', 'loading', 'bannedElection', 'isSearch','height2'],
   data() {
     return {
       goodStyle:
@@ -136,6 +136,9 @@ export default {
   },
   computed: {
     height() {
+      if (this.height2)  {
+        return this.height2 +'px';
+      };
       var height2 = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
       return height2 - 250 + 'px';
     },

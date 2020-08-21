@@ -18,12 +18,12 @@
             </el-form-item>
             <el-form-item label="开始时间" required>
                 <el-form-item prop="startTime">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.startTime" style="width: 100%;"></el-date-picker>
+                    <el-date-picker value-format="yyyy-MM-dd" type="date" placeholder="选择日期" v-model="ruleForm.startTime" style="width: 100%;"></el-date-picker>
                 </el-form-item>
             </el-form-item>
              <el-form-item label="结束时间" required>
                 <el-form-item prop="endTime">
-                    <el-date-picker type="date" placeholder="选择日期" v-model="ruleForm.endTime" style="width: 100%;"></el-date-picker>
+                    <el-date-picker  value-format="yyyy-MM-dd" type="date" placeholder="选择日期" v-model="ruleForm.endTime" style="width: 100%;"></el-date-picker>
                 </el-form-item>
             </el-form-item>
              <el-form-item label="停靠点" prop="checked">
@@ -133,7 +133,7 @@ export default {
                     },
                     "offset": {
                         "x": 0,
-                        "y": -10
+                        "y": 25
                     },
                     "position": {
                         "lat": 40.1302155765804,
@@ -155,7 +155,7 @@ export default {
                         "html": "",
                         "offset": {
                             "x": 0,
-                            "y": -10
+                            "y": -20
                         },
                         "angle": 0
                     }
@@ -243,7 +243,8 @@ export default {
                     }]
                 }
             }`,'*');
-            $("[src='images/start_end_icon.png']").hide();
+                // $("[src='images/start_end_icon.png']").hide();
+                // $('#clear-btn').hide();
         },
         drawStopPoints(){
             this.win.postMessage(`{
@@ -297,5 +298,8 @@ export default {
 }
 .map .borderTop{
     border-top:1px solid #ccc;
+}
+.hide{
+    display: none;
 }
 </style>

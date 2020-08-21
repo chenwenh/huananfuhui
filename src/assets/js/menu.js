@@ -19,6 +19,21 @@ export default [
             "title": "地图",
             "enterType": ['homes']
         },
+        {
+          "index": "/homes/projectInfo",
+          "title": "项目信息",
+          "enterType": ['homes']
+        },
+        {
+          "index": "/homes/procurementPlan",
+          "title": "采购计划",
+          "enterType": ['homes']
+        },
+        {
+          "index": "/homes/procurementPlan2",
+          "title": "采购计划",
+          "enterType": ['homes']
+        },
     ]
   },
   {
