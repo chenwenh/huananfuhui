@@ -34,7 +34,7 @@ export default {
   },
   computed:{
     showHeader(){
-      return this.$route.path == '/homePage' || this.$route.path == '/login'
+      return (this.$route.path.indexOf('/homePage') !== -1) || this.$route.path == '/login'
     },
   },
   watch:{
@@ -55,7 +55,7 @@ export default {
       if(this.$route.path == '/login'){
           this.$router.push({path:'/homePage'});
       }
-      if(this.$route.path == '/homePage'){
+      if(this.$route.path.indexOf('/homePage') !== -1){
           this.$router.push({path:'/Home'});
       }
     },

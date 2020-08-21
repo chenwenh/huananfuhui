@@ -459,3 +459,47 @@ a, a:hover, a:focus {
 .el-drawer__container>div{
   overflow: auto;
 }
+// 分页器
+.pagination {
+  margin-top: 30px;
+  .text {
+    font-size: 12px;
+    color: #3B3B3B;
+    padding: 0 16px;
+    font-weight: 400;
+  }
+  .el-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .el-pagination.is-background .el-pager li:not(.disabled).active {
+      background-color: #F7B500;
+      color: #FFF;
+  }
+  .el-pagination.is-background .el-pager li:not(.disabled):hover {
+      color: #F7B500;
+  }
+  .el-pagination.is-background .btn-prev, /deep/.el-pagination.is-background .btn-next,/deep/.el-pagination.is-background .el-pager li {
+      margin: 0;
+      border: 1px solid #DEDEDE;
+      width: 32px;
+      height: 32px;
+      background-color: #fff;
+  }
+  .el-select .el-input.is-focus .el-input__inner {
+      border-color: #F7B500;
+  }
+  .el-pagination__sizes .el-input .el-input__inner:hover {
+      border-color: #F7B500;
+  }
+  .el-select .el-input__inner:focus {
+      border-color: #F7B500;
+  }
+  .el-select-dropdown__item .selected {
+      color: #F7B500;
+  }
+}
+.el-select-dropdown__item.selected {
+  color: #F7B500;
+}

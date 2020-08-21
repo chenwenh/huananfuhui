@@ -14,12 +14,12 @@
                         <p class="header">
                             <img :src="item.image" alt="">
                             <span class="info">{{item.currentTitle}}</span>
-                            <span class="right">查看更多 ></span>
+                            <span class="right" @click="showMore(item.type)">查看更多 ></span>
                         </p>
                         <ul v-for='(item2,index2) in item.children' :key="index2">
                             <li>
                                 <p class="Title"><span class="left title">{{item2.title}}</span><span class="right state" :class="{'active':item2.state === '发布中'}">{{item2.state}}</span></p>
-                                <p class="content">{{item2.content}}<span class="date">{{item2.date}}</span></p>
+                                <p @click="toDetail(item.type, item2.id)" class="content">{{item2.content}}<span class="date">{{item2.date}}</span></p>
                             </li>
                         </ul>
                     </div>
@@ -56,18 +56,21 @@ export default {
                     image:'static/images/projectLogo.png',
                     children:[
                         {
+                            id: 1,
                             title:'无锡中恒制药医药器材采购项目',
                             state:'发布中',
                             content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
                             date:'2020-07-27'
                         },
                         {
+                            id: 1,
                             title:'无锡中恒制药医药器材采购项目',
                             state:'已结束',
                             content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
                             date:'2020-07-27'
                         },
                         {
+                            id: 1,
                             title:'无锡中恒制药医药器材采购项目',
                             state:'发布中',
                             content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
@@ -80,18 +83,21 @@ export default {
                     image:'static/images/buyLogo.png',
                     children:[
                         {
+                            id: 1,
                             title:'无锡中恒制药医药器材采购项目',
                             state:'发布中',
                             content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
                             date:'2020-07-27'
                         },
                         {
+                            id: 1,
                             title:'无锡中恒制药医药器材采购项目',
                             state:'已结束',
                             content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
                             date:'2020-07-27'
                         },
                         {
+                            id: 1,
                             title:'无锡中恒制药医药器材采购项目',
                             state:'发布中',
                             content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
@@ -104,18 +110,21 @@ export default {
                     image:'static/images/sellLogo.png',
                     children:[
                         {
+                            id: 1,
                             title:'无锡中恒制药医药器材采购项目',
                             state:'发布中',
                             content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
                             date:'2020-07-27'
                         },
                         {
+                            id: 1,
                             title:'无锡中恒制药医药器材采购项目',
                             state:'已结束',
                             content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
                             date:'2020-07-27'
                         },
                         {
+                            id: 1,
                             title:'无锡中恒制药医药器材采购项目',
                             state:'发布中',
                             content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
@@ -123,8 +132,6 @@ export default {
                         },
                     ]
                 },
-                
-
             ]
         }
     },
@@ -136,7 +143,26 @@ export default {
             var bannerHeight = 480 / 1920 * screenWidth;
             document.getElementById('el-carousel').style.height = bannerHeight + 'px';
         }, false);
-    }
+    },
+    methods: {
+        toDetail(type, id) {
+            this.$router.push({
+                path: '/homePage/detail',
+                query: {
+                    type: type,
+                    id: id
+                }
+            })
+        },
+        showMore(type) {
+            this.$router.push({
+                path:'/homePage/list',
+                query: {
+                    type
+                }
+            });
+        }
+    },
 }
 </script>
 <style scoped lang="scss">

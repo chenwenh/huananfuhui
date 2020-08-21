@@ -20,6 +20,23 @@ const routes = [
     component: resolve => require(['../views/homePage/index.vue'], resolve)
   },
   {
+    path: '/homePage/list',
+    redirect:'/homePage/listContent',
+    component: resolve => require(['../views/homePage/list.vue'], resolve),
+    children: [
+      {
+        path: '/homePage/listContent',
+        name: 'homePageDetail',
+        component: resolve => require(['../views/homePage/listContent.vue'], resolve)
+      },
+      {
+        path: '/homePage/detail',
+        name: 'homePageDetail',
+        component: resolve => require(['../views/homePage/detail.vue'], resolve)
+      },
+    ]
+  },
+  {
     path: '/Home',
     name: 'Home',
     component: resolve => require(['../views/Home/index.vue'], resolve),
@@ -155,7 +172,7 @@ router.beforeEach((to, from, next) => {
       next()
     }
   } else {
-    if(path === '/homePage'){
+    if(path.indexOf('/homePage') !== -1){
       next()
       return;
     }
