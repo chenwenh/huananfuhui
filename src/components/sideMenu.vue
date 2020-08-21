@@ -1,5 +1,5 @@
 <template>
-    <div class="sidebar">
+    <div class="sidebar" style="padding-bottom:50px;">
         <el-menu
             :default-active="activeIndex"
             class="el-menu-vertical-demo"

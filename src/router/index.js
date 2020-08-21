@@ -87,6 +87,15 @@ const routes = [
               },
               component: resolve => require(['../views/procurementPlan2/index.vue'], resolve)
         },
+        {
+              path: '/homes/enterpriseAgreement',
+              name: 'enterpriseAgreement',
+              meta: {
+                  title: '采购计划',
+                  icon: 'iconproject1'
+              },
+              component: resolve => require(['../views/enterpriseAgreement/index.vue'], resolve)
+        },
         ]
       },
       // 管理中心展示 业务开通 manage

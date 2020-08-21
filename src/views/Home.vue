@@ -30,7 +30,7 @@
                 <div class="siderBox" v-show="enterType === 'manage'">管理中心</div>
                 <sidebar></sidebar>
             </el-aside>
-            <el-main style="width:calc(100% - 60px);float:right;">
+            <el-main style="width:calc(100% - 60px);float:right;background:white;">
                 <router-view></router-view>
             </el-main>
         </el-container>
