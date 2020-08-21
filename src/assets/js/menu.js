@@ -39,6 +39,11 @@ export default [
           "title": "企业协议",
           "enterType": ['homes']
         },
+        {
+          "index": "/homes/personalInfo",
+          "title": "个人信息",
+          "enterType": ['homes']
+        },
     ]
   },
   {

@@ -91,10 +91,19 @@ const routes = [
               path: '/homes/enterpriseAgreement',
               name: 'enterpriseAgreement',
               meta: {
-                  title: '采购计划',
+                  title: '企业协议',
                   icon: 'iconproject1'
               },
               component: resolve => require(['../views/enterpriseAgreement/index.vue'], resolve)
+        },
+        {
+              path: '/homes/personalInfo',
+              name: 'enterpriseAgreement',
+              meta: {
+                  title: '个人信息',
+                  icon: 'iconproject1'
+              },
+              component: resolve => require(['../views/personalInfo/index.vue'], resolve)
         },
         ]
       },
