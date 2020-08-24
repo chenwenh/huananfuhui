@@ -87,7 +87,7 @@ export default {
           agentPhone:"经办人联系方式",
           receiver:"签收人",
           receiverPhone:"签收人电话",
-          issueDate:"发布日期",
+          publishDate:"发布日期",
           duration:"工期（月）",
           periodPayment:"回款周期",
           trustedClient:"受托客户",

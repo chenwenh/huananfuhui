@@ -14,15 +14,19 @@
       <div class="content__top">
         <p><span style="margin-right:10px;">项目名称:</span>{{item.title}}</p>
         <p>
-          <span>{{item.status}}</span>
-          <span>{{item.time}}</span>
+          <span>{{$appConst.publishStatus[item.publishStatus]}}</span>
+          <span>{{item.publishDate}}</span>
         </p>
       </div>
-      <p class="content__detail" @click="toDetail(item.id)">{{item.detail}}</p>
+      <p class="content__detail" @click="toDetail(item.id)">{{item.content}}</p>
     </div>
     <div class="pagination">
       <el-pagination
         background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page.sync="currentPage"
+        :page-size="pageSize"
         layout="prev, pager, next, slot, sizes, total"
         :total="total">
         <span class="text">每页显示</span>
@@ -35,108 +39,144 @@
 export default {
   data() {
     return {
+      currentPage:1,
+      pageSize:10,
       total: 0,
       list: [
-        {
-          id: 1,
-          title: '无锡中恒制药医药器材采购项目',
-          detail: '萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附。',
-          time: '2018-06-24',
-          status: '发布中',
-          city: '北京市',
-          constructionParty: '北京市铁建一局',
-          steel: '1989-06-12',
-          schedule: '24周',
-          accountsReceipt: 12,
-          release: 12
-        },
-        {
-          id: 1,
-          title: '无锡中恒制药医药器材采购项目',
-          detail: '萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附。',
-          time: '2018-06-24',
-          status: '发布中',
-          city: '北京市',
-          constructionParty: '北京市铁建一局',
-          steel: '1989-06-12',
-          schedule: '24周',
-          accountsReceipt: 12,
-          release: 12
-        },
-        {
-          id: 1,
-          title: '无锡中恒制药医药器材采购项目',
-          detail: '萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附。',
-          time: '2018-06-24',
-          status: '发布中',
-          city: '北京市',
-          constructionParty: '北京市铁建一局',
-          steel: '1989-06-12',
-          schedule: '24周',
-          accountsReceipt: 12,
-          release: 12
-        },
-        {
-          id: 1,
-          title: '无锡中恒制药医药器材采购项目',
-          detail: '萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附。',
-          time: '2018-06-24',
-          status: '发布中',
-          city: '北京市',
-          constructionParty: '北京市铁建一局',
-          steel: '1989-06-12',
-          schedule: '24周',
-          accountsReceipt: 12,
-          release: 12
-        },
-        {
-          id: 1,
-          title: '无锡中恒制药医药器材采购项目',
-          detail: '萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附。',
-          time: '2018-06-24',
-          status: '发布中',
-          city: '北京市',
-          constructionParty: '北京市铁建一局',
-          steel: '1989-06-12',
-          schedule: '24周',
-          accountsReceipt: 12,
-          release: 12
-        },
-        {
-          id: 1,
-          title: '无锡中恒制药医药器材采购项目',
-          detail: '萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附。',
-          time: '2018-06-24',
-          status: '发布中',
-          city: '北京市',
-          constructionParty: '北京市铁建一局',
-          steel: '1989-06-12',
-          schedule: '24周',
-          accountsReceipt: 12,
-          release: 12
-        },
-        {
-          id: 1,
-          title: '无锡中恒制药医药器材采购项目',
-          detail: '萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附。',
-          time: '2018-06-24',
-          status: '发布中',
-          city: '北京市',
-          constructionParty: '北京市铁建一局',
-          steel: '1989-06-12',
-          schedule: '24周',
-          accountsReceipt: 12,
-          release: 12
-        }
+        // {
+        //   id: 1,
+        //   title: '无锡中恒制药医药器材采购项目',
+        //   detail: '萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附。',
+        //   time: '2018-06-24',
+        //   status: '发布中',
+        //   city: '北京市',
+        //   constructionParty: '北京市铁建一局',
+        //   steel: '1989-06-12',
+        //   schedule: '24周',
+        //   accountsReceipt: 12,
+        //   release: 12
+        // },
+        // {
+        //   id: 1,
+        //   title: '无锡中恒制药医药器材采购项目',
+        //   detail: '萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附。',
+        //   time: '2018-06-24',
+        //   status: '发布中',
+        //   city: '北京市',
+        //   constructionParty: '北京市铁建一局',
+        //   steel: '1989-06-12',
+        //   schedule: '24周',
+        //   accountsReceipt: 12,
+        //   release: 12
+        // },
+        // {
+        //   id: 1,
+        //   title: '无锡中恒制药医药器材采购项目',
+        //   detail: '萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附。',
+        //   time: '2018-06-24',
+        //   status: '发布中',
+        //   city: '北京市',
+        //   constructionParty: '北京市铁建一局',
+        //   steel: '1989-06-12',
+        //   schedule: '24周',
+        //   accountsReceipt: 12,
+        //   release: 12
+        // },
+        // {
+        //   id: 1,
+        //   title: '无锡中恒制药医药器材采购项目',
+        //   detail: '萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附。',
+        //   time: '2018-06-24',
+        //   status: '发布中',
+        //   city: '北京市',
+        //   constructionParty: '北京市铁建一局',
+        //   steel: '1989-06-12',
+        //   schedule: '24周',
+        //   accountsReceipt: 12,
+        //   release: 12
+        // },
+        // {
+        //   id: 1,
+        //   title: '无锡中恒制药医药器材采购项目',
+        //   detail: '萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附。',
+        //   time: '2018-06-24',
+        //   status: '发布中',
+        //   city: '北京市',
+        //   constructionParty: '北京市铁建一局',
+        //   steel: '1989-06-12',
+        //   schedule: '24周',
+        //   accountsReceipt: 12,
+        //   release: 12
+        // },
+        // {
+        //   id: 1,
+        //   title: '无锡中恒制药医药器材采购项目',
+        //   detail: '萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附。',
+        //   time: '2018-06-24',
+        //   status: '发布中',
+        //   city: '北京市',
+        //   constructionParty: '北京市铁建一局',
+        //   steel: '1989-06-12',
+        //   schedule: '24周',
+        //   accountsReceipt: 12,
+        //   release: 12
+        // },
+        // {
+        //   id: 1,
+        //   title: '无锡中恒制药医药器材采购项目',
+        //   detail: '萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附。',
+        //   time: '2018-06-24',
+        //   status: '发布中',
+        //   city: '北京市',
+        //   constructionParty: '北京市铁建一局',
+        //   steel: '1989-06-12',
+        //   schedule: '24周',
+        //   accountsReceipt: 12,
+        //   release: 12
+        // }
       ]
     }
   },
   created() {
-    this.getData();
+    // this.getData();
+    this.query();
   },
   methods: {
-    getData() {
-      this.total = this.list.length
+    // getData() {
+    //   this.total = this.list.length;
+    //   this.query();
+    // },
+     handleSizeChange(val) {
+      this.pageSize = val;
+      this.query();
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.query();
+    },
+    query(){
+        const params = {
+            page: this.currentPage,
+            pageSize: this.pageSize
+        };
+        var type = this.$route.query.type;
+        var url = "";
+        if(type=='project'){
+          url = this.$apiUrl.project.queryTitle;
+        }else if(type=='buy'){
+          url = this.$apiUrl.purchase.queryTitle;
+        }else{
+          url = this.$apiUrl.salesInfo.queryTitle;
+        }
+        // 获取意向申请列表
+        this.$http.get(url,{params})
+            .then(res => {
+            if (res.data.status !== 200) return;
+                this.list = res.data.data.content;
+                this.total = res.data.data.totalElements;
+            }).catch(err => {
+                this.$message.warning(err.data.message || '服务器错误，请稍后再试!');
+            });
     },
     toDetail(id) {
       this.$router.push({

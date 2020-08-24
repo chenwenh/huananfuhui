@@ -18,8 +18,9 @@
                         </p>
                         <ul v-for='(item2,index2) in item.children' :key="index2">
                             <li>
-                                <p class="Title"><span class="left title">{{item2.title}}</span><span class="right state" :class="{'active':item2.state === '发布中'}">{{item2.state}}</span></p>
-                                <p @click="toDetail(item.type, item2.id)" class="content">{{item2.content}}<span class="date">{{item2.date}}</span></p>
+                                <p class="Title"><span class="left title">{{item2.title}}</span><span class="right state" :class="{'active':item2.publishStatus === 'NO_PUBLISH'}">{{$appConst.publishStatus[item2.publishStatus]}}</span></p>
+                                <p @click="toDetail(item.type, item2.id)" class="content">{{item2.content}}</p>
+                                <p style="text-align:right;"><span class="date">{{item2.publishDate}}</span></p>
                             </li>
                         </ul>
                     </div>
@@ -55,81 +56,81 @@ export default {
                     currentTitle:'项目信息',
                     image:'static/images/projectLogo.png',
                     children:[
-                        {
-                            id: 1,
-                            title:'无锡中恒制药医药器材采购项目',
-                            state:'发布中',
-                            content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
-                            date:'2020-07-27'
-                        },
-                        {
-                            id: 1,
-                            title:'无锡中恒制药医药器材采购项目',
-                            state:'已结束',
-                            content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
-                            date:'2020-07-27'
-                        },
-                        {
-                            id: 1,
-                            title:'无锡中恒制药医药器材采购项目',
-                            state:'发布中',
-                            content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
-                            date:'2020-07-27'
-                        },
+                        // {
+                        //     id: 1,
+                        //     title:'无锡中恒制药医药器材采购项目',
+                        //     state:'发布中',
+                        //     content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
+                        //     date:'2020-07-27'
+                        // },
+                        // {
+                        //     id: 1,
+                        //     title:'无锡中恒制药医药器材采购项目',
+                        //     state:'已结束',
+                        //     content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
+                        //     date:'2020-07-27'
+                        // },
+                        // {
+                        //     id: 1,
+                        //     title:'无锡中恒制药医药器材采购项目',
+                        //     state:'发布中',
+                        //     content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
+                        //     date:'2020-07-27'
+                        // },
                     ]
                 },
                 {   type:'buy',
                     currentTitle:'采购计划',
                     image:'static/images/buyLogo.png',
                     children:[
-                        {
-                            id: 1,
-                            title:'无锡中恒制药医药器材采购项目',
-                            state:'发布中',
-                            content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
-                            date:'2020-07-27'
-                        },
-                        {
-                            id: 1,
-                            title:'无锡中恒制药医药器材采购项目',
-                            state:'已结束',
-                            content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
-                            date:'2020-07-27'
-                        },
-                        {
-                            id: 1,
-                            title:'无锡中恒制药医药器材采购项目',
-                            state:'发布中',
-                            content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
-                            date:'2020-07-27'
-                        },
+                        // {
+                        //     id: 1,
+                        //     title:'无锡中恒制药医药器材采购项目',
+                        //     state:'发布中',
+                        //     content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
+                        //     date:'2020-07-27'
+                        // },
+                        // {
+                        //     id: 1,
+                        //     title:'无锡中恒制药医药器材采购项目',
+                        //     state:'已结束',
+                        //     content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
+                        //     date:'2020-07-27'
+                        // },
+                        // {
+                        //     id: 1,
+                        //     title:'无锡中恒制药医药器材采购项目',
+                        //     state:'发布中',
+                        //     content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
+                        //     date:'2020-07-27'
+                        // },
                     ]
                 },
                 {   type:'sell',
                     currentTitle:'销售信息',
                     image:'static/images/sellLogo.png',
                     children:[
-                        {
-                            id: 1,
-                            title:'无锡中恒制药医药器材采购项目',
-                            state:'发布中',
-                            content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
-                            date:'2020-07-27'
-                        },
-                        {
-                            id: 1,
-                            title:'无锡中恒制药医药器材采购项目',
-                            state:'已结束',
-                            content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
-                            date:'2020-07-27'
-                        },
-                        {
-                            id: 1,
-                            title:'无锡中恒制药医药器材采购项目',
-                            state:'发布中',
-                            content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
-                            date:'2020-07-27'
-                        },
+                        // {
+                        //     id: 1,
+                        //     title:'无锡中恒制药医药器材采购项目',
+                        //     state:'发布中',
+                        //     content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
+                        //     date:'2020-07-27'
+                        // },
+                        // {
+                        //     id: 1,
+                        //     title:'无锡中恒制药医药器材采购项目',
+                        //     state:'已结束',
+                        //     content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
+                        //     date:'2020-07-27'
+                        // },
+                        // {
+                        //     id: 1,
+                        //     title:'无锡中恒制药医药器材采购项目',
+                        //     state:'发布中',
+                        //     content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
+                        //     date:'2020-07-27'
+                        // },
                     ]
                 },
             ]
@@ -143,8 +144,35 @@ export default {
             var bannerHeight = 480 / 1920 * screenWidth;
             document.getElementById('el-carousel').style.height = bannerHeight + 'px';
         }, false);
+        this.queryProject();
     },
     methods: {
+        // 查询项目标题列表
+        queryProject(){
+            this.commonQuery(`${this.$apiUrl.project.queryTitle}`,'project');
+            this.commonQuery(`${this.$apiUrl.purchase.queryTitle}`,'buy');
+            this.commonQuery(`${this.$apiUrl.salesInfo.queryTitle}`,'sale');
+        },
+        commonQuery(url,type){
+            const params = {
+                page: 1,
+                pageSize: 3
+            };
+            // 获取意向申请列表
+            this.$http.get(url,{params})
+                .then(res => {
+                if (res.data.status !== 200) return;
+                    if(type=='project'){
+                        this.infos[0].children = res.data.data.content;
+                    }else if(type=='buy'){
+                        this.infos[1].children = res.data.data.content;
+                    }else{
+                        this.infos[2].children = res.data.data.content;
+                    }
+                }).catch(err => {
+                    this.$message.warning(err.data.message || '服务器错误，请稍后再试!');
+                });
+        },
         toDetail(type, id) {
             this.$router.push({
                 path: '/homePage/detail',
@@ -237,11 +265,16 @@ ul li .Title{
 ul li .content{
     position: relative;
     font-size: 12px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
 }
 ul li .date{
-    position: absolute;
+    // position: absolute;
     right:0;
     bottom:0;
+    font-size: 12px;
     color: #999999;
 }
 ul li .title{

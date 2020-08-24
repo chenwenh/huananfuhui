@@ -9,6 +9,9 @@
                             placeholder="选择日期" style="width:100%;" value-format="yyyy-MM-dd">
                         </el-date-picker>
                     </el-form-item>
+                    <el-form-item label="内容" prop="content" style="width:96%;">
+                        <el-input v-model="ruleForm.content" type="textarea"></el-input>
+                    </el-form-item>
             </div>
             <detailEntry ref="detailEntry"></detailEntry>
             <div style="text-align:right;width:100%;">
@@ -29,6 +32,7 @@ export default {
             loading:false,
             ruleForm: {
                 endDate: '',
+                content:'',
                 publishStatus:'NO_PUBLISH'
             },
             projects:[],

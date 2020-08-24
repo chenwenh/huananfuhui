@@ -26,24 +26,30 @@ export let apiUrl = {
     project:{
         save:apiGateway2 +　'/projectInfo/save',//保存
         query:apiGateway2 + '/projectInfo/query',//查询
+        queryTitle:apiGateway2 + '/projectInfo/queryTitle',//标题列表查询
         delete:apiGateway2 +　'/projectInfo/delete',//删除
         mergePublishStatus:apiGateway2  + '/projectInfo/mergePublishStatus',//改变状态
         update:apiGateway2 + '/projectInfo/update',//修改
+        findById:apiGateway2 + '/projectInfo/findById/',//根据id查询详情
     },
     // 采购计划
     purchase:{
         save:apiGateway2 +　'/purchase-plan-info/save',//保存
         query:apiGateway2 + '/purchase-plan-info/query',//查询
+        queryTitle:apiGateway2 + '/purchase-plan-info/queryTitle',//标题列表查询
         delete:apiGateway2 +　'/purchase-plan-info/delete',//删除
         mergePublishStatus:apiGateway2  + '/purchase-plan-info/mergePublishStatus',//改变状态
         update:apiGateway2 + '/purchase-plan-info/update',//修改
+        findById:apiGateway2 + '/purchase-plan-info/findById/',//根据id查询详情
     },
     // 销售信息
     salesInfo:{
         save:apiGateway2 +　'/sales-info/save',//保存
         query:apiGateway2 + '/sales-info/query',//查询
+        queryTitle:apiGateway2 + '/sales-info/queryTitle',//标题列表查询
         delete:apiGateway2 +　'/sales-info/delete',//删除
         mergePublishStatus:apiGateway2  + '/sales-info/mergePublishStatus',//改变状态
         update:apiGateway2 + '/sales-info/update',//修改
+        findById:apiGateway2 + '/sales-info/findById/',//根据id查询详情
     },
 }

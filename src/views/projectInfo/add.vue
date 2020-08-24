@@ -30,9 +30,9 @@
                 <el-form-item label="签收人电话" prop="receiverPhone">
                   <el-input v-model="ruleForm.receiverPhone"></el-input>
                 </el-form-item>
-                <el-form-item label="发布日期" prop="issueDate" >
+                <el-form-item label="发布日期" prop="publishDate" >
                     <el-date-picker
-                        v-model="ruleForm.issueDate"
+                        v-model="ruleForm.publishDate"
                         type="date"
                         placeholder="选择日期" style="width: 100%;" value-format="yyyy-MM-dd">
                     </el-date-picker>
@@ -48,6 +48,9 @@
                 </el-form-item>
                 <el-form-item label="钢铁用量(吨)" prop="steelConsumption">
                   <el-input v-model="ruleForm.steelConsumption"></el-input>
+                </el-form-item>
+                <el-form-item label="内容" prop="content" style="width:96%;">
+                  <el-input v-model="ruleForm.content" type="textarea"></el-input>
                 </el-form-item>
               </div>
           </div>
@@ -77,12 +80,13 @@ export default {
                agentPhone:'',
                receiver:'',
                receiverPhone:'',
-               issueDate:'',
+               publishDate:'',
                duration:'',
                periodPayment:'',
                trustedClient:'',
                steelConsumption:'',
-               publishStatus:'NO_PUBLISH'
+               publishStatus:'NO_PUBLISH',
+               content:""
             },
             rules: {
                 projectNo: [
