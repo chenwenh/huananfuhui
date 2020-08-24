@@ -91,7 +91,9 @@ export default {
   // 内容
   .center__box {
     background: #F7F7F7;
-    padding: 30px 370px;
+    // padding: 30px 370px;
+    width:1200px;
+    margin:0 auto;
     .center {
       background-color: #FFFFFF;
       height: auto;

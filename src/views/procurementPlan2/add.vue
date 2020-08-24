@@ -3,7 +3,7 @@
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="specialsForm" style="width:100%;">
             <div style="overflow:hidden;">
                     <el-form-item label="项目名称" prop="projectId">
-                        <el-select v-model="ruleForm.projectId" placeholder="" clearable=""  style="width:100%;">
+                        <el-select v-model="ruleForm.projectId" placeholder="" clearable=""  style="width:100%;" :disabled="!isAdd">
                             <el-option v-for="item in projects" :key="item.id" :label="item.title" :value="item.id"></el-option>
                         </el-select>
                     </el-form-item>
