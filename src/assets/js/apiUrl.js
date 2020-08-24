@@ -46,4 +46,22 @@ export let apiUrl = {
         mergePublishStatus:apiGateway2  + '/sales-info/mergePublishStatus',//改变状态
         update:apiGateway2 + '/sales-info/update',//修改
     },
+    // 协议管理
+    agreement: {
+        create: currentApiUrl + '/agreement/create', // 创建
+        sign: currentApiUrl + '/agreement/sign', // 签署
+        update: currentApiUrl + '/agreement/update' // 更新
+    },
+    // 审核
+    serviceFulfillment: {
+        apply: currentApiUrl + '/business/apply', // 提交业务开通申请  业务开通步骤1 
+        process: currentApiUrl + '/business/process', // 审批业务开通申请 业务开通步骤2 平台审核
+        query: currentApiUrl + '/business/query' // 审核查询 业务开通步骤2 list/开通状态
+    },
+    // 授信
+    credit: {
+        apply: currentApiUrl + '/credit/apply', // 申请
+        cancel: currentApiUrl + '/credit/cancel', // 取消
+        query: currentApiUrl + '/credit/query' // 查询
+    }
 }
