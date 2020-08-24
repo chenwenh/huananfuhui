@@ -105,6 +105,15 @@ const routes = [
               component: resolve => require(['../views/procurementPlan2/index.vue'], resolve)
         },
         {
+              path: '/homes/salesInfo',
+              name: 'salesInfo',
+              meta: {
+                  title: '采购计划',
+                  icon: 'iconproject1'
+              },
+              component: resolve => require(['../views/salesInfo/index.vue'], resolve)
+        },
+        {
               path: '/homes/enterpriseAgreement',
               name: 'enterpriseAgreement',
               meta: {

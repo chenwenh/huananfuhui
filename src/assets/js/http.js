@@ -11,7 +11,10 @@ axios.defaults.timeout = 500000
 axios.interceptors.request.use(
     config => {
         config.headers = {
-        'org_id': sessionStorage.getItem('orgId')
+            'org_id': JSON.parse(sessionStorage.getItem('user')).orgId,
+            'org_name': encodeURI(JSON.parse(sessionStorage.getItem('user')).orgName),
+            'user_id': JSON.parse(sessionStorage.getItem('user')).id,
+            'username': JSON.parse(sessionStorage.getItem('user')).username
         }
         if (window.sessionStorage.getItem('token')) {
             config.headers.Authorization = window.sessionStorage.getItem('token');

@@ -35,6 +35,11 @@ export default [
           "enterType": ['homes']
         },
         {
+          "index": "/homes/salesInfo",
+          "title": "销售信息",
+          "enterType": ['homes']
+        },
+        {
           "index": "/homes/enterpriseAgreement",
           "title": "企业协议",
           "enterType": ['homes']

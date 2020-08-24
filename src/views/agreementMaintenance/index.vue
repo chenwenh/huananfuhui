@@ -247,7 +247,7 @@ export default {
         sortDirection: 'DESC'
       };
       // 获取意向申请列表
-      const url = `${this.$apiUrl.queryContract}`;
+      const url = `${this.$apiUrl}`;
       let copyParams = Object.assign({}, searchData, params)
       this.$http.post(url, copyParams)
         .then(res => {

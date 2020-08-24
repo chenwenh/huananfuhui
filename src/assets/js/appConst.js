@@ -123,6 +123,10 @@ export default {
       MERCHANT: '贸易商',
       FIN_INSTITUTION: '金融机构',
       OTHER_FIN_INSTITUTION: '其它资金提供方'
+    },
+    publishStatus:{
+      NO_PUBLISH:'未发布',
+      PUBLISHED:'已发布'
     }
   }
   

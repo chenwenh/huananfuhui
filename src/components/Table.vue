@@ -27,11 +27,8 @@
                        :label="item"
                        :width='handlewidth(key)'>
         <template slot-scope="scope">
-          <span v-if="key === 'buzType'">
-            {{$appConst.businessTypes[scope.row[key]]}}
-          </span>
-          <span v-else-if="key === 'cType'">
-            {{$appConst.cTypes[scope.row[key]]}}
+          <span v-if="key === 'publishStatus'">
+            {{$appConst.publishStatus[scope.row[key]]}}
           </span>
           <span v-else-if="key === 'contractMoney'||key === 'orderAmount'">
             {{$appConst.fmoney(scope.row[key], 2)}}

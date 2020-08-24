@@ -2,12 +2,6 @@
     <div>
         <el-form :model="ruleForm"  ref="ruleForm" label-width="100px" class="specialsForm" style="width:100%;">
             <div style="overflow:hidden;">
-                    <el-form-item label="项目名称" prop="projectName">
-                        <el-input v-model="ruleForm.projectName" placeholder="请输入项目名称" disabled=""></el-input>
-                    </el-form-item>
-                    <el-form-item label="部门" prop="department">
-                        <el-input v-model="ruleForm.department" placeholder="请输入部门" disabled=""></el-input>
-                    </el-form-item>
                     <el-form-item label="截止日期" prop="endDate" >
                     <el-date-picker
                             v-model="ruleForm.endDate"
@@ -40,8 +34,6 @@ export default {
         return{
             loading:false,
             ruleForm: {
-                projectName: '',
-                department: '',
                 endDate: ''
             },
             mainTable: {
@@ -71,7 +63,7 @@ export default {
                 publishStatus:'PUBLISHED'
             };
             vm.loading = true;
-            vm.$http.post(`${vm.$apiUrl.purchase.mergePublishStatus}`,params)
+            vm.$http.post(`${vm.$apiUrl.salesInfo.mergePublishStatus}`,params)
             .then(res=>{
                 if(res.data.status == vm.$appConst.status){
                     vm.$message.success('发布成功');

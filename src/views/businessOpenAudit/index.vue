@@ -174,7 +174,7 @@ export default {
         sortDirection: 'DESC'
       };
       // 获取意向申请列表
-      const url = `${this.$apiUrl.queryContract}`;
+      const url = `${this.$apiUrl}`;
       this.$http.post(url,params)
         .then(res => {
           if (res.data.status !== 200) return;

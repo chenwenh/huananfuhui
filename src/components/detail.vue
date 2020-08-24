@@ -12,7 +12,12 @@
                 </el-col>
                 <el-col :span="15">
                     <div class="elInput" style="border-bottom: 1px dashed #ddd; height: 18px; padding-left: 10px;">
-                        {{diaComData[key]}}
+                        <span v-if="key=='publishStatus'">
+                            {{$appConst.publishStatus[diaComData[key]]}}
+                        </span>
+                        <span v-else>
+                            {{diaComData[key]}}
+                        </span>
                     </div>
                 </el-col>
             </el-col>

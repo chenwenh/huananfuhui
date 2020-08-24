@@ -21,11 +21,11 @@
               :showPagination="true">
               <!-- 操作 -->
               <el-table-column fixed="right"
-                        label="操作" width="160px"
+                        label="操作" width="240px"
                         >
                   <template slot-scope="scope">
                     <el-button
-                       v-if="scope.row.status =='未发布'"
+                       v-if="scope.row.publishStatus =='NO_PUBLISH'"
                         class="collectBtn"
                         size="medium"
                         type="text"
@@ -34,7 +34,7 @@
                         发布
                     </el-button>
                     <el-button
-                        v-if="scope.row.status=='已发布'"
+                        v-if="scope.row.publishStatus=='PUBLISHED'"
                         class="collectBtn"
                         size="medium"
                         type="text"
@@ -43,7 +43,7 @@
                         选择报价
                     </el-button>
                      <el-button
-                        v-if="scope.row.status=='已发布'"
+                        v-if="scope.row.publishStatus=='PUBLISHED'"
                         class="collectBtn"
                         size="medium"
                         type="text"
@@ -51,17 +51,33 @@
                         @click.stop="purchaseNotice(scope.row)">
                         采购通知
                     </el-button>
+                    <el-button
+                        class="collectBtn"
+                        size="medium"
+                        type="text"
+                        style="margin-left:0px; "
+                        @click.stop="deletePurchase(scope.row)">
+                        删除
+                    </el-button>
+                    <el-button
+                        class="collectBtn"
+                        size="medium"
+                        type="text"
+                        style="margin-left:0px; "
+                        @click.stop="updatePurchase(scope.row)">
+                        修改
+                    </el-button>
                   </template>
               </el-table-column>
         </Table>
       </div>
         <!-- 添加 -->
-        <dialogCommonComponent ref="dialogCommonComponent" title="新建采购计划" width="50%">
-            <add ref="add"></add>
+        <dialogCommonComponent ref="dialogCommonComponent" :title="title" width="50%">
+            <add ref="add" @search="search"></add>
         </dialogCommonComponent>
         <!--发布 -->
         <dialogCommonComponent ref="dialogCommonComponent2" title="发布采购计划" width="50%">
-            <publicPlan ref="publicPlan"></publicPlan>
+            <publicPlan ref="publicPlan" @search="search"></publicPlan>
         </dialogCommonComponent>
         <el-drawer
           title="选择报价"
@@ -93,6 +109,8 @@ export default {
   name: '',
   data() {
     return {
+      title:'',
+      loading:false,
       firstShow:true,
       purchaseNoticeShow:false,
       searchValue:"",
@@ -103,30 +121,15 @@ export default {
       // 表格数据
       mainTable: {
         tableHeader: {
-          name: "计划编号",
-          entityNo: "项目名称",
-          orderAmount1: "截止日期",
-          buyer: "部门",
-          seller: "发布日期",
-          status: "发布状态"
+          planNo: "计划编号",
+          projectName: "项目名称",
+          endDate: "截止日期",
+          department: "部门",
+          createTime: "发布日期",
+          publishStatus: "发布状态"
         },
         tableData: [
-          {
-            name: "计划编号",
-            entityNo: "项目名称",
-            orderAmount1: "截止日期",
-            buyer: "部门",
-            seller: "发布日期",
-            status: "未发布"
-          },
-          {
-            name: "计划编号",
-            entityNo: "项目名称",
-            orderAmount1: "截止日期",
-            buyer: "部门",
-            seller: "发布日期",
-            status: "已发布"
-          },
+          
         ],
         tableWidth: {
           
@@ -149,7 +152,7 @@ export default {
     purchaseNotice
   },
   created() {
-    // this.search();
+    this.search();
   },
   mounted(){
     var vm = this;
@@ -168,6 +171,18 @@ export default {
         this.$nextTick(()=>{
             this.$refs.add.resetForm();
             this.$bus.$emit('initForm');
+            this.$refs.add.init(true);
+            this.title = '新建采购计划';
+        });
+    },
+    // 修改采购计划
+    updatePurchase(row){
+      this.$refs.dialogCommonComponent.show();
+        this.$nextTick(()=>{
+            this.$refs.add.resetForm();
+            this.$bus.$emit('initForm');
+            this.$refs.add.init(false,row);
+            this.title = '修改采购计划';
         });
     },
     // 新建采购通知
@@ -175,9 +190,33 @@ export default {
       this.firstShow = false;
       this.purchaseNoticeShow = true;
     },
+    deletePurchase(row){
+      var vm = this;
+      this.$confirm('请确认要删除吗？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          customClass: 'tipsInfo',
+          type: 'text'
+        }).then(() => {
+          vm.$http.delete(`${vm.$apiUrl.purchase.delete}/${row.id}`)
+          .then(res=>{
+              if(res.data.status == vm.$appConst.status){
+                  vm.$message.success('删除成功');
+                  vm.search();
+              }
+          }).catch(err=>{
+              vm.$message.error(err.data.message);
+          })
+        }).catch(() => {
+        });
+    },
     // 发布
-    publicPlan(){
+    publicPlan(row){
       this.$refs.dialogCommonComponent2.show();
+      var vm = this;
+      this.$nextTick(()=>{
+        vm.$refs.publicPlan.init(row);
+      });
     },
     // 选择报价
     selectQuote(){
@@ -189,21 +228,24 @@ export default {
     // 搜索
     search(searchData) {
       this.mainTable.tableData = [];
+      this.loading = true;
       const params = {
         page: this.page,
-        pageSize: this.pageSize,
-        orgId:'6badcc0a-0288-409e-b458-58276e801711',//sessionStorage.getItem('orgId'),
-        assetType:'TRADEORDER',
-        sortDirection: 'DESC'
+        pageSize: this.pageSize
       };
       // 获取意向申请列表
-      const url = `${this.$apiUrl.queryContract}`;
-      this.$http.post(url,params)
+      const url = `${this.$apiUrl.purchase.query}`;
+      this.$http.get(url,{params})
         .then(res => {
           if (res.data.status !== 200) return;
           this.totalCount = res.data.data.totalElements;
           this.mainTable.tableData = res.data.data.content;
+          this.mainTable.tableData.map(item=>{
+            item.projectName = item.projectInfo.title;
+          });
+          this.loading = false;
         }).catch(err => {
+          this.loading = false;
           this.$message.warning(err.message || '服务器错误，请稍后再试!');
         });
     },

@@ -35,6 +35,7 @@
   					    :index="scope.$index"
   						:val="scope.row[key]"
   						@blur="handleDetailBlur($event, scope.row, key, scope.$index)"
+						  disabled=""
   						>
   					</el-input>
   					<span v-else>
@@ -42,36 +43,15 @@
   					</span>
 			    </template>
 		    </el-table-column>
-
-		     <el-table-column
-		      	fixed="right"
-		      	label="操作"
-		      	width="120">
-			    <template slot-scope="scope">
-					<i class="el-icon-delete" @click="handleDeleteRow(scope.$index)"  style="cursor:pointer;font-size:18px"></i>
-			    </template>
-		    </el-table-column>
 		</el-table> 
-		<div class="detailAdd">
-			<span class="redColor pointer" @click="handleDetailAdd()"><i class="el-icon-plus"></i>添加</span>
-		</div>
 	</div>
 </template>
 <script>
 	export default {
+		props:['tabData','formItem'],
 		data() {
 			return {
-                tabData:[
-				],
-                formItem:{
-					skuId: "编号",
-					productName: "品名",
-					spec: "规格",
-					materialQuality: "材质",
-					length: "长度",
-					unit: "计量单位",
-					quality:"数量"
-                }
+                
 			}
 		},
         computed:{
@@ -89,21 +69,6 @@
 			getGoods(){
 				return this.tabData;
 			},
-			setGoods(goods){
-				this.tabData = goods;
-			},
-			// 添加行
-			handleDetailAdd() {
-				var json = {};
-					for(var key in this.formItem){
-						json[key] = '';
-					}
-				this.tabData.push(json);
-			},
-			// 删除 行
-			handleDeleteRow(index) {
-				this.tabData.splice(index,1);
-			},
 			// target
 			handleDetailBlur(event, row, key, index) {
 				this.refEle = $(event.target);
@@ -114,7 +79,7 @@
 					this.amount = 0;
 					for(var i =0;i<this.tabData.length;i++){
 					this.amount+= this.tabData[i].quantity * this.tabData[i].unitPrice;
-					// this.tabData[i]['totalAmount'] = this.$appConst.fmoney(this.tabData[i].quantity * this.tabData[i].unitPrice, 2);
+					this.tabData[i]['totalAmount'] = this.$appConst.fmoney(this.tabData[i].quantity * this.tabData[i].unitPrice, 2);
 				}
 				if (key === 'unitPrice') {
 					row.unitPrice ? row.unitPrice = this.$appConst.fmoney(row.unitPrice, 4) : '';
@@ -158,7 +123,7 @@
 		},
 		mounted() {
 			var vm = this;
-			vm.$bus.$on('initForm',function() {
+			vm.$bus.$on('initForm2',function() {
 				vm.init();
 			});
 		},
