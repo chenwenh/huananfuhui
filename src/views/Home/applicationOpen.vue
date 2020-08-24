@@ -1,109 +1,66 @@
 <template>
 <div style="background:rgba(255,255,255,1);" class="applicationOpen">
     <div class="steps">
-        <span class="child" @click="firstClick"><span class="step" :class="{'active':step=='1'}">1</span><label>基础信息</label><span class="line"></span></span>
-        <span class="step" :class="{'active':step=='2'}" @click="otherClick">2</span><label>平台审核</label><span class="line"></span>
-        <span class="step" :class="{'active':step=='3'}" @click="otherClick">3</span><label>签署框架合同</label><span class="line"></span>
-        <span class="step" :class="{'active':step=='4'}" @click="otherClick">4</span><label>银行授信审核</label>
+        <span><span class="step child" :class="{'active':step=='1'}">1</span><label>基础信息</label><span class="line"></span></span>
+        <span class="step" :class="{'active':step=='2'}">2</span><label>平台审核</label><span class="line"></span>
+        <span class="step" :class="{'active':step=='3'}">3</span><label>签署框架合同</label><span class="line"></span>
+        <span class="step" :class="{'active':step=='4'}">4</span><label>银行授信审核</label>
     </div>
-    <div v-show="step==1 || status">
-        <div v-if="!status">
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="70px" class="specialsForm" style="width:100%;">
-          <div style="overflow:hidden;">
-                <el-form-item label="名称" prop="model1">
-                   <el-select v-model="ruleForm.model1" placeholder="请选择协议模板" clearable=""  style="width:100%;">
-                        <el-option label="协议模板1" value="value1"></el-option>
-                        <el-option label="协议模板2" value="value2"></el-option>
-                    </el-select>
-                </el-form-item>
-               <el-form-item label="名称" prop="model2">
-                   <el-select v-model="ruleForm.model2" placeholder="请选择协议模板" clearable=""  style="width:100%;">
-                        <el-option label="协议模板1" value="value1"></el-option>
-                        <el-option label="协议模板2" value="value2"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="名称" prop="name1">
-                    <el-input v-model="ruleForm.name1"></el-input>
-                </el-form-item>
-                 <el-form-item label="名称" prop="name2">
-                    <el-input v-model="ruleForm.name2"></el-input>
-                </el-form-item>
-          </div>
-        </el-form>
-        <p style="margin-left:31px;">附件<span class="download" @click="download">下载模板</span></p>
-        <el-row type="flex" class="attachmentContent" justify="space-between">
-            <el-col :span="7">
-                <div class="child">
-                    <h4>营业执照扫描件</h4>
-                    <textStyleUpload ref="textStyleUpload1" fileAccept= 'jpg,jpeg,png,gif,PDF,pdf' :limitNumber="limitNumber"></textStyleUpload>
+    <!-- 步骤1 -->
+    <div v-show="step==1">
+        <div>
+            <el-form :model="serviceFulfillment" :rules="serviceFulfillmentRules" ref="serviceFulfillment" label-width="70px" class="specialsForm" style="width:100%;">
+                <div style="overflow:hidden;">
+                    <el-form-item label="名称" prop="model1">
+                        <el-select v-model="serviceFulfillment.model1" placeholder="请选择协议模板" clearable=""  style="width:100%;">
+                            <el-option label="协议模板1" value="value1"></el-option>
+                            <el-option label="协议模板2" value="value2"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="名称" prop="model2">
+                        <el-select v-model="serviceFulfillment.model2" placeholder="请选择协议模板" clearable=""  style="width:100%;">
+                            <el-option label="协议模板1" value="value1"></el-option>
+                            <el-option label="协议模板2" value="value2"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="名称" prop="name1">
+                        <el-input v-model="serviceFulfillment.name1"></el-input>
+                    </el-form-item>
+                    <el-form-item label="名称" prop="name2">
+                        <el-input v-model="serviceFulfillment.name2"></el-input>
+                    </el-form-item>
                 </div>
-            </el-col>
-            <el-col :span="7">
-                <div class="child">
-                    <h4>企业法人或负责人证件扫描件</h4>
-                    <textStyleUpload ref="textStyleUpload2" fileAccept= 'jpg,jpeg,png,gif,PDF,pdf' :limitNumber="limitNumber"></textStyleUpload>
-                </div>
-            </el-col>
-            <el-col :span="7">
-                <div class="child">
-                    <h4>营业执照扫描件</h4>
-                    <textStyleUpload ref="textStyleUpload3" fileAccept='jpg,jpeg,png,gif,PDF,pdf' :limitNumber="limitNumber"></textStyleUpload>
-                </div>
-            </el-col>
-        </el-row>
-        <p class="checkContent"><el-checkbox v-model="checked" style="margin-right:10px;"></el-checkbox>我同意并遵守<span class="blue pointer">库易保业务开通协议</span></p>
-        <div style="text-align:right;width:100%;">
-                <el-button type="info" @click="close()" class="radiusNone">取消</el-button>
-                <el-button type="primary" @click="submitForm('ruleForm')" class="primaryButton radiusNone">提交</el-button>      
-        </div>
+            </el-form>
+            <p style="margin-left:31px;">附件<span class="download" @click="download">下载模板</span></p>
+            <el-row type="flex" class="attachmentContent" justify="space-between">
+                <el-col :span="7">
+                    <div class="child">
+                        <h4>营业执照扫描件</h4>
+                        <textStyleUpload ref="textStyleUpload1" fileAccept= 'jpg,jpeg,png,gif,PDF,pdf' :limitNumber="limitNumber"></textStyleUpload>
+                    </div>
+                </el-col>
+                <el-col :span="7">
+                    <div class="child">
+                        <h4>企业法人或负责人证件扫描件</h4>
+                        <textStyleUpload ref="textStyleUpload2" fileAccept= 'jpg,jpeg,png,gif,PDF,pdf' :limitNumber="limitNumber"></textStyleUpload>
+                    </div>
+                </el-col>
+                <el-col :span="7">
+                    <div class="child">
+                        <h4>营业执照扫描件</h4>
+                        <textStyleUpload ref="textStyleUpload3" fileAccept='jpg,jpeg,png,gif,PDF,pdf' :limitNumber="limitNumber"></textStyleUpload>
+                    </div>
+                </el-col>
+            </el-row>
+            <p class="checkContent"><el-checkbox v-model="checked" style="margin-right:10px;"></el-checkbox>我同意并遵守<span class="blue pointer">库易保业务开通协议</span></p>
+            <div style="text-align:right;width:100%;">
+                <el-button type="info" @click="close('serviceFulfillment')" class="radiusNone">取消</el-button>
+                <el-button type="primary" @click="submitForm('serviceFulfillment')" class="primaryButton radiusNone">提交</el-button>      
+            </div>
         </div>
     </div>
-    <div v-show="status">
-        <el-form :model="ruleForm2" ref="ruleForm2" label-width="70px" class="specialsForm" style="width:100%;">
-          <div style="overflow:hidden;">
-                <el-form-item label="名称" prop="model1">
-                   <el-select v-model="ruleForm2.model1" placeholder="请选择协议模板" clearable=""  style="width:100%;" disabled="">
-                        <el-option label="协议模板1" value="value1"></el-option>
-                        <el-option label="协议模板2" value="value2"></el-option>
-                    </el-select>
-                </el-form-item>
-               <el-form-item label="名称" prop="model2">
-                   <el-select v-model="ruleForm2.model2" placeholder="请选择协议模板" clearable=""  style="width:100%;" disabled="">
-                        <el-option label="协议模板1" value="value1"></el-option>
-                        <el-option label="协议模板2" value="value2"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="名称" prop="name1">
-                    <el-input v-model="ruleForm2.name1" disabled=""></el-input>
-                </el-form-item>
-                 <el-form-item label="名称" prop="name2">
-                    <el-input v-model="ruleForm2.name2" disabled=""></el-input>
-                </el-form-item>
-          </div>
-        </el-form>
-         <el-row type="flex" class="attachmentContent" justify="space-between">
-            <el-col :span="7">
-                <div class="child">
-                    <h4>营业执照扫描件</h4>
-                    <img src="static/images/pdf.png" alt="" class="pdf"><span @click="handlePreview(attachment1)">{{attachment1.name}}</span>
-                </div>
-            </el-col>
-            <el-col :span="7">
-                <div class="child">
-                    <h4>企业法人或负责人证件扫描件</h4>
-                    <img src="static/images/pdf.png" alt="" class="pdf"><span @click="handlePreview(attachment2)">{{attachment2.name}}</span>
-                </div>
-            </el-col>
-            <el-col :span="7">
-                <div class="child">
-                    <h4>营业执照扫描件</h4>
-                    <img src="static/images/pdf.png" alt="" class="pdf"><span @click="handlePreview(attachment3)">{{attachment3.name}}</span>
-                </div>
-            </el-col>
-        </el-row>
-        </div>
-
-    <div v-show="step==2 && auditState == 'shenhezhong' && !status" style="text-align:center;padding-top:40px;padding-bottom:60px;">
+    <!-- 步骤2 -->
+    <div v-show="step==2 && auditState == 'shenhezhong'" style="text-align:center;padding-top:40px;padding-bottom:60px;">
         <img src="static/images/shenhezhong.png" alt="">
         <p style="color:rgba(153,153,153,1);">平台审核中，请耐心等待</p>
     </div>
@@ -113,26 +70,27 @@
         <p style="color:rgba(102,102,102,1);text-align:left;margin-top:20px;">“一般来说资格审核是用不了多久的,一般一两天就可以通过了。 但是也不排除因为其他的原因而造成的等待时间特别长。 但是这个也不一定,因为有的地方一天左右的样子就会审核完成,而有的地方需要10天或者一个星期左右,还有的地方甚至要半个 月的时间。我们这里一般审核的话,大概一个星期左右就可以拿到...”</p>
         <p style="text-align:right;"><el-button type="primary" @click="repeatApplication()" class="primaryButton radiusNone">重新申请</el-button>      </p>
     </div>
-    <div v-show="step==3  && !status" class="thirdStep">
-        <el-form :model="ruleForm2" ref="ruleForm2" label-width="70px" class="specialsForm" style="width:100%;">
+    <!-- 步骤3 -->
+    <div v-show="step==3" class="thirdStep">
+        <el-form :model="review" ref="review" label-width="70px" class="specialsForm" style="width:100%;">
           <div style="overflow:hidden;">
                 <el-form-item label="名称" prop="model1">
-                   <el-select v-model="ruleForm2.model1" placeholder="请选择协议模板" clearable=""  style="width:100%;" disabled="">
+                   <el-select v-model="review.model1" placeholder="请选择协议模板" clearable=""  style="width:100%;" disabled="">
                         <el-option label="协议模板1" value="value1"></el-option>
                         <el-option label="协议模板2" value="value2"></el-option>
                     </el-select>
                 </el-form-item>
                <el-form-item label="名称" prop="model2">
-                   <el-select v-model="ruleForm2.model2" placeholder="请选择协议模板" clearable=""  style="width:100%;" disabled="">
+                   <el-select v-model="review.model2" placeholder="请选择协议模板" clearable=""  style="width:100%;" disabled="">
                         <el-option label="协议模板1" value="value1"></el-option>
                         <el-option label="协议模板2" value="value2"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="名称" prop="name1">
-                    <el-input v-model="ruleForm2.name1" disabled=""></el-input>
+                    <el-input v-model="review.name1" disabled=""></el-input>
                 </el-form-item>
                  <el-form-item label="名称" prop="name2">
-                    <el-input v-model="ruleForm2.name2" disabled=""></el-input>
+                    <el-input v-model="review.name2" disabled=""></el-input>
                 </el-form-item>
           </div>
         </el-form>
@@ -160,15 +118,16 @@
             <span class="onlineSign">在线签署</span>
         </p>
         <div style="text-align:right;width:100%;">
-                <el-button type="info" @click="close()" class="radiusNone">取消</el-button>
-                <el-button type="primary" @click="signSubmit()" class="primaryButton radiusNone">提交</el-button>      
+            <el-button type="info" @click="close('review')" class="radiusNone">取消</el-button>
+            <el-button type="primary" @click="signSubmit()" class="primaryButton radiusNone">提交</el-button>
         </div>
     </div>
-    <div v-show="step==4 && auditState == 'shenhezhong'  && !status" style="text-align:center;padding-top:40px;padding-bottom:60px;">
+    <!-- 步骤4 -->
+    <div v-show="step==4 && auditState == 'shenhezhong'" style="text-align:center;padding-top:40px;padding-bottom:60px;">
         <img src="static/images/shenhezhong.png" alt="">
         <p style="color:rgba(153,153,153,1);">银行授信审核中，请耐心等待</p>
     </div>
-    <div v-show="step==4 &&　auditState =='failed'  && !status" style="text-align:center;padding-top:40px;padding-bottom:10px;">
+    <div v-show="step==4 &&　auditState =='failed'" style="text-align:center;padding-top:40px;padding-bottom:10px;">
         <img src="static/images/shenheerror.png" alt="">
         <p style="color:rgba(255,88,1,1);">银行授信审核未通过</p>
         <p style="color:rgba(102,102,102,1);text-align:left;margin-top:20px;">“一般来说资格审核是用不了多久的,一般一两天就可以通过了。 但是也不排除因为其他的原因而造成的等待时间特别长。 但是这个也不一定,因为有的地方一天左右的样子就会审核完成,而有的地方需要10天或者一个星期左右,还有的地方甚至要半个 月的时间。我们这里一般审核的话,大概一个星期左右就可以拿到...”</p>
@@ -178,16 +137,19 @@
 </div>
 </template>
 <script>
-import   textStyleUpload from '@/components/textStyleUpload.vue';
+import textStyleUpload from '@/components/textStyleUpload.vue';
 import showFileDetail from '@/components/showFileDetail.vue'
 export default {
     data(){
         return{
-            limitNumber:1,
-            status:false,
-            currentStep:1,
-            checked:true,
-            ruleForm:{},
+            limitNumber: 1, // 限制文件上传
+            checked: true, // 步骤1 协议是否同意
+            serviceFulfillment:{ //业务开通 步骤1
+                model1:'',
+                model2:'',
+                name1:'',
+                name2:''
+            },
             attachment1:{
 	            "uid": 1597214482997,
                 "size": 70269,
@@ -214,13 +176,13 @@ export default {
 	            "dataPoolURL": "/tdp/0f307499499c478089f874edfe389957/network/a25eaecd3d6f4a35a4d163b0e9f69d9d/ledger/95d07aa9f7884212a9618f4d537ed998/v2.0/attachment/2913919147222"
             
             },
-            ruleForm2:{
+            review:{ // 步骤3回显数据
                 model1:'value1',
                 model2:'value2',
                 name1:'名称1',
                 name2:'名称2'
             },
-            rules:{
+            serviceFulfillmentRules:{
                 model1: [
                     { required: true, message: '不能为空！', trigger: 'change' }
                 ],
@@ -249,15 +211,14 @@ export default {
         }
     },
     methods:{
+        // 在线签署
         onlineSign(){
-            
         },
+        // 下载模板
         download(){
             window.location.href="static/模板.rar";
         },
-        stepChange(){
-            this.step = 1;
-        },
+        // 预览pdf
         handlePreview(file) {
             let IEPDF = this.$global.isAcrobatPDFPluginInstalled();
             var vm = this;
@@ -268,30 +229,36 @@ export default {
                 location = 'http://ardownload.adobe.com/pub/adobe/reader/win/9.x/9.3/chs/AdbeRdr930_zh_CN.exe';
             }
         },
-        close(){
+        // 取消
+        close(refType){
+            this.$refs[refType].resetFields();
             this.$bus.$emit('closeDialog');
-            this.$refs['ruleForm'].resetFields();
         },
+        // 步骤1 业务开通申请
         submitForm(formName) {
             var vm = this;
-            this.$refs[formName].validate((valid) => {
+            if (vm.checked === false) {
+                vm.$message.warning('请您同意并遵守库易保业务开通协议。');
+                return;
+            }
+            vm.$refs[formName].validate((valid) => {
                 if (valid) {
-                    // if(this.$refs.textStyleUpload1.getFile.length==0){
+                    // if(vm.$refs.textStyleUpload1.getFile.length==0){
                     //     vm.$message.error('请先上传营业执照扫描件');
                     //     return;
                     // }
-                    // if(this.$refs.textStyleUpload2.getFile.length==0){
+                    // if(vm.$refs.textStyleUpload2.getFile.length==0){
                     //     vm.$message.error('请先上传企业法人或负责人证件扫描件');
                     //     return;
                     // }
-                    // if(this.$refs.textStyleUpload3.getFile.length==0){
-                    //     vm.$message.error('营业执照扫描件');
+                    // if(vm.$refs.textStyleUpload3.getFile.length==0){
+                    //     vm.$message.error('请先上传营业执照扫描件');
                     //     return;
                     // }
-                    this.$store.state.step = 2;
-                    this.$store.state.openState = 'opening';
+                    vm.$store.state.step = 2;
+                    vm.$store.state.openState = 'opening';
                 } else {
-                    console.log('error submit!!');
+                    vm.$message.warning('请检查输入是否正确。');
                     return false;
                 }
             });
@@ -304,17 +271,7 @@ export default {
         repeatApplication(){
             this.$store.state.step = 1;
             this.$store.state.auditState = 'shenhezhong';
-        },
-        firstClick(){
-            if(this.step>1){
-                this.status = true;
-            }
-        },
-        otherClick(){
-            if(this.step>1){
-                this.status = false;
-            }
-        },
+        }
     }
 }
 </script>
