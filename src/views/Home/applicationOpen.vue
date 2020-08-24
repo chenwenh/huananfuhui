@@ -11,23 +11,13 @@
         <div>
             <el-form :model="serviceFulfillment" :rules="serviceFulfillmentRules" ref="serviceFulfillment" label-width="70px" class="specialsForm" style="width:100%;">
                 <div style="overflow:hidden;">
-                    <el-form-item label="名称" prop="model1">
-                        <el-select v-model="serviceFulfillment.model1" placeholder="请选择协议模板" clearable=""  style="width:100%;">
-                            <el-option label="协议模板1" value="value1"></el-option>
-                            <el-option label="协议模板2" value="value2"></el-option>
+                    <el-form-item label="名称" prop="model">
+                        <el-select v-model="serviceFulfillment.model" placeholder="请选择协议模板" clearable=""  style="width:100%;">
+                            <el-option label="年度框架协议" value="value1"></el-option>
                         </el-select>
                     </el-form-item>
-                    <el-form-item label="名称" prop="model2">
-                        <el-select v-model="serviceFulfillment.model2" placeholder="请选择协议模板" clearable=""  style="width:100%;">
-                            <el-option label="协议模板1" value="value1"></el-option>
-                            <el-option label="协议模板2" value="value2"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="名称" prop="name1">
-                        <el-input v-model="serviceFulfillment.name1"></el-input>
-                    </el-form-item>
-                    <el-form-item label="名称" prop="name2">
-                        <el-input v-model="serviceFulfillment.name2"></el-input>
+                    <el-form-item label="名称" prop="name">
+                        <el-input v-model="serviceFulfillment.name"></el-input>
                     </el-form-item>
                 </div>
             </el-form>
@@ -74,23 +64,13 @@
     <div v-show="step==3" class="thirdStep">
         <el-form :model="review" ref="review" label-width="70px" class="specialsForm" style="width:100%;">
           <div style="overflow:hidden;">
-                <el-form-item label="名称" prop="model1">
-                   <el-select v-model="review.model1" placeholder="请选择协议模板" clearable=""  style="width:100%;" disabled="">
-                        <el-option label="协议模板1" value="value1"></el-option>
-                        <el-option label="协议模板2" value="value2"></el-option>
+                <el-form-item label="名称" prop="model">
+                   <el-select v-model="review.model" placeholder="请选择协议模板" clearable=""  style="width:100%;" disabled="">
+                        <el-option label="年度框架协议" value="value1"></el-option>
                     </el-select>
                 </el-form-item>
-               <el-form-item label="名称" prop="model2">
-                   <el-select v-model="review.model2" placeholder="请选择协议模板" clearable=""  style="width:100%;" disabled="">
-                        <el-option label="协议模板1" value="value1"></el-option>
-                        <el-option label="协议模板2" value="value2"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="名称" prop="name1">
-                    <el-input v-model="review.name1" disabled=""></el-input>
-                </el-form-item>
-                 <el-form-item label="名称" prop="name2">
-                    <el-input v-model="review.name2" disabled=""></el-input>
+                <el-form-item label="名称" prop="name">
+                    <el-input v-model="review.name" disabled=""></el-input>
                 </el-form-item>
           </div>
         </el-form>
@@ -145,10 +125,8 @@ export default {
             limitNumber: 1, // 限制文件上传
             checked: true, // 步骤1 协议是否同意
             serviceFulfillment:{ //业务开通 步骤1
-                model1:'',
-                model2:'',
-                name1:'',
-                name2:''
+                model:'',
+                name:''
             },
             attachment1:{
 	            "uid": 1597214482997,
@@ -165,7 +143,6 @@ export default {
                 "fileName": "正面.pdf",
                 "name": "正面.pdf",
 	            "dataPoolURL": "/tdp/0f307499499c478089f874edfe389957/network/a25eaecd3d6f4a35a4d163b0e9f69d9d/ledger/95d07aa9f7884212a9618f4d537ed998/v2.0/attachment/2913919147222"
-            
             },
             attachment3:{
                 "uid": 1597214482997,
@@ -174,25 +151,16 @@ export default {
                 "fileName": "正面.pdf",
                 "name": "正面.pdf",
 	            "dataPoolURL": "/tdp/0f307499499c478089f874edfe389957/network/a25eaecd3d6f4a35a4d163b0e9f69d9d/ledger/95d07aa9f7884212a9618f4d537ed998/v2.0/attachment/2913919147222"
-            
             },
             review:{ // 步骤3回显数据
-                model1:'value1',
-                model2:'value2',
-                name1:'名称1',
-                name2:'名称2'
+                model:'value1',
+                name:'名称1',
             },
             serviceFulfillmentRules:{
-                model1: [
+                model: [
                     { required: true, message: '不能为空！', trigger: 'change' }
                 ],
-                model2: [
-                    { required: true, message: '不能为空！', trigger: 'change' }
-                ],
-                name1: [
-                    { required: true, message: '不能为空！', trigger: 'blur' }
-                ],
-                name2: [
+                name: [
                     { required: true, message: '不能为空！', trigger: 'blur' }
                 ],
             }
