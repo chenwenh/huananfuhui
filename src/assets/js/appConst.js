@@ -127,6 +127,24 @@ export default {
     publishStatus:{
       NO_PUBLISH:'未发布',
       PUBLISHED:'已发布'
+    },
+    // 业务开通状态
+    serveStatus: {
+      TO_BE_AUDIT: '待审核',
+      CONFIRMED: '审核通过',
+      REJECTED: '审核未通过',
+      SIGNED_BY_PARTYA: '甲方签署',
+      SIGNED_BY_PARTYB: '乙方签署',
+      BANK_CREDIT: '银行授信中',
+      VALID: '生效'
+    },
+    // 业务开开通步骤
+    serveStep: {
+      step1: ['TO_BE_AUDIT'],
+      step2: ['CONFIRMED', 'REJECTED'],
+      step3: ['SIGNED_BY_PARTYB', 'SIGNED_BY_PARTYA'],
+      step4: ['BANK_CREDIT'],
+      step5: ['VALID']
     }
   }
   

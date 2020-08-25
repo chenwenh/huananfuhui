@@ -6,7 +6,7 @@
             placeholder="输入关键字进行搜索"
             v-model="searchValue" style="width:300px;" class="search">
             <i slot="prefix" class="el-input__icon el-icon-search" style="margin-top:-2px;"></i>
-        </el-input><el-button type="primary" @click="search" size="medium" style="margin-left:20px;"  class="radiusNone">搜索</el-button>
+        </el-input><el-button type="primary" @click="search(searchValue)" size="medium" style="margin-left:20px;"  class="radiusNone">搜索</el-button>
         <Table
               ref="tableRef"
               :mainTable="mainTable"
@@ -44,7 +44,7 @@
         </Table>
         <!-- 审核 -->
         <dialogCommonComponent ref="dialogCommonComponent" title="审核" width="50%">
-            <auditDetail ref="auditDetail" :detailInfo="detailInfo"></auditDetail>
+            <auditDetail ref="auditDetail" :detailInfo="detailInfo" @search='search(searchValue)'></auditDetail>
         </dialogCommonComponent>
         <!-- 详情 -->
         <dialogCommonComponent ref="dialogCommonComponent2" title="详情" width="50%">
@@ -52,7 +52,7 @@
         </dialogCommonComponent>
           <!-- 添加 -->
         <dialogCommonComponent ref="dialogCommonComponent3" title="签署协议" width="50%">
-            <add ref="add"  :fromAudit="true"></add>
+            <add ref="add" :fromAudit="true"></add>
         </dialogCommonComponent>
     </div>
 </template>
@@ -75,11 +75,9 @@ export default {
           contractContent: "开通业务",
           buzType1: "申请日期",
           cType1: "开通状态",
-          buyer: "拒绝原因",
       },
       searchValue:"",
       breadcrumbs:["协议管理","业务开通审核"],
-      workDate: '',
       // 表格数据
       mainTable: {
         tableHeader: {
@@ -123,8 +121,6 @@ export default {
       page: 1,
       pageSize: 10,
       loading: false,
-      assetsList: [],
-      isDevorg: ''
     };
   },
   components: {
@@ -141,8 +137,7 @@ export default {
     
   },
   created() {
-    if (this.$route.query.type && this.$route.query.type !== '') this.isDevorg = this.$route.query.type;
-    // this.search();
+    this.search();
   },
   methods: {
     rowClick(row){
@@ -157,34 +152,30 @@ export default {
           this.$refs.auditDetail.init(row);
        });
     },
-    signAggreement(scope) {
+    signAggreement(row) {
        this.$refs.dialogCommonComponent3.show();
        this.$nextTick(()=>{
-          this.$refs.add.resetForm();
+          this.$refs.add.init(row);
        });
     },
     // 搜索
     search(searchData) {
-      this.mainTable.tableData = [];
+      // this.mainTable.tableData = [];
       const params = {
         page: this.page,
         pageSize: this.pageSize,
-        orgId:sessionStorage.getItem('orgId'),
-        assetType:'TRADECONTRACT',
         sortDirection: 'DESC'
       };
+      if (this.searchValue !== '') {
+
+      }
       // 获取意向申请列表
-      const url = `${this.$apiUrl}`;
+      const url = `${this.$apiUrl.serviceFulfillment.query}`;
       this.$http.post(url,params)
         .then(res => {
           if (res.data.status !== 200) return;
           this.totalCount = res.data.data.totalElements;
-          this.mainTable.tableData = res.data.data.content;
-          this.mainTable.tableData.map(item => {
-            item.contractMoney = item.amount;
-            item.cType = item.type;
-          });
-          console.log(this.mainTable.tableData);
+          // this.mainTable.tableData = res.data.data.content;
         }).catch(err => {
           this.$message.warning(err.message || '服务器错误，请稍后再试!');
         });
@@ -192,13 +183,13 @@ export default {
     // 分页
     handleCurrentChange(currentPage) {
       this.page = currentPage;
-      this.search();
+      this.search(this.searchValue);
     },
     handleSizeChange(size){
       this.pageSize = size;
       this.page = 1;
       this.$refs.tableRef.resetCurrentPage();
-      this.search();
+      this.search(this.searchValue);
     }
   }
 };

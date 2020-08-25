@@ -11,13 +11,13 @@
                  <img src="static/images/fubaotong.png" alt="" style="margin-right:20px;" class="pointer" @click="fubaotongClick">
                  <div style="position:relative;display:inline-block;" @click="applicationOpen">
                     <img src="static/images/kuyibao.png" alt="" class="pointer">
-                    <span class="status" v-show="$store.state.openState=='notOpen'">申请开通</span>
-                    <span class="status" v-show="$store.state.openState=='opening'">开通中</span>
+                    <span class="status" v-show="step=='notOpen'">申请开通</span>
+                    <span class="status" v-show="step=='opening'">开通中</span>
                  </div>
             </div>
             <!-- 开通组件 -->
             <dialogCommonComponent ref="dialogCommonComponent" title="业务开通申请" width="860px">
-                <applicationOpen ref="applicationOpen"></applicationOpen>
+                <applicationOpen ref="applicationOpenRef"></applicationOpen>
             </dialogCommonComponent>
             <div class="questions shadow">
                 <h3 class="title">常见问题</h3>
@@ -98,9 +98,11 @@ import applicationOpen from './applicationOpen.vue';
 export default {
     created() {
         this.getUserData();
+        this.getServiceStatus();
     },
     data(){
         return{
+            step: 'notOpen', // 业务开通步骤
             activeName:'first',
             alertShow:true,
             enterpriseData: { // 企业信息
@@ -181,8 +183,26 @@ export default {
                 path:'/homes/salesInfo'
             });
         },
+        // 获取业务开通状态
+        getServiceStatus() {
+            const url = `${this.$apiUrl.serviceFulfillment.query}`;
+            let params = {
+                audit_status: '!==reject'
+            };
+            this.$http.post(url, params)
+                .then(res => {
+                if (res.data.status !== 200) return;
+                    this.step = 'notOpen';
+                }).catch(err => {
+                    this.$message.warning(err.message || '服务器错误，请稍后再试!');
+                });
+        },
         applicationOpen(){
             this.$refs.dialogCommonComponent.show();
+            this.$nextTick(() =>{
+                // this.$refs.applicationOpenRef.getStep(this.step);
+                this.$refs.applicationOpenRef.getStep(1);
+            });
         },
         handleClick(tab, event) {
             console.log(tab, event);
