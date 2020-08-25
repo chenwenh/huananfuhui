@@ -25,6 +25,14 @@
                         >
                   <template slot-scope="scope">
                     <el-button
+                        class="collectBtn"
+                        size="medium"
+                        type="text"
+                        style="margin-left:0px; "
+                        @click.stop="detail(scope.row)">
+                        明细
+                    </el-button>
+                    <el-button
                        v-if="scope.row.publishStatus =='NO_PUBLISH'"
                         class="collectBtn"
                         size="medium"
@@ -61,6 +69,10 @@
         <dialogCommonComponent ref="dialogCommonComponent2" title="发布采购计划" width="50%">
             <publicPlan ref="publicPlan" @search="search"></publicPlan>
         </dialogCommonComponent>
+         <!-- 明细 -->
+        <dialogCommonComponent ref="dialogCommonComponent3" title="明细" width="50%">
+            <goodsDetail ref="goodsDetail"></goodsDetail>
+        </dialogCommonComponent>
     </div>
 </template>
 
@@ -70,6 +82,7 @@ import breadcrumb from '@/components/breadcrumb.vue';
 import dialogCommonComponent from '@/components/dialogCommonComponent';
 import add from './add.vue';
 import publicPlan from './publicPlan.vue';
+import goodsDetail from './../procurementPlan/goodsDetail';
 import { mapGetters } from 'vuex'
 
 export default {
@@ -110,7 +123,8 @@ export default {
     breadcrumb,
     dialogCommonComponent,
     add,
-    publicPlan
+    publicPlan,
+    goodsDetail
   },
   created() {
     this.search();
@@ -126,6 +140,14 @@ export default {
     });
   },
   methods: {
+    // 明细
+    detail(row){
+      this.$refs.dialogCommonComponent3.show();
+      var vm = this;
+      this.$nextTick(()=>{
+        vm.$refs.goodsDetail.init(row.goods);
+      });
+    },
     // 新建
     addPlan(){
         this.$refs.dialogCommonComponent.show();

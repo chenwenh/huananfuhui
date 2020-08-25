@@ -4,7 +4,7 @@
           <div style="overflow:hidden;">
               <div>
                 <el-form-item label="项目编号" prop="projectNo">
-                    <el-input v-model="ruleForm.projectNo"></el-input>
+                    <el-input v-model="ruleForm.projectNo" :disabled="!isAdd"></el-input>
                 </el-form-item>
                 <el-form-item label="项目名称" prop="title">
                     <el-input v-model="ruleForm.title"></el-input>

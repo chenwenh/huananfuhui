@@ -52,6 +52,10 @@ export let apiUrl = {
         update:apiGateway2 + '/sales-info/update',//修改
         findById:apiGateway2 + '/sales-info/findById/',//根据id查询详情
     },
+    // 物料
+    material:{
+        query:apiGateway2 +　'/materialInfo/query',//查询所有的物料
+    },
     // 协议管理
     agreement: {
         create: currentApiUrl + '/agreement/create', // 创建

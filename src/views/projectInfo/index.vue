@@ -92,7 +92,8 @@ export default {
           periodPayment:"回款周期",
           trustedClient:"受托客户",
           steelConsumption:"钢铁用量(吨)",
-          publishStatus:'发布状态'
+          publishStatus:'发布状态',
+          content:'内容'
       },
       searchValue:"",
       breadcrumbs:["信息公示","项目信息"],
@@ -144,7 +145,7 @@ export default {
       this.$nextTick(()=>{
         this.$refs.add.resetForm();
         this.$refs.add.init(true);
-        this.title = '新建协议';
+        this.title = '新建项目';
       });
     },
     // 修改
@@ -153,7 +154,7 @@ export default {
       this.$nextTick(()=>{
         this.$refs.add.resetForm();
         this.$refs.add.init(false,row);
-        this.title = '修改协议';
+        this.title = '修改项目';
       });
     },
     // 发布

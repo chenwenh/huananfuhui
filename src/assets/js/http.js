@@ -11,13 +11,17 @@ axios.defaults.timeout = 500000
 axios.interceptors.request.use(
     config => {
         config.headers = {
-            'org_id': JSON.parse(sessionStorage.getItem('user')).orgId,
-            'org_name': encodeURI(JSON.parse(sessionStorage.getItem('user')).orgName),
-            'user_id': JSON.parse(sessionStorage.getItem('user')).id,
-            'username': JSON.parse(sessionStorage.getItem('user')).username
+            // 'org_id': JSON.parse(sessionStorage.getItem('user')).orgId,
+            // 'org_name': encodeURI(JSON.parse(sessionStorage.getItem('user')).orgName),
+            // 'user_id': JSON.parse(sessionStorage.getItem('user')).id,
+            // 'username': JSON.parse(sessionStorage.getItem('user')).username
         }
         if (window.sessionStorage.getItem('token')) {
             config.headers.Authorization = window.sessionStorage.getItem('token');
+            config.headers.org_id = JSON.parse(sessionStorage.getItem('user')).orgId;
+            config.headers.org_name = encodeURI(JSON.parse(sessionStorage.getItem('user')).orgName);
+            config.headers.user_id = JSON.parse(sessionStorage.getItem('user')).id;
+            config.headers.username = JSON.parse(sessionStorage.getItem('user')).username;
         }
         
         // loader = new Vue().$loading({

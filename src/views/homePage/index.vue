@@ -17,9 +17,9 @@
                             <span class="right" @click="showMore(item.type)">查看更多 ></span>
                         </p>
                         <ul v-for='(item2,index2) in item.children' :key="index2">
-                            <li>
+                            <li @click="toDetail(item.type, item2.id)">
                                 <p class="Title"><span class="left title">{{item2.title}}</span><span class="right state" :class="{'active':item2.publishStatus === 'NO_PUBLISH'}">{{$appConst.publishStatus[item2.publishStatus]}}</span></p>
-                                <p @click="toDetail(item.type, item2.id)" class="content">{{item2.content}}</p>
+                                <p  class="content">{{item2.content}}</p>
                                 <p style="text-align:right;"><span class="date">{{item2.publishDate}}</span></p>
                             </li>
                         </ul>
@@ -209,7 +209,7 @@ export default {
     background: #FFFFFF;
     border: 1px solid #E4E5E6;
     box-shadow: 0 8px 4px 0 rgba(0,0,0,0.05);
-    height:328px;
+    height:342px;
     padding:15px;
 }
 .messageContent .children .header{

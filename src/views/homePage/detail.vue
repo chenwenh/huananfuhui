@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="content__top">
-        <p><span style="margin-right:10px;">项目名称:</span>{{detail.title}}</p>
+        <p><span style="margin-right:10px;">名称:</span>{{detail.title}}</p>
         <p>
           <span>{{detail.status}}</span>
           <span>{{detail.time}}</span>
@@ -9,16 +9,10 @@
     </div>
     <div class="content__bottom">
       <p>{{detail.detail}}</p>
-      <!-- <p><span>施工方:</span>{{detail.constructionParty}}</p>
-      <p><span>城市:</span>{{detail.city}}</p>
-      <p><span>钢材用量:</span>{{detail.steel}}</p>
-      <p><span>工期:</span>{{detail.schedule}}</p>
-      <p><span>回款周期:</span>{{detail.accountsReceipt}}</p>
-      <p><span>发布周期:</span>{{detail.release}}</p> -->
       <p v-for="(value,key) in formItem" :key="key">
-        <span>{{value}}:</span>
-        <span v-if="key=='publishStatus'">{{$appConst.publishStatus[detail[key]]}}</span>
-        <span v-else>{{detail[key]}}</span>
+        <span class="left">{{value}}:</span>
+        <span v-if="key=='publishStatus'" class="right">{{$appConst.publishStatus[detail[key]]}}</span>
+        <span v-else class="right">{{detail[key]}}</span>
       </p>
     </div>
   </div>
@@ -44,19 +38,21 @@ export default {
         periodPayment:"回款周期",
         trustedClient:"受托客户",
         steelConsumption:"钢铁用量(吨)",
-        publishStatus:'发布状态'
+        publishStatus:'发布状态',
+        content:'内容'
       },
       purchaseForm:{
           planNo: "计划编号",
-          projectName: "项目名称",
           endDate: "截止日期",
           department: "部门",
           createTime: "发布日期",
-          publishStatus: "发布状态"
+          publishStatus: "发布状态",
+          content:'内容'
       },
       salesForm:{
         endDate: "截止日期",
-        publishStatus: "发布状态"
+        publishStatus: "发布状态",
+        content:'内容'
       },
       detail: {
           // id: 1,
@@ -88,8 +84,10 @@ export default {
           this.formItem = Object.assign({},this.projectForm);
         }else if(type=='buy'){
           url = this.$apiUrl.purchase.findById;
+          this.formItem = Object.assign({},this.purchaseForm);
         }else{
           url = this.$apiUrl.salesInfo.findById;
+          this.formItem = Object.assign({},this.salesForm);
         }
         // 获取意向申请列表
         this.$http.get(`${url}${id}`)
@@ -136,9 +134,14 @@ export default {
         line-height: 18px;
         font-size: 12px;
         color: #666666;
-        span {
+        span.left {
           display: inline-block;
           width: 130px;
+          float: left;
+        }
+        span.right{
+          display: inline-block;
+          width: calc(100% - 155px);
         }
       }
     }

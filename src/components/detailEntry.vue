@@ -27,8 +27,16 @@
 			        </div>
 			    </template>
 		    	<template slot-scope="scope">
+					<!-- 品名 -->
+					<el-select v-if='key=="breed"' v-model="scope.row[key]"  clearable=""  style="width:100%;" @change="querySpec(scope.row[key])">
+						<el-option :label="item" :value="item" v-for="(item,index) in breeds" :key="index"></el-option>
+					</el-select>
+					<!-- 规格 -->
+					<el-select v-if='key=="spec"' v-model="scope.row[key]"  clearable=""  style="width:100%;">
+						<el-option :label="item" :value="item" v-for="(item,index) in specs" :key="index"></el-option>
+					</el-select>
   					<el-input
-  						v-if="key !== 'currency'" 
+  						v-else
   						v-model="scope.row[key]"
   						class="editInput"
   						:keyVal="key"
@@ -37,9 +45,6 @@
   						@blur="handleDetailBlur($event, scope.row, key, scope.$index)"
   						>
   					</el-input>
-  					<span v-else>
-  						{{scope.row[key]}}
-  					</span>
 			    </template>
 		    </el-table-column>
 
@@ -61,11 +66,13 @@
 	export default {
 		data() {
 			return {
+				breeds:[],
+				specs:[],
                 tabData:[
 				],
                 formItem:{
 					skuId: "编号",
-					productName: "品名",
+					breed: "品名",
 					spec: "规格",
 					materialQuality: "材质",
 					length: "长度",
@@ -80,6 +87,22 @@
             }
 		},
 		methods: {
+			// 查询所有的品名
+			query(){
+				this.$http.get(`${this.$apiUrl.material.query}`)
+				.then(res=>{
+					var arr = res.data.data.content.map(item=>item.breed);
+					this.breeds = new Set(arr);
+				});
+			},
+			// 根据品名查询规格
+			querySpec(breed){
+				this.$http.get(`${this.$apiUrl.material.query}/breed=${breed}`)
+				.then(res=>{
+					var arr = res.data.data.content.map(item=>item.spec);
+					this.specs = new Set(arr);
+				});
+			},
 			init(){
 				this.tabData = [];
 			},
@@ -161,6 +184,7 @@
 			vm.$bus.$on('initForm',function() {
 				vm.init();
 			});
+			this.query();
 		},
 		components: {
 			

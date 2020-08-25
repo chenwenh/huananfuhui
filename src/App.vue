@@ -4,6 +4,7 @@
       <div class="center">
         <div @click="goHomePage"><img src="static/images/logo.png" alt=""><span>华南富汇智慧供应链平台</span></div>
         <span class='right login'>
+          <span class="enter pointer" @click="goHomePage" v-show="token">进入平台</span>
           <router-link :to="{path:'/login'}" v-show="$route.path!='/login' && !token">登录</router-link>
           <el-dropdown trigger="click"  v-show="$route.path!='/login' && token"  @command="handleCommand" style="margin-top:7px;cursor:pointer;position:absolute;right:0;top:0;">
               <span class="el-dropdown-link">
@@ -64,6 +65,7 @@ export default {
             sessionStorage.clear()
             localStorage.clear()
             this.$router.push({path:'/login'});
+            this.token = null;
         }
     },
   }
@@ -105,5 +107,16 @@ span.login a{
   font-size:16px;
   color: #302F4D;
   top:30px;
+}
+.center span.enter{
+  padding:5px 22px;
+  display: inline-block;
+  color:#FF6E00;
+  border:1px solid #FAB700;
+  border-radius: 17px;
+  font-size:12px;
+  position: absolute;
+  right:115px;
+  top:27px;
 }
 </style>

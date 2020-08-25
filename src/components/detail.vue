@@ -5,7 +5,7 @@
             class="inner" 
             :span="12" 
             v-for="(item, key) in detailInfo" 
-            :key="item+key">
+            :key="item+key" v-show="key!=='content'">
             <el-col :span="24" class="elCol" style="margin-bottom:10px;">
                 <el-col class="elLable" :span="8" style="text-align:right; padding-right:5px; color:#48576a; ">
                     {{item}}：
@@ -19,6 +19,16 @@
                             {{diaComData[key]}}
                         </span>
                     </div>
+                </el-col>
+            </el-col>
+        </el-col>
+        <el-col v-show="detailInfo.hasOwnProperty('content')">
+            <el-col  class="elCol" style="margin-bottom:10px;">
+                <el-col class="elLable" :span="4" style="text-align:right; padding-right:5px; color:#48576a;margin-left:-9px;">
+                    {{detailInfo['content']}}:
+                </el-col>
+                <el-col :span="20">
+                    <span style="margin-left:17px;display:inline-block;">{{diaComData['content']}}</span>
                 </el-col>
             </el-col>
         </el-col>

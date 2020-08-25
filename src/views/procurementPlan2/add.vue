@@ -10,6 +10,9 @@
                     <el-form-item label="计划单号" prop="planNo">
                         <el-input v-model="ruleForm.planNo" placeholder="请输入计划单号"></el-input>
                     </el-form-item>
+                    <el-form-item label="计划标题" prop="title">
+                        <el-input v-model="ruleForm.title" placeholder="请输入计划标题"></el-input>
+                    </el-form-item>
                     <el-form-item label="部门" prop="department">
                         <el-input v-model="ruleForm.department" placeholder="请输入部门"></el-input>
                     </el-form-item>
@@ -23,7 +26,7 @@
                             placeholder="选择日期" style="width:100%;" value-format="yyyy-MM-dd">
                         </el-date-picker>
                     </el-form-item>
-                    <el-form-item label="内容" prop="content" style="width:96%;">
+                    <el-form-item label="内容" prop="content" style="width:90%;">
                         <el-input v-model="ruleForm.content" type="textarea"></el-input>
                     </el-form-item>
             </div>
@@ -45,6 +48,7 @@ export default {
         return{
             loading:false,
             ruleForm: {
+                title:'',
                 planNo: '',
                 department: '',
                 salesMan:'',
@@ -55,6 +59,9 @@ export default {
             },
             projects:[],
             rules: {
+                title: [
+                    { required: true, message: '计划标题不能为空！', trigger: 'blur' }
+                ],
                 projectId: [
                     { required: true, message: '请先选择项目！', trigger: 'change' }
                 ],

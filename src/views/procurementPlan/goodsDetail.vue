@@ -23,7 +23,7 @@ export default {
 					materialQuality: "材质",
 					length: "长度",
 					quality:"数量",
-                    productName: "品名",
+                    breed: "品名",
                     unit: "计量单位",
                 },
                 tableData: [

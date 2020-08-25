@@ -2,14 +2,17 @@
     <div>
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="specialsForm" style="width:100%;">
             <div style="overflow:hidden;">
+                    <el-form-item label="标题" prop="title">
+                        <el-input v-model="ruleForm.title"></el-input>
+                    </el-form-item>
                     <el-form-item label="截止日期" prop="endDate">
-                    <el-date-picker
+                        <el-date-picker
                             v-model="ruleForm.endDate"
                             type="date"
                             placeholder="选择日期" style="width:100%;" value-format="yyyy-MM-dd">
                         </el-date-picker>
                     </el-form-item>
-                    <el-form-item label="内容" prop="content" style="width:96%;">
+                    <el-form-item label="内容" prop="content" style="width:90%;">
                         <el-input v-model="ruleForm.content" type="textarea"></el-input>
                     </el-form-item>
             </div>
@@ -31,12 +34,16 @@ export default {
         return{
             loading:false,
             ruleForm: {
+                title:'',
                 endDate: '',
                 content:'',
                 publishStatus:'NO_PUBLISH'
             },
             projects:[],
             rules: {
+                title: [
+                    { required: true, message: '标题不能为空！', trigger: 'blur' }
+                ],
                 endDate: [
                     { required: true, message: '截止日期不能为空！', trigger: 'change' }
                 ],
