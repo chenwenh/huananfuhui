@@ -11,9 +11,9 @@
         <div>
             <el-form :model="serviceFulfillment" :rules="serviceFulfillmentRules" ref="serviceFulfillment" label-width="70px" class="specialsForm" style="width:100%;">
                 <div style="overflow:hidden;">
-                    <el-form-item label="名称" prop="model">
-                        <el-select v-model="serviceFulfillment.model" placeholder="请选择协议模板" clearable=""  style="width:100%;">
-                            <el-option label="年度框架协议" value="value1"></el-option>
+                    <el-form-item label="名称" prop="agreementtype">
+                        <el-select v-model="serviceFulfillment.agreementtype" placeholder="请选择协议模板" clearable=""  style="width:100%;">
+                            <el-option label="年度框架协议" value="00"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="名称" prop="name">
@@ -54,7 +54,7 @@
         <img src="static/images/shenhezhong.png" alt="">
         <p style="color:rgba(153,153,153,1);">平台审核中，请耐心等待</p>
     </div>
-    <div v-show="step==2 &&　auditState =='failed'" style="text-align:center;padding-top:40px;padding-bottom:10px;">
+    <div v-show="step==2 && auditState =='failed'" style="text-align:center;padding-top:40px;padding-bottom:10px;">
         <img src="static/images/shenheerror.png" alt="">
         <p style="color:rgba(255,88,1,1);">平台审核未通过</p>
         <p style="color:rgba(102,102,102,1);text-align:left;margin-top:20px;">“一般来说资格审核是用不了多久的,一般一两天就可以通过了。 但是也不排除因为其他的原因而造成的等待时间特别长。 但是这个也不一定,因为有的地方一天左右的样子就会审核完成,而有的地方需要10天或者一个星期左右,还有的地方甚至要半个 月的时间。我们这里一般审核的话,大概一个星期左右就可以拿到...”</p>
@@ -64,8 +64,8 @@
     <div v-show="step==3" class="thirdStep">
         <el-form :model="review" ref="review" label-width="70px" class="specialsForm" style="width:100%;">
           <div style="overflow:hidden;">
-                <el-form-item label="名称" prop="model">
-                   <el-select v-model="review.model" placeholder="请选择协议模板" clearable=""  style="width:100%;" disabled="">
+                <el-form-item label="名称" prop="agreementtype">
+                   <el-select v-model="review.agreementtype" placeholder="请选择协议模板" clearable=""  style="width:100%;" disabled="">
                         <el-option label="年度框架协议" value="value1"></el-option>
                     </el-select>
                 </el-form-item>
@@ -107,7 +107,7 @@
         <img src="static/images/shenhezhong.png" alt="">
         <p style="color:rgba(153,153,153,1);">银行授信审核中，请耐心等待</p>
     </div>
-    <div v-show="step==4 &&　auditState =='failed'" style="text-align:center;padding-top:40px;padding-bottom:10px;">
+    <div v-show="step==4 && auditState =='failed'" style="text-align:center;padding-top:40px;padding-bottom:10px;">
         <img src="static/images/shenheerror.png" alt="">
         <p style="color:rgba(255,88,1,1);">银行授信审核未通过</p>
         <p style="color:rgba(102,102,102,1);text-align:left;margin-top:20px;">“一般来说资格审核是用不了多久的,一般一两天就可以通过了。 但是也不排除因为其他的原因而造成的等待时间特别长。 但是这个也不一定,因为有的地方一天左右的样子就会审核完成,而有的地方需要10天或者一个星期左右,还有的地方甚至要半个 月的时间。我们这里一般审核的话,大概一个星期左右就可以拿到...”</p>
@@ -122,10 +122,11 @@ import showFileDetail from '@/components/showFileDetail.vue'
 export default {
     data(){
         return{
+            stepStatus: '', // 步骤数
             limitNumber: 1, // 限制文件上传
             checked: true, // 步骤1 协议是否同意
             serviceFulfillment:{ //业务开通 步骤1
-                model:'',
+                agreementtype:'',
                 name:''
             },
             attachment1:{
@@ -153,11 +154,11 @@ export default {
 	            "dataPoolURL": "/tdp/0f307499499c478089f874edfe389957/network/a25eaecd3d6f4a35a4d163b0e9f69d9d/ledger/95d07aa9f7884212a9618f4d537ed998/v2.0/attachment/2913919147222"
             },
             review:{ // 步骤3回显数据
-                model:'value1',
+                agreementtype:'value1',
                 name:'名称1',
             },
             serviceFulfillmentRules:{
-                model: [
+                agreementtype: [
                     { required: true, message: '不能为空！', trigger: 'change' }
                 ],
                 name: [
@@ -179,6 +180,10 @@ export default {
         }
     },
     methods:{
+        // 获取当前业务步骤
+        getStep(step) {
+            this.stepStatus = step;
+        },
         // 在线签署
         onlineSign(){
         },
@@ -224,17 +229,42 @@ export default {
                     //     return;
                     // }
                     vm.$store.state.step = 2;
-                    vm.$store.state.openState = 'opening';
-                } else {
-                    vm.$message.warning('请检查输入是否正确。');
-                    return false;
-                }
-            });
+                    const url = this.$apiUrl.serviceFulfillment.apply;
+                    let params = {
+                        auditStatus: 'TO_BE_AUDIT',
+                        orgId: JSON.parse(sessionStorage.getItem('user')).orgId,
+                        orgName: JSON.parse(sessionStorage.getItem('user')).orgName,
+                        agreementtype: this.serviceFulfillment.model,
+                        name: this.serviceFulfillment.name,
+                    };
+                    this.$http.post(url, params)
+                        .then(res => {
+                        if (res.data.status !== 200) return;
+                            // 业务开通申请
+                            this.stepStatus = '';
+                        }).catch(err => {
+                            this.$message.warning(err.message || '服务器错误，请稍后再试!');
+                        });
+                        } else {
+                            vm.$message.warning('请检查输入是否正确。');
+                            return false;
+                        }
+                    });
         },
         // 签署提交
         signSubmit(){
             this.$store.state.step = 4;
             this.$store.state.auditState = 'shenhezhong';
+            const url = `${this.$apiUrl.agreement.sign}`;
+            let params = {
+            };
+            this.$http.put(url, params)
+                .then(res => {
+                if (res.data.status !== 200) return;
+                    this.$message.success('签署成功');
+                }).catch(err => {
+                    this.$message.warning(err.message || '服务器错误，请稍后再试!');
+                });
         },
         repeatApplication(){
             this.$store.state.step = 1;

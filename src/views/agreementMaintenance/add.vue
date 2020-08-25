@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-loading='loading'>
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="specialsForm" style="width:100%;">
           <div style="overflow:hidden;">
               <div style="width:44%;float:left;">
@@ -47,9 +47,9 @@
                 <el-form-item label="乙方" prop="yifang" class="inputwidth">
                   <el-input v-model="ruleForm.yifang"></el-input>
                 </el-form-item>
-                <el-form-item label="丙方" prop="bingfang"  class="inputwidth">
+                <!-- <el-form-item label="丙方" prop="bingfang"  class="inputwidth">
                   <el-input v-model="ruleForm.bingfang"></el-input>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item label="合同层级" prop="level"  class="inputwidth">
                   <el-input v-model="ruleForm.level"></el-input>
                 </el-form-item>
@@ -66,9 +66,11 @@
                 <el-form-item label="合同附件" prop="" v-if="ruleForm.signMode === 'paper'">
                     <textStyleUpload ref="textStyleUpload" fileAccept= 'PDF,pdf'></textStyleUpload>
                 </el-form-item>
+                <el-form-item label="线上签署" prop="" v-if="ruleForm.signMode === 'onLine'">
+                     <span @click="signAgreement()" class="blue pointer" style="position:relative;">签署协议</span>
+                </el-form-item>
               </div>
-          </div>
-             <span @click="signAgreement()" class="blue pointer" style="position:relative;right:-20px;">签署协议</span>
+          </div>  
             <div style="text-align:center;width:100%;">
                 <el-form-item>
                     <el-button type="info" @click="close()" >取消</el-button>
@@ -88,6 +90,7 @@ export default {
     props:['fromAudit'],
     data(){
         return{
+            loading: false,
             filePrev: {
                 dataPoolURL: "/tdp/0f307499499c478089f874edfe389957/network/a25eaecd3d6f4a35a4d163b0e9f69d9d/ledger/95d07aa9f7884212a9618f4d537ed998/v2.0/attachment/2353157961395",
                 description: "合同文本电子版",
@@ -97,7 +100,8 @@ export default {
                 uid: "1587630180252",
             },
             ruleForm: {
-                signMode: '',
+                id: '',
+                signMode: 'onLine',
                 contractType: '',
                 contractNum: '',
                 contractName: '',
@@ -108,7 +112,7 @@ export default {
                 department: '',
                 jiafang: "",
                 yifang: "",
-                bingfang: '',
+                // bingfang: '',
                 level: 0,
             },
             rules: {
@@ -133,9 +137,9 @@ export default {
                 yifang: [
                 { required: true, message: '不能为空！', trigger: 'blur' },
                 ],
-                bingfang: [
-                { required: true, message: '不能为空！', trigger: 'blur' },
-                ],
+                // bingfang: [
+                // { required: true, message: '不能为空！', trigger: 'blur' },
+                // ],
                 level: [
                 { required: true, message: '不能为空！', trigger: 'blur' }
                 ],
@@ -151,34 +155,76 @@ export default {
         textStyleUpload
     },
     methods:{
+        // 预览
         preView() {
             this.$refs.showFileDetail.showFile(this.filePrev);
         },
+        // 安心签 签署
         signAgreement(){
 
         },
+        // 提交操作
         submitForm(formName) {
             var vm = this;
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    console.log(vm.fromAudit,'vm.fromAudit');
+                    // 业务开通审核
                     if(vm.fromAudit){
-                        console.log('2');
                         vm.$store.state.step = 3;
+                        // 线上
+                        if (this.ruleForm.signMode === 'onLine') {
+                            // 平台审核
+                            const url = `${this.$apiUrl.agreement.sign}`;
+                            let params = {
+                            };
+                            this.$http.put(url, params)
+                                .then(res => {
+                                if (res.data.status !== 200) return;
+                                    this.$message.success('平台签署成功');
+                                    vm.close();
+                                }).catch(err => {
+                                    this.$message.warning(err.message || '服务器错误，请稍后再试!');
+                                });
+                        }
+                        // 线下
+                        if (this.ruleForm.signMode === 'paper') {
+                            // 平台审核
+                            const url = `${this.$apiUrl.credit.apply}`;
+                            let params = {
+                                orgId: JSON.parse(sessionStorage.getItem('user')).orgId,
+                                pattern: "PATTERN_A"
+                            };
+                            this.$http.post(url, params)
+                                .then(res => {
+                                if (res.data.status !== 200) return;
+                                    this.$message.success('授信申请成功');
+                                    vm.close();
+                                }).catch(err => {
+                                    this.$message.warning(err.message || '服务器错误，请稍后再试!');
+                                });
+                        }
                     }
-                    vm.close();
                 } else {
-                    console.log('error submit!!');
                     return false;
                 }
             });
-      },
+        },
         resetForm() {
-        this.$refs['ruleForm'].resetFields();
-      },
-      close(){
-          this.$bus.$emit('closeDialog');
-      },
+            this.$refs['ruleForm'].resetFields();
+        },
+        init(row) {
+            const vm = this;
+            this.$refs['ruleForm'].resetFields();
+            Object.keys(row).forEach(function(key){
+                if (vm.ruleForm.hasOwnProperty(key)) {
+                    console.log('row', key, row[key], vm.ruleForm[key]);
+                    vm.ruleForm[key] = row[key]
+                }
+            });
+        },
+        close(){
+            this.$bus.$emit('closeDialog');
+        },
     }
 }
 </script>
