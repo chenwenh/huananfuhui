@@ -54,38 +54,40 @@
                 </ul>
                 <p class="blue pointer">更多</p>
             </div>
-            <div class="shadow publicMessages" style="padding-top:11px">
+            <div class="shadow publicMessages publicMessages2" style="padding-top:11px">
                 <p class="title">公示</p>
                 <el-tabs v-model="activeName" @tab-click="handleClick">
                     <el-tab-pane label="项目信息" name="first">
                         <ul>
                             <li v-for="(item,index) in projectInfos" :key="index"> 
-                                <span class="marginRight">{{item.name}}</span>
-                                <span class="marginRight">{{item.date}}</span>
-                                <span>{{item.status}}</span>
+                                <span class="marginRight title">{{item.title}}</span>
+                                <span class="marginRight publishDate">{{item.publishDate}}</span>
+                                <span class="publishStatus">{{$appConst.publishStatus[item.publishStatus]}}</span>
                             </li>
                         </ul>
+                        <p class="blue pointer" @click="getMoreProject">更多</p>
                     </el-tab-pane>
                     <el-tab-pane label="采购计划" name="second">
                          <ul>
-                            <li v-for="(item,index) in projectInfos" :key="index"> 
-                                <span class="marginRight">{{item.name}}</span>
-                                <span class="marginRight">{{item.date}}</span>
-                                <span>{{item.status}}</span>
+                            <li v-for="(item,index) in purchaseInfos" :key="index"> 
+                                <span class="marginRight">{{item.title}}</span>
+                                <span class="marginRight">{{item.publishDate}}</span>
+                                <span>{{$appConst.publishStatus[item.publishStatus]}}</span>
                             </li>
                         </ul>
+                        <p class="blue pointer" @click="getMorePurchase">更多</p>
                     </el-tab-pane>
                     <el-tab-pane label="销售信息" name="third">
                          <ul>
-                            <li v-for="(item,index) in projectInfos" :key="index"> 
-                                <span class="marginRight">{{item.name}}</span>
-                                <span class="marginRight">{{item.date}}</span>
-                                <span>{{item.status}}</span>
+                            <li v-for="(item,index) in salesInfos" :key="index"> 
+                                <span class="marginRight">{{item.title}}</span>
+                                <span class="marginRight">{{item.publishDate}}</span>
+                                <span>{{$appConst.publishStatus[item.publishStatus]}}</span>
                             </li>
                         </ul>
+                        <p class="blue pointer" @click="getMoreSales">更多</p>
                     </el-tab-pane>
                 </el-tabs>
-                <p class="blue pointer">更多</p>
             </div>
         </div>
     </div>
@@ -126,42 +128,59 @@ export default {
                     info:"【幸福花开新边疆】五畜兴旺的边疆生活"
                 }
             ],
+            purchaseInfos:[],
+            salesInfos:[],
             projectInfos:[
                 {
-                    name:'xxxxxxxxxxx钢材销售',
-                    date:'2020-04-08',
-                    status:'发布中'
+                    title:'xxxxxxxxxxx钢材销售钢材销售',
+                    publishDate:'2020-04-08',
+                    publishStatus:'NO_PUBLISH'
                 },
                 {
-                    name:'xxxxxxxxxxx钢材销售',
-                    date:'2020-04-08',
-                    status:'发布中'
+                    title:'xxxxxxxxxxx钢材销售钢材销售',
+                    publishDate:'2020-04-08',
+                    publishStatus:'NO_PUBLISH'
                 },
                 {
-                    name:'xxxxxxxxxxx钢材销售',
-                    date:'2020-04-08',
-                    status:'发布中'
+                    title:'xxxxxxxxxxx钢材销售钢材销售',
+                    publishDate:'2020-04-08',
+                    publishStatus:'NO_PUBLISH'
                 },
                 {
-                    name:'xxxxxxxxxxx钢材销售',
-                    date:'2020-04-08',
-                    status:'发布中'
+                    title:'xxxxxxxxxxx钢材销售钢材销售',
+                    publishDate:'2020-04-08',
+                    publishStatus:'NO_PUBLISH'
                 },
                 {
-                    name:'xxxxxxxxxxx钢材销售',
-                    date:'2020-04-08',
-                    status:'发布中'
+                    title:'xxxxxxxxxxx钢材销售钢材销售',
+                    publishDate:'2020-04-08',
+                    publishStatus:'NO_PUBLISH'
                 },
                 {
-                    name:'xxxxxxxxxxx钢材销售',
-                    date:'2020-04-08',
-                    status:'发布中'
-                }
+                    title:'xxxxxxxxxxx钢材销售钢材销售',
+                    publishDate:'2020-04-08',
+                    publishStatus:'NO_PUBLISH'
+                },
                 
             ]
         }
     },
     methods:{
+        getMoreProject(){
+            this.$router.push({
+                path:'/homes/projectInfo'
+            });
+        },
+        getMorePurchase(){
+            this.$router.push({
+                path:'/homes/procurementPlan2'
+            });
+        },
+        getMoreSales(){
+            this.$router.push({
+                path:'/homes/salesInfo'
+            });
+        },
         applicationOpen(){
             this.$refs.dialogCommonComponent.show();
         },
@@ -184,12 +203,59 @@ export default {
         goToSSO() {
             let token = sessionStorage.getItem('token');
             window.open(`${SSO_URL}/login?token=${token}`);
+        },
+        getProject(){
+            const params = {
+                page: 1,
+                pageSize: 6
+            };
+            const url = `${this.$apiUrl.project.query}`;
+            this.$http.get(url,{params})
+                .then(res => {
+                if (res.data.status !== 200) return;
+                    this.projectInfos = res.data.data.content;
+                }).catch(err => {
+                   
+                });
+        },
+        getPurchase(){
+            const params = {
+                page: 1,
+                pageSize: 6
+            };
+            const url = `${this.$apiUrl.purchase.query}`;
+            this.$http.get(url,{params})
+                .then(res => {
+                if (res.data.status !== 200) return;
+                    this.purchaseInfos = res.data.data.content;
+                }).catch(err => {
+                   
+                });
+        },
+        getSales(){
+            const params = {
+                page: 1,
+                pageSize: 6
+            };
+            const url = `${this.$apiUrl.salesInfo.query}`;
+            this.$http.get(url,{params})
+                .then(res => {
+                if (res.data.status !== 200) return;
+                    this.salesInfos = res.data.data.content;
+                }).catch(err => {
+                   
+                });
         }
     },
     components:{
         dialogCommonComponent,
         applicationOpen
-    }
+    },
+    mounted(){
+        this.getProject();
+        this.getPurchase();
+        this.getSales();
+    },
 }
 </script>
 <style scoped>
@@ -203,7 +269,7 @@ export default {
     border-top-right-radius:3px;
 }
 .marginRight{
-    margin-right:26px;
+    margin-right:15px;
 }
 .word{
     font-size:12px;
@@ -268,4 +334,45 @@ export default {
      line-height:35px;
      color: #666666;
  }
+ .publicMessages .title{
+     width:177px;
+     display: inline-block;
+     overflow: hidden;
+     white-space: nowrap;
+     text-overflow: ellipsis;
+ }
+  .publicMessages .publishDate{
+      display: inline-block;
+      width:80px;
+      overflow: hidden;
+  }
+  .publicMessages .publishStatus{
+      display: inline-block;
+      width:60px;
+      overflow: hidden;
+  }
+  /* .publicMessages2 ul{
+      animation: 10s wordsLoop  infinite normal;
+  }
+  @keyframes wordsLoop {
+        0% {
+            transform: translateY(0px);
+            -webkit-transform: translateY(0px);
+        }
+        100% {
+            transform: translateY(-5%);
+            -webkit-transform: translateY(-5%);
+        }
+    }
+
+    @-webkit-keyframes wordsLoop {
+        0% {
+            transform: translateY(0px);
+            -webkit-transform: translateY(0px);
+        }
+        100% {
+            transform: translateY(-5%);
+            -webkit-transform: translateY(-5%);
+        }
+    } */
 </style>

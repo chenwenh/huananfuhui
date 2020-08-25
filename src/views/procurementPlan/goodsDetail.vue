@@ -20,7 +20,7 @@ export default {
                 tableHeader: {
                     skuId: "编号",
 					spec: "规格",
-					materialQuality: "材质",
+					materielQuality: "材质",
 					length: "长度",
 					quality:"数量",
                     breed: "品名",

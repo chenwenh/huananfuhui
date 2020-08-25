@@ -111,7 +111,7 @@ export default {
           
         }
       },
-      totalCount: 6, // 数据总数
+      totalCount: 0, // 数据总数
       page: 1,
       pageSize: 10,
       loading: false,

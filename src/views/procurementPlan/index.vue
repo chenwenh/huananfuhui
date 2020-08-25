@@ -129,7 +129,7 @@ export default {
           
         }
       },
-      totalCount2: 2, // 数据总数
+      totalCount2: 0, // 数据总数
       page2: 1,
       pageSize2: 10,
       loading2: false,

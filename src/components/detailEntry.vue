@@ -74,7 +74,7 @@
 					skuId: "编号",
 					breed: "品名",
 					spec: "规格",
-					materialQuality: "材质",
+					materielQuality: "材质",
 					length: "长度",
 					unit: "计量单位",
 					quality:"数量"
@@ -89,7 +89,7 @@
 		methods: {
 			// 查询所有的品名
 			query(){
-				this.$http.get(`${this.$apiUrl.material.query}`)
+				this.$http.get(`${this.$apiUrl.materiel.query}`)
 				.then(res=>{
 					var arr = res.data.data.content.map(item=>item.breed);
 					this.breeds = new Set(arr);
@@ -97,7 +97,7 @@
 			},
 			// 根据品名查询规格
 			querySpec(breed){
-				this.$http.get(`${this.$apiUrl.material.query}/breed=${breed}`)
+				this.$http.get(`${this.$apiUrl.materiel.query}/breed=${breed}`)
 				.then(res=>{
 					var arr = res.data.data.content.map(item=>item.spec);
 					this.specs = new Set(arr);
