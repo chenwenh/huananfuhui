@@ -49,7 +49,7 @@
                 <p class="title">公告</p>
                 <ul>
                     <li v-for="(item,index) in publicMessages" :key="index">
-                        {{item.info}}
+                        {{item.title}}
                     </li>
                 </ul>
                 <p class="blue pointer">更多</p>
@@ -112,57 +112,57 @@ export default {
             },
             publicMessages:[
                 {
-                    info:"【每日一习话】推动脱贫攻坚各项政策措施落地生根"
+                    title:"【每日一习话】推动脱贫攻坚各项政策措施落地生根"
                 },
                 {
-                    info:"美国制裁新疆生产建设兵团 中方:严重干涉中国内政"
+                    title:"美国制裁新疆生产建设兵团 中方:严重干涉中国内政"
                 },
                 {
-                    info:"【幸福花开新边疆】五畜兴旺的边疆生活"
+                    title:"【幸福花开新边疆】五畜兴旺的边疆生活"
                 },
                 {
-                    info:"【每日一习话】推动脱贫攻坚各项政策措施落地生根"
+                    title:"【每日一习话】推动脱贫攻坚各项政策措施落地生根"
                 },
                 {
-                    info:"美国制裁新疆生产建设兵团 中方:严重干涉中国内政"
+                    title:"美国制裁新疆生产建设兵团 中方:严重干涉中国内政"
                 },
                 {
-                    info:"【幸福花开新边疆】五畜兴旺的边疆生活"
+                    title:"【幸福花开新边疆】五畜兴旺的边疆生活"
                 }
             ],
             purchaseInfos:[],
             salesInfos:[],
             projectInfos:[
-                {
-                    title:'xxxxxxxxxxx钢材销售钢材销售',
-                    publishDate:'2020-04-08',
-                    publishStatus:'NO_PUBLISH'
-                },
-                {
-                    title:'xxxxxxxxxxx钢材销售钢材销售',
-                    publishDate:'2020-04-08',
-                    publishStatus:'NO_PUBLISH'
-                },
-                {
-                    title:'xxxxxxxxxxx钢材销售钢材销售',
-                    publishDate:'2020-04-08',
-                    publishStatus:'NO_PUBLISH'
-                },
-                {
-                    title:'xxxxxxxxxxx钢材销售钢材销售',
-                    publishDate:'2020-04-08',
-                    publishStatus:'NO_PUBLISH'
-                },
-                {
-                    title:'xxxxxxxxxxx钢材销售钢材销售',
-                    publishDate:'2020-04-08',
-                    publishStatus:'NO_PUBLISH'
-                },
-                {
-                    title:'xxxxxxxxxxx钢材销售钢材销售',
-                    publishDate:'2020-04-08',
-                    publishStatus:'NO_PUBLISH'
-                },
+                // {
+                //     title:'xxxxxxxxxxx钢材销售钢材销售',
+                //     publishDate:'2020-04-08',
+                //     publishStatus:'NO_PUBLISH'
+                // },
+                // {
+                //     title:'xxxxxxxxxxx钢材销售钢材销售',
+                //     publishDate:'2020-04-08',
+                //     publishStatus:'NO_PUBLISH'
+                // },
+                // {
+                //     title:'xxxxxxxxxxx钢材销售钢材销售',
+                //     publishDate:'2020-04-08',
+                //     publishStatus:'NO_PUBLISH'
+                // },
+                // {
+                //     title:'xxxxxxxxxxx钢材销售钢材销售',
+                //     publishDate:'2020-04-08',
+                //     publishStatus:'NO_PUBLISH'
+                // },
+                // {
+                //     title:'xxxxxxxxxxx钢材销售钢材销售',
+                //     publishDate:'2020-04-08',
+                //     publishStatus:'NO_PUBLISH'
+                // },
+                // {
+                //     title:'xxxxxxxxxxx钢材销售钢材销售',
+                //     publishDate:'2020-04-08',
+                //     publishStatus:'NO_PUBLISH'
+                // },
                 
             ]
         }
@@ -265,7 +265,21 @@ export default {
                 }).catch(err => {
                    
                 });
-        }
+        },
+        getNotice(){
+            const params = {
+                page: 1,
+                pageSize: 6
+            };
+            const url = `${this.$apiUrl.notice.query}`;
+            this.$http.get(url,{params})
+                .then(res => {
+                if (res.data.status !== 200) return;
+                    this.publicMessages = res.data.data.content;
+                }).catch(err => {
+                   
+                });
+        },
     },
     components:{
         dialogCommonComponent,
@@ -275,6 +289,7 @@ export default {
         this.getProject();
         this.getPurchase();
         this.getSales();
+        this.getNotice();
     },
 }
 </script>
