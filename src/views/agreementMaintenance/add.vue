@@ -1,21 +1,23 @@
 <template>
     <div v-loading='loading'>
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="specialsForm" style="width:100%;">
-          <div style="overflow:hidden;">
+           <div style="overflow:hidden;">
               <div style="width:44%;float:left;">
                 <el-form-item label="签订方式" prop="signMode">
-                   <el-select v-model="ruleForm.signMode" placeholder="" clearable=""  style="width:100%;">
+                   <el-select v-model="ruleForm.signMode" placeholder="" clearable=""  style="width:100%;" :disabled="fromAudit">
                         <el-option label="线上" value="onLine"></el-option>
-                        <el-option label="纸质" value="paper"></el-option>
+                        <el-option label="线下" value="paper"></el-option>
                     </el-select>
                 </el-form-item>
                 <el-form-item label="合同类型" prop="contractType">
-                    <el-select v-model="ruleForm.contractType" placeholder="" clearable=""  style="width:100%;">
-                        <el-option label="是" value="true"></el-option>
-                        <el-option label="否" value="false"></el-option>
+                    <el-select v-model="ruleForm.contractType" placeholder="" clearable=""  style="width:100%;" :disabled="fromAudit">
+                        <el-option v-for="(item, key) in $appConst.agreementType" :key="key" :label="item" :value="key"></el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="合同号" prop="contractNum">
+                <!-- <el-form-item label="合同流水号" prop="contractSerialNum">
+                    <el-input v-model="ruleForm.contractSerialNum"></el-input>
+                </el-form-item> -->
+                <el-form-item label="合同编号" prop="contractNum" v-if="ruleForm.signMode === 'paper'">
                     <el-input v-model="ruleForm.contractNum"></el-input>
                 </el-form-item>
                 <el-form-item label="合同名称" prop="contractName">
@@ -24,6 +26,12 @@
                 <el-form-item label="合同金额" prop="contractAmount">
                     <el-input v-model="ruleForm.contractAmount"></el-input>
                 </el-form-item>
+                <el-form-item label="到期类型" prop="expireType">
+                   <el-select v-model="ruleForm.expireType" placeholder="" clearable=""  style="width:100%;">
+                        <el-option label="固定日期" value="固定日期"></el-option>
+                        <el-option label="项目结束" value="项目结束"></el-option>
+                    </el-select>
+                </el-form-item>
                 <el-form-item label="起始日期" prop="startDate" >
                     <el-date-picker
                         v-model="ruleForm.startDate"
@@ -31,9 +39,16 @@
                         placeholder="选择日期" style="width: 100%;" value-format="yyyy-MM-dd">
                     </el-date-picker>
                 </el-form-item>
-                <el-form-item label="签署日期" prop="signDAate" v-if="ruleForm.signMode === 'paper'">
+                <el-form-item label="签署日期" prop="signDate">
                    <el-date-picker
-                        v-model="ruleForm.signDAate"
+                        v-model="ruleForm.signDate"
+                        type="date"
+                        placeholder="选择日期" style="width:100%;" value-format="yyyy-MM-dd">
+                    </el-date-picker>
+                </el-form-item>
+                <el-form-item label="到期日期" prop="endDate" >
+                   <el-date-picker
+                        v-model="ruleForm.endDate"
                         type="date"
                         placeholder="选择日期" style="width:100%;" value-format="yyyy-MM-dd">
                     </el-date-picker>
@@ -41,11 +56,15 @@
               </div>
 
               <div style="width:44%;float:right;">
-                <el-form-item label="甲方" prop="jiafang" class="inputwidth">
-                  <el-input v-model="ruleForm.jiafang"></el-input>
+                <el-form-item label="追索权" prop="recourse" class="inputwidth">
+                  <el-radio v-model="ruleForm.recourse" :label="true">有</el-radio>
+                  <el-radio v-model="ruleForm.recourse" :label="false">无</el-radio>
                 </el-form-item>
-                <el-form-item label="乙方" prop="yifang" class="inputwidth">
-                  <el-input v-model="ruleForm.yifang"></el-input>
+                <el-form-item label="甲方" prop="firstParty" class="inputwidth">
+                  <el-input v-model="ruleForm.firstParty"></el-input>
+                </el-form-item>
+                <el-form-item label="乙方" prop="secondParty" class="inputwidth">
+                  <el-input v-model="ruleForm.secondParty"></el-input>
                 </el-form-item>
                 <!-- <el-form-item label="丙方" prop="bingfang"  class="inputwidth">
                   <el-input v-model="ruleForm.bingfang"></el-input>
@@ -56,21 +75,25 @@
                 <el-form-item label="部门" prop="department"   class="inputwidth">
                     <el-input v-model="ruleForm.department"></el-input>
                 </el-form-item>
-                <el-form-item label="到期日期" prop="endDate" >
-                   <el-date-picker
-                        v-model="ruleForm.endDate"
-                        type="date"
-                        placeholder="选择日期" style="width:100%;" value-format="yyyy-MM-dd">
-                    </el-date-picker>
+                <el-form-item label="保证金比例" prop="marginLevel"   class="inputwidth">
+                    <el-input v-model="ruleForm.marginLevel"></el-input>
                 </el-form-item>
-                <el-form-item label="合同附件" prop="" v-if="ruleForm.signMode === 'paper'">
+                <el-form-item label="标的数量" prop="markNumber"   class="inputwidth">
+                    <el-input v-model="ruleForm.markNumber"></el-input>
+                </el-form-item>
+                <el-form-item prop="" v-if="ruleForm.signMode === 'paper'">
+                    <span slot="label"><span style="color:#F56C6C">* </span>合同</span>
                     <textStyleUpload ref="textStyleUpload" fileAccept= 'PDF,pdf'></textStyleUpload>
                 </el-form-item>
-                <el-form-item label="线上签署" prop="" v-if="ruleForm.signMode === 'onLine'">
+                <!-- <el-form-item prop="" v-if="ruleForm.signMode === 'onLine'">
+                    <span slot="label"><span style="color:#F56C6C">* </span>合同</span>
                      <span @click="signAgreement()" class="blue pointer" style="position:relative;">签署协议</span>
-                </el-form-item>
+                </el-form-item> -->
               </div>
-          </div>  
+            </div>  
+            <el-form-item label="备注" prop="comments" v-if="ruleForm.signMode === 'onLine'">
+                <el-input maxlength="100" type="textarea" v-model="ruleForm.comments"></el-input>
+            </el-form-item>
             <div style="text-align:center;width:100%;">
                 <el-form-item>
                     <el-button type="info" @click="close()" >取消</el-button>
@@ -101,51 +124,103 @@ export default {
             },
             ruleForm: {
                 id: '',
-                signMode: 'onLine',
-                contractType: '',
-                contractNum: '',
-                contractName: '',
-                contractAmount: '',
-                startDate: '',
-                endDate: '',
-                signDAate:'',
-                department: '',
-                jiafang: "",
-                yifang: "",
+                signMode: 'onLine', // 签订方式
+                contractType: '', // 合同类型
+                contractSerialNum: '', //合同流水号
+                contractNum: '', // 合同编号
+                contractName: '', // 合同名称
+                contractAmount: '', // 合同金额
+                expireType: '', // 到期类型
+                startDate: '', // 起始日期
+                signDate:'', // 签署日期
+                recourse: true, // 追索权
+                firstParty: "", // 甲方
+                secondParty: "", // 乙方
+                level: null, // 合同层级
+                department: '', // 部门
+                marginLevel: '', // 保证金比例
+                markNumber: '', // 标的数量
+                endDate: '', // 到期时间
+                comments: '', // 备注
                 // bingfang: '',
-                level: 0,
             },
             rules: {
+                // 签订方式
                 signMode: [
-                { required: true, message: '不能为空！', trigger: 'change' }
+                    { required: true, message: '不能为空！', trigger: 'change' }
                 ],
+                // 合同流水号
+                contractSerialNum: [
+                    { required: true, message: '不能为空！', trigger: 'blur' },
+                    { min: 1, max: 30, message: '长度不能超过30个字符', trigger: 'blur' }
+                ],
+                // 合同类型
                 contractType: [
-                { required: true, message: '不能为空！', trigger: 'blur' }
+                    { required: true, message: '不能为空！', trigger: 'change' }
                 ],
+                // 合同编号
                 contractNum: [
-                { required: true, message: '不能为空！', trigger: 'change' }
+                    { required: true, message: '不能为空！', trigger: 'blur' },
+                    { min: 1, max: 30, message: '长度不能超过30个字符', trigger: 'blur' }
                 ],
+                // 合同名称
                 contractName:[
-                { required: true, message: '不能为空！', trigger: 'change' }
+                    { required: true, message: '不能为空！', trigger: 'blur' },
+                    { min: 1, max: 30, message: '长度不能超过30个字符', trigger: 'blur' }
                 ],
+                // 追索权
+                recourse: [
+                    { required: true, message: '不能为空！', trigger: 'change' }
+                ],
+                // 合同金额
                 contractAmount: [
-                { required: true, message: '不能为空！', trigger: 'change' }
+                    { required: true, message: '不能为空！', trigger: 'change' },
+                    { validator: this.$validate.twoDecimalPlaces, trigger: 'change'}
                 ],
-                jiafang: [
-                { required: true, message: '不能为空！', trigger: 'blur' },
+                // 甲方
+                firstParty: [
+                    { required: true, message: '不能为空！', trigger: 'blur' },
+                    { min: 1, max: 50, message: '长度不能超过50个字符', trigger: 'blur' }
                 ],
-                yifang: [
-                { required: true, message: '不能为空！', trigger: 'blur' },
+                // 乙方
+                secondParty: [
+                    { required: true, message: '不能为空！', trigger: 'blur' },
+                    { min: 1, max: 50, message: '长度不能超过50个字符', trigger: 'blur' }
                 ],
-                // bingfang: [
-                // { required: true, message: '不能为空！', trigger: 'blur' },
-                // ],
                 level: [
-                { required: true, message: '不能为空！', trigger: 'blur' }
+                    { required: true, message: '不能为空！', trigger: 'blur' }
                 ],
+                // 签署日期
+                signDate: [
+                    { required: true, message: '不能为空！', trigger: 'change' }
+                ],
+                // 起始日期
                 startDate: [
-                { required: true, message: '不能为空！', trigger: 'blur' }
+                    { required: true, message: '不能为空！', trigger: 'change' }
                 ],
+                // 保证金比例
+                marginLevel: [
+                    { required: true, message: '不能为空！', trigger: 'change' },
+                    { validator: this.$validate.fourDecimalPlaces, trigger: 'change'}
+                ],
+                // 标的数量
+                markNumber: [
+                    { required: true, message: '不能为空！', trigger: 'change' },
+                    { validator: this.$validate.integer, trigger: 'change'}
+                ],
+                // 到期类型
+                expireType: [
+                    { required: true, message: '不能为空！', trigger: 'change' }
+                ],
+                // 到期日期
+                endDate: [
+                    { required: true, message: '不能为空！', trigger: 'change' }
+                ],
+                // 部门
+                department: [
+                    { required: true, message: '不能为空！', trigger: 'blur' },
+                    { min: 1, max: 20, message: '长度不能超过20个字符', trigger: 'blur' }
+                ]
             },
 
         }
@@ -212,7 +287,7 @@ export default {
         resetForm() {
             this.$refs['ruleForm'].resetFields();
         },
-        init(row) {
+        init(row, templateType) {
             const vm = this;
             this.$refs['ruleForm'].resetFields();
             Object.keys(row).forEach(function(key){
@@ -221,6 +296,7 @@ export default {
                     vm.ruleForm[key] = row[key]
                 }
             });
+            vm.ruleForm.contractType = templateType;
         },
         close(){
             this.$bus.$emit('closeDialog');

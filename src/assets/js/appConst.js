@@ -136,15 +136,13 @@ export default {
       SIGNED_BY_PARTYA: '甲方签署',
       SIGNED_BY_PARTYB: '乙方签署',
       BANK_CREDIT: '银行授信中',
+      BANK_CREDIT_FAILED: '银行授信失败',
       VALID: '生效'
     },
-    // 业务开开通步骤
-    serveStep: {
-      step1: ['TO_BE_AUDIT'],
-      step2: ['CONFIRMED', 'REJECTED'],
-      step3: ['SIGNED_BY_PARTYB', 'SIGNED_BY_PARTYA'],
-      step4: ['BANK_CREDIT'],
-      step5: ['VALID']
+    // 模板类型
+    agreementType: {
+      FRAMEWORK_AGREEMENTS: '年度框架协议',
+      SERVER_AGREEMENTS: '服务协议'
     }
   }
   

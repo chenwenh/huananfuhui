@@ -19,7 +19,7 @@
               @rowClick="rowClick"
               :showPagination="true">
               <!-- 操作 -->
-              <el-table-column fixed="right" width="140px"
+              <el-table-column fixed="right" width="200px"
                         label="操作"
                         >
                   <template slot-scope="scope">
@@ -36,8 +36,16 @@
                         size="medium"
                         type="text"
                         style="margin-left:0px; "
-                        @click.stop="signAggreement(scope.row)">
-                        签署协议
+                        @click.stop="signAggreement(scope.row, 'FRAMEWORK_AGREEMENTS')">
+                        签署年度框架协议
+                    </el-button>
+                    <el-button
+                        class="collectBtn"
+                        size="medium"
+                        type="text"
+                        style="margin-left:0px; "
+                        @click.stop="signAggreement(scope.row, 'SERVER_AGREEMENTS')">
+                        签署服务协议
                     </el-button>
                   </template>
               </el-table-column>
@@ -152,10 +160,10 @@ export default {
           this.$refs.auditDetail.init(row);
        });
     },
-    signAggreement(row) {
+    signAggreement(row, templateType) {
        this.$refs.dialogCommonComponent3.show();
        this.$nextTick(()=>{
-          this.$refs.add.init(row);
+          this.$refs.add.init(row, templateType);
        });
     },
     // 搜索
