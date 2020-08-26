@@ -140,7 +140,7 @@ export default {
                         "lng": 117.80105123046874
                     },
                     "icon": {
-                        "src":"http://192.168.28.87:8086/static/images/car.png",
+                        "src":"http://localhost:8080/static/images/car.png",
                         "size": {
                             "width": 20,
                             "height": 40

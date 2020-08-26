@@ -52,7 +52,7 @@
                         {{item.title}}
                     </li>
                 </ul>
-                <p class="blue pointer">更多</p>
+                <p class="blue pointer" @click="getMoreNotice">更多</p>
             </div>
             <div class="shadow publicMessages publicMessages2" style="padding-top:11px">
                 <p class="title">公示</p>
@@ -110,64 +110,18 @@ export default {
                 isVerified: '',
                 orgRole: ''
             },
-            publicMessages:[
-                {
-                    title:"【每日一习话】推动脱贫攻坚各项政策措施落地生根"
-                },
-                {
-                    title:"美国制裁新疆生产建设兵团 中方:严重干涉中国内政"
-                },
-                {
-                    title:"【幸福花开新边疆】五畜兴旺的边疆生活"
-                },
-                {
-                    title:"【每日一习话】推动脱贫攻坚各项政策措施落地生根"
-                },
-                {
-                    title:"美国制裁新疆生产建设兵团 中方:严重干涉中国内政"
-                },
-                {
-                    title:"【幸福花开新边疆】五畜兴旺的边疆生活"
-                }
-            ],
+            publicMessages:[],
             purchaseInfos:[],
             salesInfos:[],
-            projectInfos:[
-                // {
-                //     title:'xxxxxxxxxxx钢材销售钢材销售',
-                //     publishDate:'2020-04-08',
-                //     publishStatus:'NO_PUBLISH'
-                // },
-                // {
-                //     title:'xxxxxxxxxxx钢材销售钢材销售',
-                //     publishDate:'2020-04-08',
-                //     publishStatus:'NO_PUBLISH'
-                // },
-                // {
-                //     title:'xxxxxxxxxxx钢材销售钢材销售',
-                //     publishDate:'2020-04-08',
-                //     publishStatus:'NO_PUBLISH'
-                // },
-                // {
-                //     title:'xxxxxxxxxxx钢材销售钢材销售',
-                //     publishDate:'2020-04-08',
-                //     publishStatus:'NO_PUBLISH'
-                // },
-                // {
-                //     title:'xxxxxxxxxxx钢材销售钢材销售',
-                //     publishDate:'2020-04-08',
-                //     publishStatus:'NO_PUBLISH'
-                // },
-                // {
-                //     title:'xxxxxxxxxxx钢材销售钢材销售',
-                //     publishDate:'2020-04-08',
-                //     publishStatus:'NO_PUBLISH'
-                // },
-                
-            ]
+            projectInfos:[]
         }
     },
     methods:{
+        getMoreNotice(){
+            this.$router.push({
+                path:'/homes/noticeManage'
+            });
+        },
         getMoreProject(){
             this.$router.push({
                 path:'/homes/projectInfo'
