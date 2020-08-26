@@ -320,7 +320,6 @@ export default {
                         userName: this.loginForm.userName.trim(),
                         pwd: this.loginForm.pwd.trim(),
                         smsCode: this.loginForm.smsCode,
-                        // smsToken: '456415345454'
                         smsToken: this.loginForm.smsToken
                     };
                     // params.sys = 'trade';
