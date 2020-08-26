@@ -54,7 +54,18 @@ export let apiUrl = {
     },
     // 物料
     materiel:{
-        query:apiGateway2 +　'/materielInfo/query',//查询所有的物料
+        save:apiGateway2 +　'/materiel-info/save',//保存
+        query:apiGateway2 +　'/materiel-info/query',//查询所有的物料
+        delete:apiGateway2 + '/materiel-info/delete',//删除
+        update:apiGateway2 +　'/materiel-info/update',//更新
+    },
+    // 公告
+    notice:{
+        save:apiGateway2 +　'/notice-info/save',//保存
+        query:apiGateway2 +　'/notice-info/query',//查询所有的物料
+        delete:apiGateway2 + '/notice-info/delete',//删除
+        update:apiGateway2 +　'/notice-info/update',//更新
+        findById:apiGateway2 + '/notice-info/findById/',//根据id查询详情
     },
     // 协议管理
     agreement: {

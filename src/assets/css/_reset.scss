@@ -503,3 +503,11 @@ a, a:hover, a:focus {
 .el-select-dropdown__item.selected {
   color: #F7B500;
 }
+.notice .el-textarea__inner{
+  border:none !important;
+}
+.notice .el-textarea.is-disabled .el-textarea__inner{
+  background-color: white !important;
+  border-color: none;
+  color:black;
+}

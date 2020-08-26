@@ -18,7 +18,7 @@
 		    	:show-overflow-tooltip="true" 
 		    	>
 		    	<template slot="header" slot-scope="scope">
-			        <div  v-if="key == 'quantity'|| key == 'unitPrice'|| key == 'taxRate'" class="table-head" style="width: 100%;">
+			        <div  v-if="key == 'breed'|| key == 'spec'|| key == 'materiel'" class="table-head" style="width: 100%;">
 			        	<i style="color: #f56c6c;">*</i>
 			        	{{item}}
 			        </div>
@@ -28,12 +28,16 @@
 			    </template>
 		    	<template slot-scope="scope">
 					<!-- 品名 -->
-					<el-select v-if='key=="breed"' v-model="scope.row[key]"  clearable=""  style="width:100%;" @change="querySpec(scope.row[key])">
+					<!-- <el-select v-if='key=="breed"' v-model="scope.row[key]"  clearable=""  style="width:100%;" @change="querySpec(scope.row[key])">
 						<el-option :label="item" :value="item" v-for="(item,index) in breeds" :key="index"></el-option>
-					</el-select>
+					</el-select> -->
 					<!-- 规格 -->
 					<el-select v-if='key=="spec"' v-model="scope.row[key]"  clearable=""  style="width:100%;">
 						<el-option :label="item" :value="item" v-for="(item,index) in specs" :key="index"></el-option>
+					</el-select>
+					<!-- 材质 -->
+					<el-select v-else-if='key=="materiel"' v-model="scope.row[key]"  clearable=""  style="width:100%;">
+						<el-option :label="item" :value="item" v-for="(item,index) in materiels" :key="index"></el-option>
 					</el-select>
   					<el-input
   						v-else
@@ -42,6 +46,7 @@
   						:keyVal="key"
   					    :index="scope.$index"
   						:val="scope.row[key]"
+						  @change="queryByBreed(scope.row[key],key,scope.$index)"
   						@blur="handleDetailBlur($event, scope.row, key, scope.$index)"
   						>
   					</el-input>
@@ -68,13 +73,14 @@
 			return {
 				breeds:[],
 				specs:[],
+				materiels:[],
                 tabData:[
 				],
                 formItem:{
 					skuId: "编号",
 					breed: "品名",
 					spec: "规格",
-					materielQuality: "材质",
+					materiel: "材质",
 					length: "长度",
 					unit: "计量单位",
 					quality:"数量"
@@ -87,20 +93,19 @@
             }
 		},
 		methods: {
-			// 查询所有的品名
-			query(){
-				this.$http.get(`${this.$apiUrl.materiel.query}`)
-				.then(res=>{
-					var arr = res.data.data.content.map(item=>item.breed);
-					this.breeds = new Set(arr);
-				});
-			},
 			// 根据品名查询规格
-			querySpec(breed){
-				this.$http.get(`${this.$apiUrl.materiel.query}/breed=${breed}`)
+			queryByBreed(breed,key,index){
+				if(key!='breed')return;
+				this.specs = [];
+				this.materiels = [];
+				this.tabData[index].spec = '';
+				this.tabData[index].materiel = '';
+				this.$http.get(`${this.$apiUrl.materiel.query}?breed=${breed}`)
 				.then(res=>{
 					var arr = res.data.data.content.map(item=>item.spec);
 					this.specs = new Set(arr);
+					var arr2 = res.data.data.content.map(item=>item.materiel);
+					this.materiels = new Set(arr2);
 				});
 			},
 			init(){
@@ -130,31 +135,35 @@
 			// target
 			handleDetailBlur(event, row, key, index) {
 				this.refEle = $(event.target);
-					if(key === "quantity" || key === "unitPrice" || key === "taxRate") {
+					if(key === "breed" || key === "spec" || key === "materiel") {
 						let val = event.target.value;
 						this.handleValidate(event.target.value, this.refEle, index)
 					}
-					this.amount = 0;
-					for(var i =0;i<this.tabData.length;i++){
-					this.amount+= this.tabData[i].quantity * this.tabData[i].unitPrice;
+					// this.amount = 0;
+					// for(var i =0;i<this.tabData.length;i++){
+					// this.amount+= this.tabData[i].quantity * this.tabData[i].unitPrice;
 					// this.tabData[i]['totalAmount'] = this.$appConst.fmoney(this.tabData[i].quantity * this.tabData[i].unitPrice, 2);
-				}
-				if (key === 'unitPrice') {
-					row.unitPrice ? row.unitPrice = this.$appConst.fmoney(row.unitPrice, 4) : '';
-				}
+				// }
+				// if (key === 'unitPrice') {
+				// 	row.unitPrice ? row.unitPrice = this.$appConst.fmoney(row.unitPrice, 4) : '';
+				// }
 			},
 			handleValidate(val, ele, index) {
-				if(!isNaN(Number(val)) && val) {
-					$(ele).css("border-color", "#dcdfe6");
-					return true
-				}else if(isNaN(Number(val)) && val) {
-					$(ele).css("border-color", "#f56c6c")
-					this.$message.error("只能填写数字，请重新输入！");
-					return false;
-				}else if(!val) {
+				// if(!isNaN(Number(val)) && val) {
+				// 	$(ele).css("border-color", "#dcdfe6");
+				// 	return true
+				// }
+				// else if(isNaN(Number(val)) && val) {
+				// 	$(ele).css("border-color", "#f56c6c")
+				// 	this.$message.error("只能填写数字，请重新输入！");
+				// 	return false;
+				// }
+				if(!val) {
 					$(ele).css("border-color", "#f56c6c")
 					this.$message.error("此项为必填项，请重新输入！");
 					return false
+				}else{
+					$(ele).css("border-color",'#DCDFE6');
 				}
 			},
 			handleValidateAll() {
@@ -184,7 +193,6 @@
 			vm.$bus.$on('initForm',function() {
 				vm.init();
 			});
-			this.query();
 		},
 		components: {
 			

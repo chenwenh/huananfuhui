@@ -40,6 +40,16 @@ export default [
           "enterType": ['homes']
         },
         {
+          "index": "/homes/materielManage",
+          "title": "物料管理",
+          "enterType": ['homes']
+        },
+        {
+          "index": "/homes/noticeManage",
+          "title": "公告管理",
+          "enterType": ['homes']
+        },
+        {
           "index": "/homes/enterpriseAgreement",
           "title": "企业协议",
           "enterType": ['homes']

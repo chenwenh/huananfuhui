@@ -108,10 +108,28 @@ const routes = [
               path: '/homes/salesInfo',
               name: 'salesInfo',
               meta: {
-                  title: '采购计划',
+                  title: '销售信息',
                   icon: 'iconproject1'
               },
               component: resolve => require(['../views/salesInfo/index.vue'], resolve)
+        },
+        {
+              path: '/homes/materielManage',
+              name: 'materielManage',
+              meta: {
+                  title: '物料管理',
+                  icon: 'iconproject1'
+              },
+              component: resolve => require(['../views/materielManage/index.vue'], resolve)
+        },
+        {
+              path: '/homes/noticeManage',
+              name: 'noticeManage',
+              meta: {
+                  title: '公告管理',
+                  icon: 'iconproject1'
+              },
+              component: resolve => require(['../views/noticeManage/index.vue'], resolve)
         },
         {
               path: '/homes/enterpriseAgreement',

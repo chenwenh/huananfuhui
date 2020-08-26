@@ -72,7 +72,7 @@
         </Table>
       </div>
         <!-- 添加 -->
-        <dialogCommonComponent ref="dialogCommonComponent" :title="title" width="50%">
+        <dialogCommonComponent ref="dialogCommonComponent" :title="title" width="70%">
             <add ref="add" @search="search"></add>
         </dialogCommonComponent>
         <!--发布 -->
