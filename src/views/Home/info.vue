@@ -11,8 +11,8 @@
                  <img src="static/images/fubaotong.png" alt="" style="margin-right:20px;" class="pointer" @click="fubaotongClick">
                  <div style="position:relative;display:inline-block;" @click="applicationOpen">
                     <img src="static/images/kuyibao.png" alt="" class="pointer">
-                    <span class="status" v-show="step=='notOpen'">申请开通</span>
-                    <span class="status" v-show="step=='opening'">开通中</span>
+                    <span class="status" v-if="step === 'NOT_OPEN'">申请开通</span>
+                    <span class="status" v-else>开通中</span>
                  </div>
             </div>
             <!-- 开通组件 -->
@@ -102,7 +102,7 @@ export default {
     },
     data(){
         return{
-            step: 'notOpen', // 业务开通步骤
+            step: 'NOT_OPEN', // 业务开通步骤
             activeName:'first',
             alertShow:true,
             enterpriseData: { // 企业信息
@@ -142,12 +142,14 @@ export default {
         getServiceStatus() {
             const url = `${this.$apiUrl.serviceFulfillment.query}`;
             let params = {
-                audit_status: '!==reject'
+                sortField: 'applyDate',
+                sortDirection: 'DESC'
             };
             this.$http.post(url, params)
                 .then(res => {
                 if (res.data.status !== 200) return;
-                    this.step = 'notOpen';
+                // 进入页面获取状态
+                    this.step = 'NOT_OPEN';
                 }).catch(err => {
                     this.$message.warning(err.message || '服务器错误，请稍后再试!');
                 });
@@ -155,8 +157,8 @@ export default {
         applicationOpen(){
             this.$refs.dialogCommonComponent.show();
             this.$nextTick(() =>{
-                // this.$refs.applicationOpenRef.getStep(this.step);
-                this.$refs.applicationOpenRef.getStep(1);
+                // this.$refs.applicationOpenRef.init(this.step);
+                this.$refs.applicationOpenRef.init('NOT_OPEN');
             });
         },
         handleClick(tab, event) {

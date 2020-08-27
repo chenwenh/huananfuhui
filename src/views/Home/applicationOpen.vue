@@ -1,27 +1,39 @@
 <template>
 <div style="background:rgba(255,255,255,1);" class="applicationOpen">
     <div class="steps">
-        <span><span class="step child" :class="{'active':step=='1'}">1</span><label>基础信息</label><span class="line"></span></span>
-        <span class="step" :class="{'active':step=='2'}">2</span><label>平台审核</label><span class="line"></span>
-        <span class="step" :class="{'active':step=='3'}">3</span><label>签署框架合同</label><span class="line"></span>
-        <span class="step" :class="{'active':step=='4'}">4</span><label>银行授信审核</label>
+        <span><span class="step child" :class="{'active':stepStatus === 'NOT_OPEN'}">1</span><label>基础信息</label><span class="line"></span></span>
+        <span class="step" :class="{'active':(stepStatus === 'TO_BE_AUDIT' || stepStatus === 'REJECTED' || stepStatus === 'SIGNED_BY_PARTYA')}">2</span><label>平台审核</label><span class="line"></span>
+        <span class="step" :class="{'active':stepStatus === 'SIGNED_BY_PARTYB'}">3</span><label>签署框架合同</label><span class="line"></span>
+        <span class="step" :class="{'active':(stepStatus === 'BANK_CREDIT' || stepStatus === 'BANK_CREDIT_FAILED')}">4</span><label>银行授信审核</label>
     </div>
     <!-- 步骤1 -->
-    <div v-show="step==1">
+    <div v-show="stepStatus === 'NOT_OPEN'">
         <div>
             <el-form :model="serviceFulfillment" :rules="serviceFulfillmentRules" ref="serviceFulfillment" label-width="70px" class="specialsForm" style="width:100%;">
                 <div style="overflow:hidden;">
-                    <el-form-item label="名称" prop="agreementtype">
-                        <el-select v-model="serviceFulfillment.agreementtype" placeholder="请选择协议模板" clearable=""  style="width:100%;">
-                            <el-option label="年度框架协议" value="00"></el-option>
-                        </el-select>
+                    <el-form-item label="名称" prop="orgName">
+                        <el-input v-model="serviceFulfillment.orgName" disabled></el-input>
                     </el-form-item>
-                    <el-form-item label="名称" prop="name">
-                        <el-input v-model="serviceFulfillment.name"></el-input>
+                    <el-form-item label="角色" prop="orgRole">
+                        <el-input v-model="serviceFulfillment.orgRole" disabled></el-input>
+                    </el-form-item>
+                    <p style="padding-bottom: 5px;">保证金账户</p>
+                    <el-form-item label="开户行" prop="bondBank">
+                        <el-input v-model="serviceFulfillment.bondBank"></el-input>
+                    </el-form-item>
+                    <el-form-item label="账号" prop="bondAccount">
+                        <el-input v-model="serviceFulfillment.bondAccount"></el-input>
+                    </el-form-item>
+                    <p style="padding-bottom: 5px;">结算账户</p>
+                    <el-form-item label="开户行" prop="settlementBank">
+                        <el-input v-model="serviceFulfillment.settlementBank"></el-input>
+                    </el-form-item>
+                    <el-form-item label="账号" prop="settlementAccount">
+                        <el-input v-model="serviceFulfillment.settlementAccount"></el-input>
                     </el-form-item>
                 </div>
             </el-form>
-            <p style="margin-left:31px;">附件<span class="download" @click="download">下载模板</span></p>
+            <!-- <p style="margin-left:31px;">附件<span class="download" @click="download">下载模板</span></p>
             <el-row type="flex" class="attachmentContent" justify="space-between">
                 <el-col :span="7">
                     <div class="child">
@@ -41,7 +53,7 @@
                         <textStyleUpload ref="textStyleUpload3" fileAccept='jpg,jpeg,png,gif,PDF,pdf' :limitNumber="limitNumber"></textStyleUpload>
                     </div>
                 </el-col>
-            </el-row>
+            </el-row> -->
             <p class="checkContent"><el-checkbox v-model="checked" style="margin-right:10px;"></el-checkbox>我同意并遵守<span class="blue pointer">库易保业务开通协议</span></p>
             <div style="text-align:right;width:100%;">
                 <el-button type="info" @click="close('serviceFulfillment')" class="radiusNone">取消</el-button>
@@ -50,31 +62,43 @@
         </div>
     </div>
     <!-- 步骤2 -->
-    <div v-show="step==2 && auditState == 'shenhezhong'" style="text-align:center;padding-top:40px;padding-bottom:60px;">
+    <div v-show="stepStatus === 'TO_BE_AUDIT' || stepStatus === 'SIGNED_BY_PARTYA'" style="text-align:center;padding-top:40px;padding-bottom:60px;">
         <img src="static/images/shenhezhong.png" alt="">
         <p style="color:rgba(153,153,153,1);">平台审核中，请耐心等待</p>
     </div>
-    <div v-show="step==2 && auditState =='failed'" style="text-align:center;padding-top:40px;padding-bottom:10px;">
+    <div v-show="stepStatus === 'REJECTED'" style="text-align:center;padding-top:40px;padding-bottom:10px;">
         <img src="static/images/shenheerror.png" alt="">
         <p style="color:rgba(255,88,1,1);">平台审核未通过</p>
         <p style="color:rgba(102,102,102,1);text-align:left;margin-top:20px;">“一般来说资格审核是用不了多久的,一般一两天就可以通过了。 但是也不排除因为其他的原因而造成的等待时间特别长。 但是这个也不一定,因为有的地方一天左右的样子就会审核完成,而有的地方需要10天或者一个星期左右,还有的地方甚至要半个 月的时间。我们这里一般审核的话,大概一个星期左右就可以拿到...”</p>
         <p style="text-align:right;"><el-button type="primary" @click="repeatApplication()" class="primaryButton radiusNone">重新申请</el-button>      </p>
     </div>
     <!-- 步骤3 -->
-    <div v-show="step==3" class="thirdStep">
+    <div v-show="stepStatus === 'SIGNED_BY_PARTYB'" class="thirdStep">
         <el-form :model="review" ref="review" label-width="70px" class="specialsForm" style="width:100%;">
           <div style="overflow:hidden;">
-                <el-form-item label="名称" prop="agreementtype">
-                   <el-select v-model="review.agreementtype" placeholder="请选择协议模板" clearable=""  style="width:100%;" disabled="">
-                        <el-option label="年度框架协议" value="value1"></el-option>
-                    </el-select>
+                <el-form-item label="名称" prop="orgName">
+                    <el-input v-model="review.orgName" disabled></el-input>
                 </el-form-item>
-                <el-form-item label="名称" prop="name">
-                    <el-input v-model="review.name" disabled=""></el-input>
+                <el-form-item label="角色" prop="orgRole">
+                    <el-input v-model="review.orgRole" disabled></el-input>
                 </el-form-item>
-          </div>
+                <p style="padding-bottom: 5px;">保证金账户</p>
+                <el-form-item label="开户行" prop="bondBank">
+                    <el-input v-model="review.bondBank" disabled></el-input>
+                </el-form-item>
+                <el-form-item label="账号" prop="bondAccount">
+                    <el-input v-model="review.bondAccount" disabled></el-input>
+                </el-form-item>
+                <p style="padding-bottom: 5px;">结算账户</p>
+                <el-form-item label="开户行" prop="settlementBank">
+                    <el-input v-model="review.settlementBank" disabled></el-input>
+                </el-form-item>
+                <el-form-item label="账号" prop="settlementAccount">
+                    <el-input v-model="review.settlementAccount" disabled></el-input>
+                </el-form-item>
+            </div>
         </el-form>
-         <el-row type="flex" class="attachmentContent" justify="space-between">
+         <!-- <el-row type="flex" class="attachmentContent" justify="space-between">
             <el-col :span="7">
                 <div class="child">
                     <h4>营业执照扫描件</h4>
@@ -93,25 +117,25 @@
                     <img src="static/images/pdf.png" alt="" class="pdf"><span @click="handlePreview(attachment3)">{{attachment3.name}}</span>
                 </div>
             </el-col>
-        </el-row>
+        </el-row> -->
         <p style="margin-left:30px;margin-top:20px;">年度框架协议：<span class="blue" @click="handlePreview(attachment1)">库易保业务开通协议.pdf</span>
-            <span class="onlineSign">在线签署</span>
+            <span @click="signSubmit()" class="onlineSign">在线签署</span>
         </p>
         <div style="text-align:right;width:100%;">
             <el-button type="info" @click="close('review')" class="radiusNone">取消</el-button>
-            <el-button type="primary" @click="signSubmit()" class="primaryButton radiusNone">提交</el-button>
+            <el-button type="primary" @click="creditApply()" class="primaryButton radiusNone">提交</el-button>
         </div>
     </div>
     <!-- 步骤4 -->
-    <div v-show="step==4 && auditState == 'shenhezhong'" style="text-align:center;padding-top:40px;padding-bottom:60px;">
+    <div v-show="stepStatus === 'BANK_CREDIT'" style="text-align:center;padding-top:40px;padding-bottom:60px;">
         <img src="static/images/shenhezhong.png" alt="">
         <p style="color:rgba(153,153,153,1);">银行授信审核中，请耐心等待</p>
     </div>
-    <div v-show="step==4 && auditState =='failed'" style="text-align:center;padding-top:40px;padding-bottom:10px;">
+    <div v-show="stepStatus === 'BANK_CREDIT_FAILED'" style="text-align:center;padding-top:40px;padding-bottom:10px;">
         <img src="static/images/shenheerror.png" alt="">
         <p style="color:rgba(255,88,1,1);">银行授信审核未通过</p>
         <p style="color:rgba(102,102,102,1);text-align:left;margin-top:20px;">“一般来说资格审核是用不了多久的,一般一两天就可以通过了。 但是也不排除因为其他的原因而造成的等待时间特别长。 但是这个也不一定,因为有的地方一天左右的样子就会审核完成,而有的地方需要10天或者一个星期左右,还有的地方甚至要半个 月的时间。我们这里一般审核的话,大概一个星期左右就可以拿到...”</p>
-        <p style="text-align:right;"><el-button type="primary" @click="repeatApplication()" class="primaryButton radiusNone">重新申请</el-button>      </p>
+        <p style="text-align:right;"><el-button type="primary" @click="repeatApplication()" class="primaryButton radiusNone">重新申请</el-button></p>
     </div>
     <show-file-detail ref="showFileDetail"></show-file-detail>
 </div>
@@ -122,12 +146,17 @@ import showFileDetail from '@/components/showFileDetail.vue'
 export default {
     data(){
         return{
+            user: {},
             stepStatus: '', // 步骤数
             limitNumber: 1, // 限制文件上传
             checked: true, // 步骤1 协议是否同意
             serviceFulfillment:{ //业务开通 步骤1
-                agreementtype:'',
-                name:''
+                orgName: '',
+                orgRole: '',
+                bondBank: '',
+                bondAccount: '',
+                settlementBank: '',
+                settlementAccount: ''
             },
             attachment1:{
 	            "uid": 1597214482997,
@@ -154,16 +183,26 @@ export default {
 	            "dataPoolURL": "/tdp/0f307499499c478089f874edfe389957/network/a25eaecd3d6f4a35a4d163b0e9f69d9d/ledger/95d07aa9f7884212a9618f4d537ed998/v2.0/attachment/2913919147222"
             },
             review:{ // 步骤3回显数据
-                agreementtype:'value1',
-                name:'名称1',
+                orgName: '',
+                orgRole: '',
+                bondBank: '',
+                bondAccount: '',
+                settlementBank: '',
+                settlementAccount: ''
             },
             serviceFulfillmentRules:{
-                agreementtype: [
-                    { required: true, message: '不能为空！', trigger: 'change' }
-                ],
-                name: [
+                settlementAccount: [
                     { required: true, message: '不能为空！', trigger: 'blur' }
                 ],
+                settlementBank: [
+                    { required: true, message: '不能为空！', trigger: 'blur' }
+                ],
+                bondBank: [
+                    { required: true, message: '不能为空！', trigger: 'blur' }
+                ],
+                bondAccount: [
+                    { required: true, message: '不能为空！', trigger: 'blur' }
+                ]
             }
         }
     },
@@ -181,8 +220,17 @@ export default {
     },
     methods:{
         // 获取当前业务步骤
-        getStep(step) {
+        init(step) {
+            this.user = JSON.parse(sessionStorage.getItem('user'));
             this.stepStatus = step;
+            if (this.stepStatus === 'NOT_OPEN') {
+                this.serviceFulfillment.orgName = this.user.orgName;
+                this.serviceFulfillment.orgRole = this.$appConst.enterOrgRole[this.user.orgRole];
+            }
+            if (this.stepStatus === 'SIGNED_BY_PARTYB') {
+                this.review.orgName = this.user.orgName;
+                this.review.orgRole = this.$appConst.enterOrgRole[this.user.orgRole];
+            }
         },
         // 在线签署
         onlineSign(){
@@ -228,30 +276,45 @@ export default {
                     //     vm.$message.error('请先上传营业执照扫描件');
                     //     return;
                     // }
-                    vm.$store.state.step = 2;
+                    this.stepStatus = 'TO_BE_AUDIT';
                     const url = this.$apiUrl.serviceFulfillment.apply;
                     let params = {
                         auditStatus: 'TO_BE_AUDIT',
-                        orgId: JSON.parse(sessionStorage.getItem('user')).orgId,
-                        orgName: JSON.parse(sessionStorage.getItem('user')).orgName,
-                        agreementtype: this.serviceFulfillment.model,
-                        name: this.serviceFulfillment.name,
+                        orgId: this.user.orgId,
+                        orgName: this.user.orgName,
+                        type: this.serviceFulfillment.bondBank,
+                        contractName: this.serviceFulfillment.bondAccount,
+                        type1: this.serviceFulfillment.settlementBank,
+                        contractName2: this.serviceFulfillment.settlementAccount,
                     };
                     this.$http.post(url, params)
                         .then(res => {
                         if (res.data.status !== 200) return;
                             // 业务开通申请
-                            this.stepStatus = '';
+                            vm.$message.success('业务开通申请成功');
+                            this.stepStatus = 'TO_BE_AUDIT';
                         }).catch(err => {
                             this.$message.warning(err.message || '服务器错误，请稍后再试!');
                         });
                         } else {
-                            vm.$message.warning('请检查输入是否正确。');
+                            vm.$message.warning('请检查输入是否正确!');
                             return false;
                         }
                     });
         },
-        // 签署提交
+        // 步骤3提交
+        creditApply() {
+            const url = `${this.$apiUrl.credit.apply}`;
+            let params = {
+            };
+            this.$http.put(url, params)
+                .then(res => {
+                if (res.data.status !== 200) return;
+                }).catch(err => {
+                    this.$message.warning(err.message || '服务器错误，请稍后再试!');
+                });
+        },
+        // 供应商签署
         signSubmit(){
             this.$store.state.step = 4;
             this.$store.state.auditState = 'shenhezhong';
@@ -266,9 +329,20 @@ export default {
                     this.$message.warning(err.message || '服务器错误，请稍后再试!');
                 });
         },
+        // 重新请求
         repeatApplication(){
             this.$store.state.step = 1;
             this.$store.state.auditState = 'shenhezhong';
+            // 
+            const url = this.$apiUrl.serviceFulfillment.apply;
+                let params = {
+                };
+                this.$http.post(url, params)
+                    .then(res => {
+                    if (res.data.status !== 200) return;
+                    }).catch(err => {
+                        this.$message.warning(err.message || '服务器错误，请稍后再试!');
+                    });
         }
     }
 }
