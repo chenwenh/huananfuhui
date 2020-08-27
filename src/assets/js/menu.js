@@ -56,6 +56,21 @@ export default [
         "title": "物料管理",
         "enterType": ['manage']
       },
+      {
+        "index": "/manage/onlinePriceCity",
+        "title": "网价城市",
+        "enterType": ['manage']
+      },
+      {
+        "index": "/manage/departmentInfo",
+        "title": "部门信息",
+        "enterType": ['manage']
+      },
+      {
+        "index": "/manage/warehouseInfo",
+        "title": "仓库信息",
+        "enterType": ['manage']
+      },
     ]
   },
   {

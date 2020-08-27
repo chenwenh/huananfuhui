@@ -111,9 +111,36 @@ const routes = [
                   title: '物料管理',
                   icon: 'iconproject1'
               },
-              component: resolve => require(['../views/materielManage/index.vue'], resolve)
+              component: resolve => require(['../views/basicData/materielManage/index.vue'], resolve)
         },
         {
+              path: '/manage/onlinePriceCity',
+              name: 'onlinePriceCity',
+              meta: {
+                  title: '网价城市',
+                  icon: 'iconproject1'
+              },
+              component: resolve => require(['../views/basicData/onlinePriceCity/index.vue'], resolve)
+        },
+        {
+              path: '/manage/departmentInfo',
+              name: 'departmentInfo',
+              meta: {
+                  title: '部门信息',
+                  icon: 'iconproject1'
+              },
+              component: resolve => require(['../views/basicData/departmentInfo/index.vue'], resolve)
+        },
+        {
+              path: '/manage/warehouseInfo',
+              name: 'warehouseInfo',
+              meta: {
+                  title: '仓库信息',
+                  icon: 'iconproject1'
+              },
+              component: resolve => require(['../views/basicData/warehouseInfo/index.vue'], resolve)
+        },
+          {
               path: '/manage/noticeManage',
               name: 'noticeManage',
               meta: {

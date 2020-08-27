@@ -42,7 +42,7 @@
                 <h4 style="margin-top:5px;">欢迎“{{enterpriseData.orgName}}”登录系统</h4>
                 <p style="margin-left:20px;" class="word">
                     <span>{{enterpriseData.orgRole}}</span><span class="noReal">{{enterpriseData.isVerified}}</span>
-                    <span class="blue pointer" style="float:right;">企业管理</span>
+                    <span class="blue pointer" style="float:right;" @click="goToSSO">企业管理</span>
                 </p>
             </div>
             <div class="shadow publicMessages" style="padding-top:11px; padding-bottom: 18px;">
@@ -120,22 +120,22 @@ export default {
     methods:{
         getMoreNotice(){
             this.$router.push({
-                path:'/homes/noticeManage'
+                path:'/manage/noticeManage'
             });
         },
         getMoreProject(){
             this.$router.push({
-                path:'/homes/projectInfo'
+                path:'/publicInfoModel/projectInfo'
             });
         },
         getMorePurchase(){
             this.$router.push({
-                path:'/homes/procurementPlan2'
+                path:'/publicInfoModel/procurementPlan'
             });
         },
         getMoreSales(){
             this.$router.push({
-                path:'/homes/salesInfo'
+                path:'/publicInfoModel/salesInfo'
             });
         },
         // 获取业务开通状态
