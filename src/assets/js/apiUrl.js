@@ -9,6 +9,7 @@ export let apiUrl = {
     fileQuery:apiGateway + '/files/file/query/',//文件预览
     upload: FILE_UPLOAD_URL + "/",   //文件上传
     userInfo:apiGateway + '/auth/api/v1.0/user',//获取用户个人信息
+    companyDetail: FILE_IP + '/api/orguser/org/v1.0/list', // 根据企业name获取企业信息
     // login
     login: {
         loginUrl: apiGateway + '/auth/api/v1.0/token/new',
