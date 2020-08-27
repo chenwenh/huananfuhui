@@ -5,6 +5,7 @@
   :class="{limitStyleUpload:limitNumber==1}"
   :headers="headers"
   :action="upload"
+  :drag="drag"
   :accept="fileAccept"
   :before-upload="handleBeforeUpload"
   :on-preview="handlePreview"
@@ -13,7 +14,9 @@
   :on-success="handleSuccess"
   :file-list="fileList">
   <span class="blue" v-if="limitNumber== 1 && fileList.length==0">添加</span>
-  <span class="blue" v-if="limitNumber!=1">文件上传</span>
+  <span class="blue" v-if="limitNumber!=1 && !drag">文件上传</span>
+  <i class="el-icon-upload" v-if="drag"></i>
+  <div class="el-upload__text" v-if="drag">将文件拖到此处，或<em>点击上传</em></div>
 </el-upload>
 <show-file-detail ref="showFileDetail"></show-file-detail>
 </div>
@@ -21,7 +24,7 @@
 <script>
   import showFileDetail from './showFileDetail.vue'
   export default {
-    props:['fileAccept','limitNumber'],
+    props:['fileAccept','limitNumber','drag'],
     data() {
       return {
         fileList:[],

@@ -20,8 +20,8 @@
                 </el-form-item>
               </div>
           </div>
-          <div style="margin-left:30px;padding-bottom:30px;">
-               <textStyleUpload ref="textStyleUpload1" fileAccept= 'jpg,jpeg,png,gif,PDF,pdf'></textStyleUpload>
+          <div style="margin-left:117px;padding-bottom:30px;">
+               <textStyleUpload ref="textStyleUpload1" fileAccept= 'jpg,jpeg,png,gif,PDF,pdf' drag="true"></textStyleUpload>
           </div>
             <div style="text-align:right;width:100%;">
                 <el-form-item>
