@@ -11,7 +11,8 @@
             </el-dropdown-menu>
         </el-dropdown>
         <div class="right">
-            <img src="static/images/infoLogo.png" alt="" class="infoLogo">
+            <span class="manageCenter pointer" v-show="$route.path=='/home'" @click="goManageCenter">管理中心</span>
+            <img src="static/images/infoLogo.png" alt="" class="infoLogo" @click="goMail">
             <el-dropdown trigger="click" @command="handleCommand" style="margin-top:7px;cursor:pointer;">
                 <span class="el-dropdown-link">
                     <img class="userIcon" src="static/images/toux.png" />
@@ -41,6 +42,16 @@ export default {
         }
     },
     methods:{
+        goManageCenter(){
+            this.$router.push({
+                path:'/manage/businessOpenAudit'
+            });
+        },
+        goMail(){
+            this.$router.push({
+                path:'/publicInfoModel/mail'
+            });
+        },
         handleCommand (command) {
             // 退出
             if (command === 'logout') {
@@ -49,9 +60,19 @@ export default {
                 this.$router.push({path:'/login'});
             }
             if (command === 'enterpriseManagement'){
-                // 跳转业务审核页面
+                let token = sessionStorage.getItem('token');
+                window.open(`${SSO_URL}/login?token=${token}`);
+            }
+            if(command === 'personalCenter'){
+                // 跳转到公共信息模块的个人信息
                 this.$router.push({
-                    path:'/manage/businessOpenAudit'
+                    path:'/publicInfoModel/personalInfo'
+                });
+            }
+            if(command === 'enterpriseAgreement'){
+                // 跳转到公共信息模块的企业协议
+                this.$router.push({
+                    path:'/publicInfoModel/enterpriseAgreement'
                 });
             }
         },
@@ -65,6 +86,10 @@ export default {
 }
 </script>
 <style scoped>
+.manageCenter{
+    color: #333333;
+    font-size: 16px;
+}
 .header{
     height:60px;
     padding-left:20px;

@@ -176,6 +176,12 @@ export default {
             }
         }
     },
+    mounted(){
+        var type= this.$route.query.type;
+        if(type){
+            this.title = type;
+        }
+    },
     watch: {
         "registerForm.newPassword"(){
             this.pwdInconformity = false
@@ -310,7 +316,7 @@ export default {
         },
         // 登录
         submitForm(formName) {
-            if (!this.loginForm.smsToken && this.loginForm.smsToken === '') {
+            if (!this.loginForm.smsToken || this.loginForm.smsToken === '') {
                 this.$message.warning('请先获取验证码');
                 return;
             }

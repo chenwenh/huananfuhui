@@ -1,10 +1,10 @@
 <template>
     <div class="content">
         <div class="left">
-            <div class="alert shadow" v-show="alertShow">
+            <div class="alert shadow" v-show="!isVerified">
                 <h3 class="title">实用提示</h3>
                 <p><img src="static/images/lamp.png">为保证您的帐户及资源的所属权安全，建议您优先完成实名认证。<span @click="goToSSO" class="blue pointer">前往认证</span></p>
-                <i class="el-icon-close close" @click="alertShow=!alertShow"></i>
+                <i class="el-icon-close close" @click="isVerified=!isVerified"></i>
             </div>
             <div class="product shadow">
                  <h3 class="title">产品中心</h3>
@@ -113,7 +113,8 @@ export default {
             publicMessages:[],
             purchaseInfos:[],
             salesInfos:[],
-            projectInfos:[]
+            projectInfos:[],
+            isVerified:false
         }
     },
     methods:{
@@ -170,6 +171,7 @@ export default {
         getUserData() {
             let user = JSON.parse(sessionStorage.getItem('user'));
             this.enterpriseData.orgName = user.orgName;
+            this.isVerified = user.verified;
             this.enterpriseData.isVerified = user.hasOwnProperty('verified') && user.verified === true ? '已实名' : '未实名';
             this.enterpriseData.orgRole = this.$appConst.enterOrgRole[user.orgRole];
         },
@@ -275,6 +277,7 @@ export default {
     padding:20px;
     background:rgb(244,244,244);
     overflow: hidden;
+    height: calc(100% - 42px);
  }
  body{
      background:rgb(244,244,244);

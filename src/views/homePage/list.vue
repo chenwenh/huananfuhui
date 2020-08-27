@@ -55,7 +55,7 @@ export default {
         if (this.$route.query.type === 'project') {
           this.breadcrumbs = ['首页', '项目信息列表'];
         }
-        if (this.$route.query.type === 'buy') {
+        if (this.$route.query.type === 'purchase') {
           this.breadcrumbs = ['首页', '采购计划'];
         }
         if (this.$route.query.type === 'sell') {
@@ -66,7 +66,7 @@ export default {
         if (this.$route.query.type === 'project') {
           this.breadcrumbs = ['首页', '项目信息列表', '项目详情'];
         }
-        if (this.$route.query.type === 'buy') {
+        if (this.$route.query.type === 'purchase') {
           this.breadcrumbs = ['首页', '采购计划', '采购计划详情'];
         }
         if (this.$route.query.type === 'sell') {

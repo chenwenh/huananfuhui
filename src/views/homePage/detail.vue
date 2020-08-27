@@ -82,7 +82,7 @@ export default {
         if(type=='project'){
           url = this.$apiUrl.project.findById;
           this.formItem = Object.assign({},this.projectForm);
-        }else if(type=='buy'){
+        }else if(type=='purchase'){
           url = this.$apiUrl.purchase.findById;
           this.formItem = Object.assign({},this.purchaseForm);
         }else{

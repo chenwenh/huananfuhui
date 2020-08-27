@@ -126,6 +126,14 @@
             color: #666 !important;
         }
     }
+    .el-menu-vertical-demo > .el-menu-item{
+        padding-left:37px !important;
+        
+    }
+    .el-menu-vertical-demo .el-submenu .el-menu-item{
+        padding-left:58px !important;
+    }
+
 
     .el-aside {
         position: relative;
@@ -144,7 +152,7 @@
             color: #FEA700 !important;
             // background: #FFF1DB !important;
             background: #FFFFFF !important;
-            text-align: center;
+            // text-align: center;
 
             .sideIcon {
                 color: #E79C2A !important;
@@ -215,7 +223,4 @@
         }
     }
 
-    .el-submenu .el-menu-item {
-        text-align: center;
-    }
 </style>

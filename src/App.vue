@@ -2,10 +2,11 @@
   <div id="app">
     <div class="header" v-if="showHeader">
       <div class="center">
-        <div @click="goHomePage"><img src="static/images/logo.png" alt=""><span>华南富汇智慧供应链平台</span></div>
+        <div @click="goHomePage" style="width:326px;"><img src="static/images/logo.png" alt=""><span>华南富汇智慧供应链平台</span></div>
         <span class='right login'>
           <span class="enter pointer" @click="goHomePage" v-show="token">进入平台</span>
-          <router-link :to="{path:'/login'}" v-show="$route.path!='/login' && !token">登录</router-link>
+          <router-link :to="{path:'/login'}" v-show="$route.path!='/login' && !token" class="login">登录</router-link>
+          <span class="register pointer" @click="goRegister" v-show="$route.path!='/login' && !token">注册</span>
           <el-dropdown trigger="click"  v-show="$route.path!='/login' && token"  @command="handleCommand" style="margin-top:7px;cursor:pointer;position:absolute;right:0;top:0;">
               <span class="el-dropdown-link">
                   <img class="userIcon" src="static/images/toux.png" />
@@ -52,6 +53,14 @@ export default {
     }
   },
   methods:{
+    goRegister(){
+      this.$router.push({
+        path:'/login',
+        query:{
+          type:'registerForm'
+        }
+      });
+    },
     goHomePage(){
       if(this.$route.path == '/login'){
           this.$router.push({path:'/homePage'});
@@ -97,16 +106,31 @@ export default {
   color: #2A211E;
   letter-spacing: 0;
   line-height: 24px;
+  font-weight: bold;
 }
 .right{
   float:right;
 }
 span.login a{
   position: absolute;
-  right:0;
+  right:100px;
   font-size:16px;
   color: #302F4D;
   top:30px;
+}
+span.register{
+  position: absolute;
+  right:20px;
+  top:34px;
+  font-size: 16px;
+}
+span.login .login{
+  font-size: 14px;
+  color: #302F4D;
+  padding:5px 18px;
+  display: inline-block;
+  background:#FFC422;
+  border-radius: 2px;
 }
 .center span.enter{
   padding:5px 22px;

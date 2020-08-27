@@ -6,28 +6,12 @@
                     <img src="static/images/menu.png" class="productWord">产品中心
                     <i class="el-icon-arrow-right iconRight" style="float:right;"></i>
                     <div class="content" v-show="contentShow"> 
-                        <!-- <div style="width:100px;float:left">
-                            <p class="title">供应链</p>
-                            <ul>
-                                <li>订单管理</li>
-                                <li>发货管理</li>
-                                <li>企业协议</li>
-                            </ul>
-                        </div>
-                        <div style="width:100px;float:right">
-                            <p class="title">融资</p>
-                            <ul>
-                                <li>订单管理</li>
-                                <li>发货管理</li>
-                                <li>企业协议</li>
-                            </ul>
-                        </div> -->
                         <div class="squareBox">供应链</div>
                         <div class="squareBox">融资</div>
-                        <div class="squareBox">物流公司</div>
                     </div>
                 </div>
                 <div class="siderBox" v-show="enterType === 'manage'">管理中心</div>
+                <div class="siderBox" v-show="enterType === 'publicInfoModel'">公共信息</div>
                 <sidebar></sidebar>
             </el-aside>
             <el-main style="width:calc(100% - 60px);float:right;background:white;">

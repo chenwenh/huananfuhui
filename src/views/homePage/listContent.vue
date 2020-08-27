@@ -3,10 +3,10 @@
     <!-- 项目标题 -->
     <div class="project__title">
       <img  v-show="$route.query.type === 'project'" src="../../../public/static/images/projectLogo.png" alt="">
-      <img  v-show="$route.query.type === 'buy'" src="../../../public/static/images/buyLogo.png" alt="">
+      <img  v-show="$route.query.type === 'purchase'" src="../../../public/static/images/buyLogo.png" alt="">
       <img  v-show="$route.query.type === 'sell'" src="../../../public/static/images/sellLogo.png" alt="">
       <span v-show="$route.query.type === 'project'">项目信息</span>
-      <span v-show="$route.query.type === 'buy'">采购计划</span>
+      <span v-show="$route.query.type === 'purchase'">采购计划</span>
       <span v-show="$route.query.type === 'sell'">销售信息</span>
     </div>
     <!-- 内容 -->
@@ -163,7 +163,7 @@ export default {
         var url = "";
         if(type=='project'){
           url = this.$apiUrl.project.queryTitle;
-        }else if(type=='buy'){
+        }else if(type=='purchase'){
           url = this.$apiUrl.purchase.queryTitle;
         }else{
           url = this.$apiUrl.salesInfo.queryTitle;

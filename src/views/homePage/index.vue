@@ -55,83 +55,17 @@ export default {
                     type:'project',
                     currentTitle:'项目信息',
                     image:'static/images/projectLogo.png',
-                    children:[
-                        // {
-                        //     id: 1,
-                        //     title:'无锡中恒制药医药器材采购项目',
-                        //     state:'发布中',
-                        //     content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
-                        //     date:'2020-07-27'
-                        // },
-                        // {
-                        //     id: 1,
-                        //     title:'无锡中恒制药医药器材采购项目',
-                        //     state:'已结束',
-                        //     content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
-                        //     date:'2020-07-27'
-                        // },
-                        // {
-                        //     id: 1,
-                        //     title:'无锡中恒制药医药器材采购项目',
-                        //     state:'发布中',
-                        //     content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
-                        //     date:'2020-07-27'
-                        // },
-                    ]
+                    children:[]
                 },
-                {   type:'buy',
+                {   type:'purchase',
                     currentTitle:'采购计划',
                     image:'static/images/buyLogo.png',
-                    children:[
-                        // {
-                        //     id: 1,
-                        //     title:'无锡中恒制药医药器材采购项目',
-                        //     state:'发布中',
-                        //     content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
-                        //     date:'2020-07-27'
-                        // },
-                        // {
-                        //     id: 1,
-                        //     title:'无锡中恒制药医药器材采购项目',
-                        //     state:'已结束',
-                        //     content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
-                        //     date:'2020-07-27'
-                        // },
-                        // {
-                        //     id: 1,
-                        //     title:'无锡中恒制药医药器材采购项目',
-                        //     state:'发布中',
-                        //     content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
-                        //     date:'2020-07-27'
-                        // },
-                    ]
+                    children:[]
                 },
                 {   type:'sell',
                     currentTitle:'销售信息',
                     image:'static/images/sellLogo.png',
-                    children:[
-                        // {
-                        //     id: 1,
-                        //     title:'无锡中恒制药医药器材采购项目',
-                        //     state:'发布中',
-                        //     content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
-                        //     date:'2020-07-27'
-                        // },
-                        // {
-                        //     id: 1,
-                        //     title:'无锡中恒制药医药器材采购项目',
-                        //     state:'已结束',
-                        //     content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
-                        //     date:'2020-07-27'
-                        // },
-                        // {
-                        //     id: 1,
-                        //     title:'无锡中恒制药医药器材采购项目',
-                        //     state:'发布中',
-                        //     content:'萨迪实打实交鞍山对手搞活动不结婚ID附近上动肝火撒飞机盎司附近第三方的',
-                        //     date:'2020-07-27'
-                        // },
-                    ]
+                    children:[]
                 },
             ]
         }
@@ -142,7 +76,9 @@ export default {
         window.addEventListener('resize', function() {
             var screenWidth = document.documentElement.scrollWidth || document.body.scrollWidth;
             var bannerHeight = 480 / 1920 * screenWidth;
-            document.getElementById('el-carousel').style.height = bannerHeight + 'px';
+            if(document.getElementById('el-carousel')){
+                document.getElementById('el-carousel').style.height = bannerHeight + 'px';
+            }
         }, false);
         this.queryProject();
     },
@@ -150,7 +86,7 @@ export default {
         // 查询项目标题列表
         queryProject(){
             this.commonQuery(`${this.$apiUrl.project.queryTitle}`,'project');
-            this.commonQuery(`${this.$apiUrl.purchase.queryTitle}`,'buy');
+            this.commonQuery(`${this.$apiUrl.purchase.queryTitle}`,'purchase');
             this.commonQuery(`${this.$apiUrl.salesInfo.queryTitle}`,'sale');
         },
         commonQuery(url,type){
@@ -164,7 +100,7 @@ export default {
                 if (res.data.status !== 200) return;
                     if(type=='project'){
                         this.infos[0].children = res.data.data.content;
-                    }else if(type=='buy'){
+                    }else if(type=='purchase'){
                         this.infos[1].children = res.data.data.content;
                     }else{
                         this.infos[2].children = res.data.data.content;
