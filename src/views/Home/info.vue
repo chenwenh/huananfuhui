@@ -102,6 +102,7 @@ export default {
     },
     data(){
         return{
+            businessId: null,
             step: 'NOT_OPEN', // 业务开通步骤
             activeName:'first',
             alertShow:true,
@@ -149,7 +150,9 @@ export default {
                 .then(res => {
                 if (res.data.status !== 200) return;
                 // 进入页面获取状态
+                if(res.data.data && res.data.data.content[0] === null) {
                     this.step = 'NOT_OPEN';
+                }
                 }).catch(err => {
                     this.$message.warning(err.message || '服务器错误，请稍后再试!');
                 });
@@ -157,8 +160,7 @@ export default {
         applicationOpen(){
             this.$refs.dialogCommonComponent.show();
             this.$nextTick(() =>{
-                // this.$refs.applicationOpenRef.init(this.step);
-                this.$refs.applicationOpenRef.init('NOT_OPEN');
+                this.$refs.applicationOpenRef.init(this.step, 'PATTERN_A');
             });
         },
         handleClick(tab, event) {

@@ -18,18 +18,18 @@
                         <el-input v-model="serviceFulfillment.orgRole" disabled></el-input>
                     </el-form-item>
                     <p style="padding-bottom: 5px;">保证金账户</p>
-                    <el-form-item label="开户行" prop="bondBank">
-                        <el-input v-model="serviceFulfillment.bondBank"></el-input>
+                    <el-form-item label="开户行" prop="depositBank">
+                        <el-input v-model="serviceFulfillment.depositBank"></el-input>
                     </el-form-item>
-                    <el-form-item label="账号" prop="bondAccount">
-                        <el-input v-model="serviceFulfillment.bondAccount"></el-input>
+                    <el-form-item label="账号" prop="depositAccountNo">
+                        <el-input v-model="serviceFulfillment.depositAccountNo"></el-input>
                     </el-form-item>
                     <p style="padding-bottom: 5px;">结算账户</p>
                     <el-form-item label="开户行" prop="settlementBank">
                         <el-input v-model="serviceFulfillment.settlementBank"></el-input>
                     </el-form-item>
-                    <el-form-item label="账号" prop="settlementAccount">
-                        <el-input v-model="serviceFulfillment.settlementAccount"></el-input>
+                    <el-form-item label="账号" prop="settlementAccountNo">
+                        <el-input v-model="serviceFulfillment.settlementAccountNo"></el-input>
                     </el-form-item>
                 </div>
             </el-form>
@@ -83,18 +83,18 @@
                     <el-input v-model="review.orgRole" disabled></el-input>
                 </el-form-item>
                 <p style="padding-bottom: 5px;">保证金账户</p>
-                <el-form-item label="开户行" prop="bondBank">
-                    <el-input v-model="review.bondBank" disabled></el-input>
+                <el-form-item label="开户行" prop="depositBank">
+                    <el-input v-model="review.depositBank" disabled></el-input>
                 </el-form-item>
-                <el-form-item label="账号" prop="bondAccount">
-                    <el-input v-model="review.bondAccount" disabled></el-input>
+                <el-form-item label="账号" prop="depositAccountNo">
+                    <el-input v-model="review.depositAccountNo" disabled></el-input>
                 </el-form-item>
                 <p style="padding-bottom: 5px;">结算账户</p>
                 <el-form-item label="开户行" prop="settlementBank">
                     <el-input v-model="review.settlementBank" disabled></el-input>
                 </el-form-item>
-                <el-form-item label="账号" prop="settlementAccount">
-                    <el-input v-model="review.settlementAccount" disabled></el-input>
+                <el-form-item label="账号" prop="settlementAccountNo">
+                    <el-input v-model="review.settlementAccountNo" disabled></el-input>
                 </el-form-item>
             </div>
         </el-form>
@@ -118,7 +118,7 @@
                 </div>
             </el-col>
         </el-row> -->
-        <p style="margin-left:30px;margin-top:20px;">年度框架协议：<span class="blue" @click="handlePreview(attachment1)">库易保业务开通协议.pdf</span>
+        <p style="margin-left:30px;margin-top:20px;">协议：<span class="blue" @click="handlePreview(attachment1)">库易保业务开通协议.pdf</span>
             <span @click="signSubmit()" class="onlineSign">在线签署</span>
         </p>
         <div style="text-align:right;width:100%;">
@@ -147,16 +147,18 @@ export default {
     data(){
         return{
             user: {},
+            businessId: null,
+            businessType: '', //业务类型
             stepStatus: '', // 步骤数
             limitNumber: 1, // 限制文件上传
             checked: true, // 步骤1 协议是否同意
             serviceFulfillment:{ //业务开通 步骤1
                 orgName: '',
                 orgRole: '',
-                bondBank: '',
-                bondAccount: '',
+                depositBank: '',
+                depositAccountNo: '',
                 settlementBank: '',
-                settlementAccount: ''
+                settlementAccountNo: ''
             },
             attachment1:{
 	            "uid": 1597214482997,
@@ -185,22 +187,22 @@ export default {
             review:{ // 步骤3回显数据
                 orgName: '',
                 orgRole: '',
-                bondBank: '',
-                bondAccount: '',
+                depositBank: '',
+                depositAccountNo: '',
                 settlementBank: '',
-                settlementAccount: ''
+                settlementAccountNo: ''
             },
             serviceFulfillmentRules:{
-                settlementAccount: [
+                settlementAccountNo: [
                     { required: true, message: '不能为空！', trigger: 'blur' }
                 ],
                 settlementBank: [
                     { required: true, message: '不能为空！', trigger: 'blur' }
                 ],
-                bondBank: [
+                depositBank: [
                     { required: true, message: '不能为空！', trigger: 'blur' }
                 ],
-                bondAccount: [
+                depositAccountNo: [
                     { required: true, message: '不能为空！', trigger: 'blur' }
                 ]
             }
@@ -220,7 +222,9 @@ export default {
     },
     methods:{
         // 获取当前业务步骤
-        init(step) {
+        init(step, businessType, businessId) {
+            this.businessType = businessType;
+            this.businessId = businessId;
             this.user = JSON.parse(sessionStorage.getItem('user'));
             this.stepStatus = step;
             if (this.stepStatus === 'NOT_OPEN') {
@@ -277,15 +281,15 @@ export default {
                     //     return;
                     // }
                     this.stepStatus = 'TO_BE_AUDIT';
-                    const url = this.$apiUrl.serviceFulfillment.apply;
+                    const url = `${this.$apiUrl.serviceFulfillment.apply}/${this.businessType}`;
                     let params = {
                         auditStatus: 'TO_BE_AUDIT',
                         orgId: this.user.orgId,
                         orgName: this.user.orgName,
-                        type: this.serviceFulfillment.bondBank,
-                        contractName: this.serviceFulfillment.bondAccount,
-                        type1: this.serviceFulfillment.settlementBank,
-                        contractName2: this.serviceFulfillment.settlementAccount,
+                        depositBank: this.serviceFulfillment.depositBank,
+                        depositAccountNo: this.serviceFulfillment.depositAccountNo,
+                        settlementBank: this.serviceFulfillment.settlementBank,
+                        settlementAccountNo: this.serviceFulfillment.settlementAccountNo,
                     };
                     this.$http.post(url, params)
                         .then(res => {
@@ -307,7 +311,7 @@ export default {
             const url = `${this.$apiUrl.credit.apply}`;
             let params = {
             };
-            this.$http.put(url, params)
+            this.$http.get(url, params)
                 .then(res => {
                 if (res.data.status !== 200) return;
                 }).catch(err => {
@@ -333,16 +337,15 @@ export default {
         repeatApplication(){
             this.$store.state.step = 1;
             this.$store.state.auditState = 'shenhezhong';
-            // 
             const url = this.$apiUrl.serviceFulfillment.apply;
-                let params = {
-                };
-                this.$http.post(url, params)
-                    .then(res => {
-                    if (res.data.status !== 200) return;
-                    }).catch(err => {
-                        this.$message.warning(err.message || '服务器错误，请稍后再试!');
-                    });
+            let params = {
+            };
+            this.$http.post(url, params)
+                .then(res => {
+                if (res.data.status !== 200) return;
+                }).catch(err => {
+                    this.$message.warning(err.message || '服务器错误，请稍后再试!');
+                });
         }
     }
 }
