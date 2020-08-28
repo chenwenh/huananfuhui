@@ -3,7 +3,7 @@
     <el-table :data="mainTable.tableData"
               highlight-current-row
               tooltip-effect="dark"
-              stripe
+         
               border
               @selection-change="selectionWarehouse"
               header-cell-class-name="table-header-cell"

@@ -2,11 +2,12 @@
     <div>
        <breadcrumb :breadcrumbList="breadcrumbs"/>
         <!-- 表格 -->
-        <el-input
+         <el-input
             placeholder="输入关键字进行搜索"
-            v-model="searchValue" style="width:300px;" class="search">
-            <i slot="prefix" class="el-input__icon el-icon-search" style="margin-top:-2px;"></i>
-        </el-input><el-button type="primary" @click="search(searchValue)" size="medium" style="margin-left:20px;"  class="radiusNone">搜索</el-button>
+            v-model="searchValue" style="width:300px;" class="search" @keyup.enter.native="search">
+            <i slot="suffix" class="el-input__icon el-icon-search" style="margin-top:-4px;"></i>
+        </el-input>
+        <!-- <el-button type="primary" @click="search(searchValue)" size="medium" style="margin-left:20px;"  class="radiusNone">搜索</el-button> -->
         <Table
               ref="tableRef"
               :mainTable="mainTable"

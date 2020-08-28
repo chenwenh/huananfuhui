@@ -2,11 +2,12 @@
 <div>
     <div v-show="firstStep">
          <breadcrumb :breadcrumbList="breadcrumbs"/>
-        <el-input
+         <el-input
             placeholder="输入关键字进行搜索"
-            v-model="searchValue" style="width:300px;" class="search">
-            <i slot="prefix" class="el-input__icon el-icon-search" style="margin-top:-2px;"></i>
-        </el-input><el-button type="primary" @click="search" size="medium" style="margin-left:20px;"  class="radiusNone">搜索</el-button>
+            v-model="searchValue" style="width:300px;" class="search" @keyup.enter.native="search">
+            <i slot="suffix" class="el-input__icon el-icon-search" style="margin-top:-4px;"></i>
+        </el-input>
+        <!-- <el-button type="primary" @click="search" size="medium" style="margin-left:20px;"  class="radiusNone">搜索</el-button> -->
         <div style="float:right;" class="tab">
           <span :class="{'active':currentTab=='first'}" @click="currentTab='first'">计划列表</span>
           <span :class="{'active':currentTab=='second'}" @click="currentTab='second'">我的报价</span>
