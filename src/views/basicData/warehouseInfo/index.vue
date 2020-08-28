@@ -6,7 +6,7 @@
             v-model="searchValue" style="width:300px;" class="search">
             <i slot="prefix" class="el-input__icon el-icon-search" style="margin-top:-2px;"></i>
         </el-input><el-button type="primary" @click="search" size="medium" style="margin-left:20px;"  class="radiusNone">搜索</el-button>
-        <el-button type="primary" @click="addProject" size="medium" style="margin-left:20px;float:right;" class="radiusNone">添加</el-button>
+        <el-button type="primary" @click="addProject" size="medium" style="margin-left:20px;float:right;" class="radiusNone">新增</el-button>
         <!-- 表格 -->
         <Table
               ref="tableRef"

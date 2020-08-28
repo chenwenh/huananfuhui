@@ -281,7 +281,7 @@ export default {
     padding:20px;
     background:rgb(244,244,244);
     overflow: hidden;
-    /* height: calc(100% - 42px); */
+    min-height: calc(100% - 42px);
  }
  body{
      background:rgb(244,244,244);
