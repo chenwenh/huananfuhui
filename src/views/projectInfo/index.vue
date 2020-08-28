@@ -58,7 +58,7 @@
             <add ref="add" @search="search"></add>
         </dialogCommonComponent>
          <!-- 详情 -->
-        <dialogCommonComponent ref="dialogCommonComponent2" title="详情" width="50%">
+        <dialogCommonComponent ref="dialogCommonComponent2" title="详情" width="600px">
             <detail ref="detail" :detailInfo="detailInfo" closeButton=true></detail>
         </dialogCommonComponent>
     </div>
