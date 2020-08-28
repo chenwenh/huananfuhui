@@ -11,7 +11,7 @@
             </el-dropdown-menu>
         </el-dropdown>
         <div class="right">
-            <span class="manageCenter pointer" v-show="$route.path=='/home'" @click="goManageCenter">管理中心</span>
+            <span class="manageCenter pointer" v-show="$route.path=='/home' ||$route.path=='/Home'" @click="goManageCenter">管理中心</span>
             <img src="static/images/infoLogo.png" alt="" class="infoLogo" @click="goMail">
             <el-dropdown trigger="click" @command="handleCommand" style="margin-top:7px;cursor:pointer;">
                 <span class="el-dropdown-link">

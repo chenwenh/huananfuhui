@@ -60,7 +60,7 @@
                     <el-tab-pane label="项目信息" name="first">
                         <ul>
                             <li v-for="(item,index) in projectInfos" :key="index"> 
-                                <span class="marginRight title">{{item.title}}</span>
+                                <span class="marginRight title2">{{item.title}}</span>
                                 <span class="marginRight publishDate">{{item.publishDate}}</span>
                                 <span class="publishStatus">{{$appConst.publishStatus[item.publishStatus]}}</span>
                             </li>
@@ -70,8 +70,8 @@
                     <el-tab-pane label="采购计划" name="second">
                          <ul>
                             <li v-for="(item,index) in purchaseInfos" :key="index"> 
-                                <span class="marginRight">{{item.title}}</span>
-                                <span class="marginRight">{{item.publishDate}}</span>
+                                <span class="marginRight title2">{{item.title}}</span>
+                                <span class="marginRight publishDate">{{item.publishDate}}</span>
                                 <span>{{$appConst.publishStatus[item.publishStatus]}}</span>
                             </li>
                         </ul>
@@ -80,8 +80,8 @@
                     <el-tab-pane label="销售信息" name="third">
                          <ul>
                             <li v-for="(item,index) in salesInfos" :key="index"> 
-                                <span class="marginRight">{{item.title}}</span>
-                                <span class="marginRight">{{item.publishDate}}</span>
+                                <span class="marginRight title2">{{item.title}}</span>
+                                <span class="marginRight publishDate">{{item.publishDate}}</span>
                                 <span>{{$appConst.publishStatus[item.publishStatus]}}</span>
                             </li>
                         </ul>
@@ -330,13 +330,13 @@ export default {
      line-height:35px;
      color: #666666;
  }
- .publicMessages .title{
+ .publicMessages2 .title2{
      width:177px;
      display: inline-block;
      overflow: hidden;
      white-space: nowrap;
      text-overflow: ellipsis;
-     color:#666666;
+     color: #666666;
      font-weight: 400;
  }
   .publicMessages .publishDate{
