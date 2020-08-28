@@ -1,6 +1,6 @@
 <template>
-    <el-dialog v-dialogDrag title="修改密码" :close-on-click-modal="false"  :rules="rules" :visible.sync="dialogVisible" style="padding-bottom:20px;" :before-close="close" class="tinyDialog">
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+    <el-dialog v-dialogDrag title="修改密码"  :close-on-click-modal="false"  :rules="rules" :visible.sync="dialogVisible" style="padding-bottom:20px;" :before-close="close" class="tinyDialog">
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" size="medium">
             <el-form-item label="原密码" prop="oldPwd">
                 <el-input type="password" v-model="ruleForm.oldPwd" auto-complete="off"></el-input>
             </el-form-item>
