@@ -55,7 +55,7 @@
             <auditDetail ref="auditDetail" :detailInfo="detailInfo" @search='search(searchValue)'></auditDetail>
         </dialogCommonComponent>
         <!-- 详情 -->
-        <dialogCommonComponent ref="dialogCommonComponent2" title="详情" width="50%">
+        <dialogCommonComponent ref="dialogCommonComponent2" title="详情" width="600px">
             <detail ref="detail" :detailInfo="detailInfo" closeButton=true></detail>
         </dialogCommonComponent>
           <!-- 添加 -->
