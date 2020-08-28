@@ -88,7 +88,7 @@ export default {
 <style scoped>
 .manageCenter{
     color: #333333;
-    font-size: 16px;
+    font-size: 18px;
 }
 .header{
     height:60px;
