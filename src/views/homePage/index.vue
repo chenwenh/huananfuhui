@@ -72,17 +72,21 @@ export default {
     },
     mounted(){
         var vm = this;
+        vm.getSize();
         //监听浏览器窗口大小改变
         window.addEventListener('resize', function() {
+            vm.getSize();
+        }, false);
+        this.queryProject();
+    },
+    methods: {
+        getSize(){
             var screenWidth = document.documentElement.scrollWidth || document.body.scrollWidth;
             var bannerHeight = 480 / 1920 * screenWidth;
             if(document.getElementById('el-carousel')){
                 document.getElementById('el-carousel').style.height = bannerHeight + 'px';
             }
-        }, false);
-        this.queryProject();
-    },
-    methods: {
+        },
         // 查询项目标题列表
         queryProject(){
             this.commonQuery(`${this.$apiUrl.project.queryTitle}`,'project');

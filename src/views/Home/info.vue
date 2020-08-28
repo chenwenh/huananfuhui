@@ -176,7 +176,7 @@ export default {
             let user = JSON.parse(sessionStorage.getItem('user'));
             this.enterpriseData.orgName = user.orgName;
             this.isVerified = user.verified;
-            this.enterpriseData.isVerified = user.hasOwnProperty('verified') && user.verified === true ? '已实名' : '未实名';
+            this.enterpriseData.isVerified = user.hasOwnProperty('verified') && user.verified === true ? '已实名认证' : '未实名';
             this.enterpriseData.orgRole = this.$appConst.enterOrgRole[user.orgRole];
         },
         // 跳转统一登陆系统
@@ -336,6 +336,8 @@ export default {
      overflow: hidden;
      white-space: nowrap;
      text-overflow: ellipsis;
+     color:#666666;
+     font-weight: 400;
  }
   .publicMessages .publishDate{
       display: inline-block;
