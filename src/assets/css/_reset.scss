@@ -391,7 +391,7 @@ a, a:hover, a:focus {
   height:46px;
 }
 .search .el-input__inner{
-  height:30px;
+  height:36px;
 }
 .blue{
   color:#387FE0;
@@ -517,3 +517,10 @@ a, a:hover, a:focus {
 // .el-button--medium{
 //   padding:8px 20px;
 // }
+.el-table--mini td, .el-table--mini th{
+  padding:2px 0;
+  height:40px;
+}
+.sidebar .el-submenu__title{
+  padding-left:46px !important;
+}

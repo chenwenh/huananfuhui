@@ -1,4 +1,11 @@
 const webpack = require('webpack')
+// 引入等比适配插件
+const px2rem = require('postcss-px2rem')
+// 配置基本大小
+const postcss = px2rem({
+    // 基准大小 baseSize，需要和rem.js中相同
+    remUnit: 16
+})
 module.exports = {
     configureWebpack: {
         externals: {
@@ -34,8 +41,13 @@ module.exports = {
         extract: true,
         // 开启 CSS source maps?
         sourceMap: false,
-        // css预设器配置项
-        loaderOptions: {},
+        loaderOptions: {
+            postcss: {
+              plugins: [
+                postcss
+              ]
+            }
+        },
         // 启用 CSS modules for all css / pre-processor files.
         modules: false
     },

@@ -12,6 +12,8 @@ import bus from '@/views/eventBus/eventBus'
 import './assets/js/dialogDrag';
 import validate from './assets/js/validate';
 import store from './store';
+// import './assets/js/pc.js';
+import './assets/js/rem.js';
 Vue.use(ElementUI)
 
 Vue.prototype.$http = http;

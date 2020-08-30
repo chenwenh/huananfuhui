@@ -15,7 +15,7 @@
                     <el-submenu :index="item.index" :key="item.index" v-if="item.subs.length">
                         <template slot="title">
                             <!-- <i :class="['sideIcon', 'iconfont', item.icon]"></i> -->
-                            <i style="margin-left: 27px;"></i>
+                            <!-- <i style="margin-left: 27px;"></i> -->
                             {{ item.title }}
                         </template>
                         <div>
@@ -37,7 +37,7 @@
                 </template>
             </template>
         </el-menu>
-        <div class="fixedBottom" @click="goHome">
+        <div class="fixedBottom" @click="goHome" style="width:189px !important">
             <!-- <i class="el-icon-menu"></i> -->
             <img src="./../assets/img/iconhome.png" style="width:16px; vertical-align:middle; margin-right:5px;">
             返回平台
@@ -127,7 +127,7 @@
         }
     }
     .el-menu-vertical-demo > .el-menu-item{
-        padding-left:37px !important;
+        padding-left:40px !important;
         
     }
     .el-menu-vertical-demo .el-submenu .el-menu-item{

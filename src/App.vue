@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div class="header" v-if="showHeader">
-      <div class="center">
-        <div @click="goHomePage" style="width:326px;"><img src="static/images/logo.png" alt=""><span>华南富汇智慧供应链平台</span></div>
+      <div class="center" style="width:1200px;">
+        <div @click="goHomePage" style="width:345px;"><img src="static/images/logo.png" alt=""><span>华南富汇智慧供应链平台</span></div>
         <span class='right login'>
           <span class="enter pointer" @click="goHomePage" v-show="token">进入平台</span>
           <router-link :to="{path:'/login'}" v-show="$route.path!='/login' && !token" class="login">登录</router-link>
@@ -87,7 +87,6 @@ export default {
 }
 .center{
   position: relative;
-  width:1200px;
   margin:0 auto;
 }
 .center div{
@@ -102,7 +101,7 @@ export default {
 }
 .center span{
   font-family: PingFangSC-Semibold;
-  font-size: 24px;
+  font-size: 18px;
   color: #2A211E;
   letter-spacing: 0;
   line-height: 24px;

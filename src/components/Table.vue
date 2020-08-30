@@ -3,7 +3,6 @@
     <el-table :data="mainTable.tableData"
               highlight-current-row
               tooltip-effect="dark"
-         
               border
               @selection-change="selectionWarehouse"
               header-cell-class-name="table-header-cell"
