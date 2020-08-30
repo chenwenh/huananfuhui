@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-const apiGateway =  'https://192.168.20.70/api'
+const apiGateway =  'https://test.easy-sight.com/api' //https://192.168.20.70/api 统一认证中心的api登录用不了了
 const apiGateway2 = 'http://192.168.28.64:8088'; //https://test.easy-sight.com/api
 const currentApiUrl = 'http://192.168.28.74:8098'; // 张宏翔本地
 const FILE_IP = "https://test.easy-sight.com";

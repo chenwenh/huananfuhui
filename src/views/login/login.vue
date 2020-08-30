@@ -1,7 +1,7 @@
 <template>
     <div style="height:calc(100% - 80px)">
         <div class="login-container" style="padding:0;bottom:0;">
-            <div class="content">
+            <div class="content" style="width:1200px;">
                 <div class="login-content-left left" >
                     <img src="static/images/login.png" alt="" style="width:592px;height:294px;">
                 </div>
@@ -316,17 +316,18 @@ export default {
         },
         // 登录
         submitForm(formName) {
-            if (!this.loginForm.smsToken || this.loginForm.smsToken === '') {
-                this.$message.warning('请先获取验证码');
-                return;
-            }
+            // if (!this.loginForm.smsToken || this.loginForm.smsToken === '') {
+            //     this.$message.warning('请先获取验证码');
+            //     return;
+            // }
             this.$refs[formName].validate((valid) => {
                 if (valid) {
                     const params = {
                         userName: this.loginForm.userName.trim(),
                         pwd: this.loginForm.pwd.trim(),
                         smsCode: this.loginForm.smsCode,
-                        smsToken: this.loginForm.smsToken
+                        // smsToken: this.loginForm.smsToken
+                        smsToken:'324'
                     };
                     // params.sys = 'trade';
                     this.loading = true;
@@ -485,7 +486,7 @@ export default {
     overflow: auto;
 }
 .content{
-    width:1200px;
+    // width:1200px;
     margin:0 auto;
     height:100%;
     display: flex;
