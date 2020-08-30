@@ -42,10 +42,17 @@ module.exports = {
         // 开启 CSS source maps?
         sourceMap: false,
         loaderOptions: {
+            // postcss: {
+            //   plugins: [
+            //     postcss
+            //   ]
+            // }
             postcss: {
-              plugins: [
-                postcss
-              ]
+                plugins: [
+                  require('postcss-px2rem')({
+                    remUnit: 136.6
+                  })
+                ]
             }
         },
         // 启用 CSS modules for all css / pre-processor files.
