@@ -7,7 +7,7 @@
                 <img :src="item.url" class="carousel-content">
             </el-carousel-item>
         </el-carousel>
-        <div class="messageContent">
+        <div class="messageContent" style="width:1200px;">
             <el-row :gutter="20">
                 <el-col :span="8" v-for="(item,index) in infos" :key="index">
                     <div class="children">
@@ -27,8 +27,8 @@
                 </el-col>
             </el-row>
         </div>
-        <div class="footer">
-            <div>
+        <div class="footer" >
+            <div style="width:1200px;">
                 <span class="left">©华南富汇智慧供应链平台 All Rights Reserved. </span>                                                                                                                              
                 <span class="right">京ICP证120829号    京ICP备 12032080号-2    京公网安备11010802017204号</span>
             </div>
@@ -135,21 +135,22 @@ export default {
 </script>
 <style scoped lang="scss">
 #el-carousel{
-    min-width: 1200px;
+    // min-width: 1200px;
+    width:100%;
     height: 480px;
 }
 .el-carousel__container img{
     width:100%;
 }
 .messageContent{
-    width:1200px;
+    // width:1200px;
     margin:30px auto;
 }
 .messageContent .children{
     background: #FFFFFF;
     border: 1px solid #E4E5E6;
     box-shadow: 0 8px 4px 0 rgba(0,0,0,0.05);
-    height:342px;
+    // height:342px;
     padding:15px;
 }
 .messageContent .children .header{
@@ -181,7 +182,7 @@ export default {
     line-height:60px;
 }
 .footer div{
-    width:1200px;
+    // width:1200px;
     margin:0 auto;
     color: #FFFFFF;
     font-size: 12px;

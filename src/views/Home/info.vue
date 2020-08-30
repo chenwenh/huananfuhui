@@ -72,7 +72,7 @@
                             <li v-for="(item,index) in purchaseInfos" :key="index"> 
                                 <span class="marginRight title2">{{item.title}}</span>
                                 <span class="marginRight publishDate">{{item.publishDate}}</span>
-                                <span>{{$appConst.publishStatus[item.publishStatus]}}</span>
+                                <span class="publishStatus">{{$appConst.publishStatus[item.publishStatus]}}</span>
                             </li>
                         </ul>
                         <p class="blue pointer" @click="getMorePurchase">更多</p>
@@ -82,7 +82,7 @@
                             <li v-for="(item,index) in salesInfos" :key="index"> 
                                 <span class="marginRight title2">{{item.title}}</span>
                                 <span class="marginRight publishDate">{{item.publishDate}}</span>
-                                <span>{{$appConst.publishStatus[item.publishStatus]}}</span>
+                                <span class="publishStatus">{{$appConst.publishStatus[item.publishStatus]}}</span>
                             </li>
                         </ul>
                         <p class="blue pointer" @click="getMoreSales">更多</p>
@@ -331,7 +331,7 @@ export default {
      color: #666666;
  }
  .publicMessages2 .title2{
-     width:177px;
+     width:170px;
      display: inline-block;
      overflow: hidden;
      white-space: nowrap;
@@ -341,7 +341,7 @@ export default {
  }
   .publicMessages .publishDate{
       display: inline-block;
-      width:80px;
+      width:90px;
       overflow: hidden;
   }
   .publicMessages .publishStatus{
