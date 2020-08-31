@@ -218,7 +218,27 @@ export default {
       });
     },
     sign(row){
-
+      this.$confirm('此操作将签署该协议, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const url = `${this.$apiUrl.agreement.sign}`;
+          let params = {
+          };
+          this.$http.put(url, params)
+            .then(res => {
+            if (res.data.status !== 200) return;
+                this.$message.success('签署成功');
+            }).catch(err => {
+                this.$message.warning(err.message || '服务器错误，请稍后再试!');
+            });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消操作'
+          });          
+        });
     },
     close(){
       this.$bus.$emit('closeDialog');
