@@ -212,8 +212,12 @@ export default {
     // this.search();
   },
   methods: {
-    update() {
-
+    update(row) {
+      this.$refs.dialogCommonComponent.show();
+       this.$nextTick(()=>{
+          // this.$refs.add.init(row, row.templateType);
+          this.$refs.add.init(row, 'FRAMEWORK_AGREEMENTS');
+       });
     },
     rowClick(row){
       this.$refs.dialogCommonComponent2.show();
