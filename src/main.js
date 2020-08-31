@@ -12,8 +12,9 @@ import bus from '@/views/eventBus/eventBus'
 import './assets/js/dialogDrag';
 import validate from './assets/js/validate';
 import store from './store';
-import 'lib-flexible';
-import './assets/js/lib-flexible.js';
+// import 'lib-flexible';
+// import './assets/js/rem.js';
+// import './assets/js/lib-flexible.js';
 Vue.use(ElementUI)
 
 Vue.prototype.$http = http;
